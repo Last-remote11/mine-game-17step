@@ -2,6 +2,8 @@
 
 ## 절찬 제작중
 
+create-react-app, node.js, express.js, pwa
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
