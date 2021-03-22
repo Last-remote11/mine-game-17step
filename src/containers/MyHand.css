@@ -1,9 +1,9 @@
-.CardList-container {
+.MyHand-container {
   min-height: 200px;
   margin-top: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-color: orange;
-  border-style: dotted;
+  border-color: skyblue;
+  border-style: double;
 }
