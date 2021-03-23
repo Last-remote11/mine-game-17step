@@ -1,8 +1,7 @@
 import React from 'react';
-import { switchHand } from '../actions'
 import { useDispatch } from 'react-redux'
 
-const Card = ({ card }) => {
+const Card = ({ card, switchHand }) => {
 
   const dispatch = useDispatch()
 

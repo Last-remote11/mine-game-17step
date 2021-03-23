@@ -479,18 +479,93 @@ const cn = {
 }
 
 export const MockDatabase = [
-  s2,
-  s3,
-  s4,
-  m7,
-  m8,
-  m9,
-  t4,
-  t5,
-  t6,
-  e,
-  e,
-  e,
-  s,
-  s,
+  {...s2},
+  {...s3},
+  {...s4},
+  {...m7},
+  {...m8},
+  {...m9},
+  {...t4},
+  {...t5},
+  {...t6},
+  {...e},
+  {...e},
+  {...e},
+  {...s},
+  {...s},
 ]
+
+const shuffle = (array) => {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
+}
+
+const cardData = [
+  {...m1},{...m2},{...m3},{...m4},{...m5},{...m6},{...m7},{...m8},{...m9},
+  {...t1},{...t2},{...t3},{...t4},{...t5},{...t6},{...t7},{...t8},{...t9},
+  {...s1},{...s2},{...s3},{...s4},{...s5},{...s6},{...s7},{...s8},{...s9},
+  {...e},{...s},{...w},{...n},{...wh},{...gn},{...cn}
+]
+
+const queue = [
+  1,1,1,1,
+  2,2,2,2,
+  3,3,3,3,
+  4,4,4,4,
+  5,5,5,5,
+  6,6,6,6,
+  7,7,7,7,
+  8,8,8,8,
+  9,9,9,9,
+  11,11,11,11,
+  12,12,12,12,
+  13,13,13,13,
+  14,14,14,14,
+  15,15,15,15,
+  16,16,16,16,
+  17,17,17,17,
+  18,18,18,18,
+  19,19,19,19,
+  21,21,21,21,
+  22,22,22,22,
+  23,23,23,23,
+  24,24,24,24,
+  25,25,25,25,
+  26,26,26,26,
+  27,27,27,27,
+  28,28,28,28,
+  29,29,29,29,
+  30,30,30,30,
+  31,31,31,31,
+  32,32,32,32,
+  33,33,33,33,
+  34,34,34,34,
+  35,35,35,35,
+  36,36,36,36
+]
+
+const shuffleQueue = shuffle(queue)
+
+const playerHandNum = []
+const playerHand = []
+
+for (var i=0; i < 34; i++) {
+  playerHandNum.push(shuffleQueue.pop())
+}
+
+for (var i of playerHandNum) {
+  for (var j of cardData) {
+    if (i === j.order) {
+      playerHand.push({...j})
+    }
+  }
+}
+
+export {playerHand}

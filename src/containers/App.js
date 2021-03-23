@@ -14,7 +14,24 @@ const App = () => {
 
   const background = useSelector(state => state.enableDarkMode.background)
   const route = useSelector(state => state.changeRoute.route)
+  // const cards = useSelector(state => state.switchHand.cards)
   // const dispatch = useDispatch()
+
+  const renderSwitch = (route) => {
+    switch (route) {
+      case 'home':
+        return (
+          <div className='routeTest'>홈화면</div>
+        )
+      case 'inGame':
+        return (
+          <div className='routeTest'>게임중
+            <CardList />
+            <MyHand />
+          </div>
+        )
+    }
+  }
 
 
   return (
@@ -26,17 +43,16 @@ const App = () => {
       <StartButton />
       <HowToPlay />
       <Darkmode />
-      {
-        route === 'home'
-        ? <div className='routeTest'>홈화면</div>
-        : 
-        <div className='routeTest'>게임중
+      {renderSwitch(route)
+        // route === 'home'
+        // ? <div className='routeTest'>홈화면</div>
+        // : 
+        // <div className='routeTest'>게임중
 
-           {/* <Sidebar /> */}
-           <CardList />
-           <MyHand />
+        //    <CardList />
+        //    <MyHand />
 
-        </div>
+        // </div>
       }
 
     </div>

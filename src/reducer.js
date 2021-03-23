@@ -1,10 +1,13 @@
 import { 
   ENABLE_DARKMODE,
   CHANGE_ROUTE,
-  SWITCH_HAND
+  CARD_TO_HAND,
+  HAND_TO_CARD,
+  START_GAME,
+  DECIDE_HAND
 } from './constants'
 
-import { MockDatabase } from './components/MockDatabase'
+import { playerHand } from './components/MockDatabase'
 
 const initialStateBackground = {
   background: 'body { background-color: black; }'
@@ -40,22 +43,32 @@ export const changeRoute = (state=initialRoute, action={}) => {
 }
 
 const initialCard = {
-  cards : MockDatabase
+  cards : playerHand,
+  hello : true
 }
 
 export const switchHand = (state=initialCard, action={}) => {
+  
   switch (action.type) {
-    case SWITCH_HAND:
-      let cardId = action.payload.order
+
+    case CARD_TO_HAND:
       for (var i = 0; i < state.cards.length; i++) {
-        if (state.cards[i].order === cardId) {
-          state.cards[i].myHand === true
-          ? state.cards[i].myHand = false 
-          : state.cards[i].myHand = true
+        if (state.cards[i].order === action.payload.order && state.cards[i].myHand === false) {
+          state.cards[i].myHand = true
           break
         }
       }
-      return state
+      return {...state, hello : action.payload}
+
+    case HAND_TO_CARD:
+      for (var i = 0; i < state.cards.length; i++) {
+        if (state.cards[i].order === action.payload.order && state.cards[i].myHand === true) {
+          state.cards[i].myHand = false
+          break
+        }
+      }
+      return {...state, hello : action.payload}
+
     default:
       return state
   }
