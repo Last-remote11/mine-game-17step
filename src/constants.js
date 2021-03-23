@@ -1,2 +1,3 @@
 export const ENABLE_DARKMODE = 'ENABLE_DARKMODE';
 export const CHANGE_ROUTE = 'CHANGE_ROUTE';
+export const SWITCH_HAND = 'SWITCH_HAND';

@@ -1,7 +1,10 @@
 import { 
   ENABLE_DARKMODE,
-  CHANGE_ROUTE 
+  CHANGE_ROUTE,
+  SWITCH_HAND
 } from './constants'
+
+import { MockDatabase } from './components/MockDatabase'
 
 const initialStateBackground = {
   background: 'body { background-color: black; }'
@@ -34,6 +37,27 @@ export const changeRoute = (state=initialRoute, action={}) => {
     default:
       return state
   }
+}
 
+const initialCard = {
+  cards : MockDatabase
+}
+
+export const switchHand = (state=initialCard, action={}) => {
+  switch (action.type) {
+    case SWITCH_HAND:
+      let cardId = action.payload.order
+      for (var i = 0; i < state.cards.length; i++) {
+        if (state.cards[i].order === cardId) {
+          state.cards[i].myHand === true
+          ? state.cards[i].myHand = false 
+          : state.cards[i].myHand = true
+          break
+        }
+      }
+      return state
+    default:
+      return state
+  }
 }
 

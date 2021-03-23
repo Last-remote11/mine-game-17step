@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import { createLogger } from 'redux-logger'
-import { enableDarkMode, changeRoute } from './reducer'
+import { enableDarkMode, changeRoute, switchHand } from './reducer'
 import './index.css';
 import App from './containers/App';
 import reportWebVitals from './reportWebVitals';
@@ -11,7 +11,7 @@ import 'tachyons';
 
 const logger = createLogger()
 
-const rootReducer = combineReducers({enableDarkMode, changeRoute})
+const rootReducer = combineReducers({enableDarkMode, changeRoute, switchHand})
 
 const store = createStore(rootReducer, applyMiddleware(logger))
 
