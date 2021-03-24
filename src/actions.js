@@ -4,8 +4,15 @@ import {
   CARD_TO_HAND,
   HAND_TO_CARD,
   START_GAME,
-  DECIDE_HAND
+  DECIDE_HAND,
+  DISCARD_PENDING,
+  DISCARD_SUCCESS,
+  DISCARD_FAILED,
+  DEAL_IN,
+  DO_NOTHING,
+  DISCARD
 } from './constants'
+
 
 
 export const enableDarkMode = () => ({
@@ -33,4 +40,36 @@ export const startGame = () => ({
 
 export const decideHand = () => ({
   type: DECIDE_HAND
+})
+
+
+export const discard = ( card ) => async ( dispatch ) => {
+  dispatch({ type: DISCARD_PENDING })
+
+  const res = await fetch('http://localhost:3001/discard',
+  {
+    method: 'post',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+    card: card
+  })
+})
+  const data = await res.json()
+  
+  if (!data.ron) { // 버렸는데 안쏘임
+    dispatch({
+      type: DISCARD_SUCCESS,
+      payload: data
+    })
+  } else { // 쏘임
+    dispatch({
+      type: DEAL_IN,
+      payload: data
+    })
+  }
+
+}
+
+export const doNothing = () => ({
+  type: DO_NOTHING
 })

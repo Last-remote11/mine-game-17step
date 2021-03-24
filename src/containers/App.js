@@ -1,14 +1,18 @@
 import './App.css';
-import React from 'react';
-import HowToPlay from '../components/HowToPlay'
-import StartButton from '../components/StartButton';
+import React, { useEffect, useReducer } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet';
+import HowToPlay from '../components/HowToPlay'
+import StartButton from '../components/StartButton';
+import DecideButton from '../components/DecideButton';
 
 import Darkmode from '../components/Darkmode'
 import CardList from './CardList'
 import MyHand from './MyHand'
-import Sidebar from '../components/Sidebar';
+import DecidedHand from './DecidedHand'
+import DecidedField from './DecidedField'
+import Discarded from './Discarded'
+
 
 const App = () => {
 
@@ -17,18 +21,35 @@ const App = () => {
   // const cards = useSelector(state => state.switchHand.cards)
   // const dispatch = useDispatch()
 
+
   const renderSwitch = (route) => {
     switch (route) {
       case 'home':
         return (
-          <div className='routeTest'>홈화면</div>
+          <div>
+            <StartButton />
+            <div className='routeTest'>홈화면</div>
+          </div>
         )
-      case 'inGame':
+      case 'phase1':
         return (
-          <div className='routeTest'>게임중
+          <div className='routeTest'><div>패를만드세요</div>
+            <DecideButton />
             <CardList />
             <MyHand />
           </div>
+        )
+      case 'phase2':
+        return (
+          <div className='routeTest'>2페이즈!
+            <Discarded />
+            <DecidedField />
+            <DecidedHand />
+          </div>
+        )
+      default:
+        return (
+          <div>error</div>
         )
     }
   }
@@ -40,7 +61,7 @@ const App = () => {
         <style>{background}</style>
       </Helmet>
       <h1 className='title'>지뢰 게임 17보</h1>
-      <StartButton />
+      
       <HowToPlay />
       <Darkmode />
       {renderSwitch(route)

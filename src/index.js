@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import { createLogger } from 'redux-logger'
+import thunk from 'redux-thunk';
 import { enableDarkMode, changeRoute, switchHand } from './reducer'
 import './index.css';
 import App from './containers/App';
@@ -13,7 +14,7 @@ const logger = createLogger()
 
 const rootReducer = combineReducers({enableDarkMode, changeRoute, switchHand})
 
-const store = createStore(rootReducer, applyMiddleware(logger))
+const store = createStore(rootReducer, applyMiddleware(logger, thunk))
 
 ReactDOM.render(
   <Provider store={store}>

@@ -9,7 +9,7 @@ const StartButton = () => {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={() => dispatch(changeRoute('inGame'))}>
+      <Button variant="contained" color="primary" onClick={() => dispatch(changeRoute('phase1'))}>
         게임 시작!
       </Button>
     </div>

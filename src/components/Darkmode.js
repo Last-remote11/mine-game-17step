@@ -7,7 +7,6 @@ const Darkmode = () => {
 
   const dispatch = useDispatch()
 
-  
   return (
       <Button variant="contained" onClick={() => dispatch(enableDarkMode())}>Dark/Light Mode</Button>
   );

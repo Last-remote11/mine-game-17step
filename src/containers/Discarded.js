@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from 'react'
 import { useSelector } from 'react-redux'
 import Card from '../components/Card'
-import { cardToHand } from '../actions'
+import { doNothing } from '../actions'
 // import { MockDatabase } from '../components/MockDatabase'
 import './CardList.css'
 
@@ -12,19 +12,18 @@ const CardList = () => {
   const hello = useSelector(state => state.switchHand.hello)
   const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
-  useEffect(() => setTimeout(forceUpdate(),1000), [hello])
+  useEffect(() => setTimeout(forceUpdate(), 1000), [hello])
 
-  let falseCards = 
-  cards.filter(card => { return card.myHand === false })
-  .sort((a, b) => {return a.order - b.order})
+  let discardedCards = 
+  cards.filter(card => { return card.discard === true })
 
   return (
     <div>
-      <h2>제외할 패</h2>
+      <h2>버려진 패들</h2>
       <div className='CardList-container'>
         {
-          falseCards.map((card, i) => {
-            return (<Card card={card} switchHand = {cardToHand} key={i}></Card>)
+          discardedCards.map((card, i) => {
+            return (<Card card={card} switchHand = {doNothing} key={i}></Card>)
           })
         }
       </div>
