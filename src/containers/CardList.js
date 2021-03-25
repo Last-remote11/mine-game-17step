@@ -9,10 +9,10 @@ import './CardList.css'
 const CardList = () => {
 
   const cards = useSelector(state => state.switchHand.cards)
-  const hello = useSelector(state => state.switchHand.hello)
+  const time = useSelector(state => state.switchHand.time)
   const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
 
-  useEffect(() => setTimeout(forceUpdate(),1000), [hello])
+  useEffect(() => setTimeout(forceUpdate(),1000), [time])
 
   let falseCards = 
   cards.filter(card => { return card.myHand === false })

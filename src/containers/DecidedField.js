@@ -9,10 +9,7 @@ import './CardList.css'
 const CardList = () => {
 
   const cards = useSelector(state => state.switchHand.cards)
-  const hello = useSelector(state => state.switchHand.hello)
-  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
-
-  useEffect(() => setTimeout(forceUpdate(),1000), [hello])
+  const time = useSelector(state => state.switchHand.time)
 
   let abandonedCards = 
   cards.filter(card => { return card.myHand === false && !card.discard })

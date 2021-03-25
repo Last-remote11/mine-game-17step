@@ -3,14 +3,15 @@ import {
   CHANGE_ROUTE,
   CARD_TO_HAND,
   HAND_TO_CARD,
-  START_GAME,
   DECIDE_HAND,
   DISCARD_PENDING,
   DISCARD_SUCCESS,
   DISCARD_FAILED,
   DEAL_IN,
   DO_NOTHING,
-  DISCARD
+  START_PENDING,
+  START_SUCCESS,
+  START_FAILED,
 } from './constants'
 
 
@@ -34,10 +35,6 @@ export const handToCard = ( card ) => ({
   payload: card
 })
 
-export const startGame = () => ({
-  type: START_GAME
-})
-
 export const decideHand = () => ({
   type: DECIDE_HAND
 })
@@ -46,29 +43,63 @@ export const decideHand = () => ({
 export const discard = ( card ) => async ( dispatch ) => {
   dispatch({ type: DISCARD_PENDING })
 
-  const res = await fetch('http://localhost:3001/discard',
-  {
-    method: 'post',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-    card: card
-  })
-})
-  const data = await res.json()
-  
-  if (!data.ron) { // 버렸는데 안쏘임
-    dispatch({
-      type: DISCARD_SUCCESS,
-      payload: data
+
+  try {
+    const res = await fetch('http://localhost:3001/discard',
+    {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+      card
     })
-  } else { // 쏘임
+  })
+    const data = await res.json()
+
+    if (!data.card.ron) { // 버렸는데 안쏘임
+      dispatch({
+        type: DISCARD_SUCCESS,
+        payload: data
+      })
+    } else { // 쏘임
+      dispatch({
+        type: DEAL_IN,
+        payload: data
+      })
+    }
+  } catch(error) {
     dispatch({
-      type: DEAL_IN,
-      payload: data
+      type: DISCARD_FAILED,
+      payload: error
     })
   }
 
 }
+
+export const startGame = () => async ( dispatch ) => {
+  dispatch({ type: START_PENDING })
+
+  try {
+    const res = await fetch('http://localhost:3001/start',
+    {
+      method: 'put',
+      headers: {'Content-Type': 'application/json'},
+    })
+    const data = res.json()
+
+    dispatch({
+      type: START_SUCCESS,
+      payload: data
+    })
+  } catch(error) {
+    dispatch({
+      type: START_FAILED,
+      payload: error
+    })
+  }
+}
+    
+
+
 
 export const doNothing = () => ({
   type: DO_NOTHING

@@ -10,10 +10,13 @@ import {
   DISCARD_SUCCESS,
   DISCARD_FAILED,
   DEAL_IN,
-  DISCARD
+  DISCARD,
+  START_PENDING,
+  START_SUCCESS,
+  START_FAILED,
 } from './constants'
 
-import { playerHand } from './components/MockDatabase'
+import { cardData } from './components/MockDatabase'
 import { TextareaAutosize } from '@material-ui/core'
 
 const initialStateBackground = {
@@ -50,8 +53,12 @@ export const changeRoute = (state=initialRoute, action={}) => {
 }
 
 const initialCard = {
-  cards : playerHand,
-  hello : true
+  cards: [],
+  time: true,
+  gameEnd: false,
+  myScore: 32000,
+  opponentScore: 32000,
+  opponentDiscard: []
 }
 
 export const switchHand = (state=initialCard, action={}) => {
@@ -65,7 +72,7 @@ export const switchHand = (state=initialCard, action={}) => {
           break
         }
       }
-      return {...state, hello : Date.now()}
+      return {...state, time : Date.now()}
 
     case HAND_TO_CARD:
       for (var i = 0; i < state.cards.length; i++) {
@@ -74,46 +81,83 @@ export const switchHand = (state=initialCard, action={}) => {
           break
         }
       }
-      return {...state, hello : Date.now()}
+      return {...state, time : Date.now()}
 
-    case DISCARD:
+    case DISCARD_PENDING:
+      return {...state, isPending: true, time: Date.now()}
+
+    case DISCARD_SUCCESS:
       for (var i = 0; i < state.cards.length; i++) {
-        if (state.cards[i].order === action.payload.order && state.cards[i].myHand === false && !state.cards[i].discard) {
+        if (state.cards[i].order === action.payload.card.order && state.cards[i].myHand === false && !state.cards[i].discard) {
           state.cards[i].discard = true
           break
         }
       }
-      return {...state, hello : action.payload}
+      return {...state, time : Date.now()}
+
+    case DISCARD_FAILED:
+      return {...state, error: action.payload}
+
+    case DEAL_IN:
+      for (var i = 0; i < state.cards.length; i++) {
+        if (state.cards[i].order === action.payload.card.order && state.cards[i].myHand === false && !state.cards[i].discard) {
+          state.cards[i].discard = true
+          break
+        }
+      }
+      state.myScore -= action.payload.score
+      state.opponentScore += action.payload.score
+      return {...state, gameEnd: true, score: action.payload.card.score, isPending: false, time: Date.now()}
 
     case DO_NOTHING:
       return state
 
+
+    case START_PENDING:
+      return {...state, pending: true}
+
+    case START_SUCCESS:
+      for (var i of action.payload) {
+        for (var j of cardData) {
+          if (i === j.order) {
+            state.cards.push({...j})
+          }
+        }
+      }
+      return {state, pending: false, time: Date.now()}
+
+    case START_FAILED:
+      return {...state, pending: action.payload}
+
+
     default:
       return state
   }
 }
 
 
-const initialDiscarded = {
-  discarded: [],
-  isPending: false
-}
+// const initialDiscarded = {
+//   discarded: [],
+//   isPending: false,
+//   time: true
+// }
 
-export const discardOrRon = (state=initialDiscarded, action={}) => {
+// export const discardOrRon = (state=initialDiscarded, action={}) => {
 
-  switch (action.type) {
+//   switch (action.type) {
 
-    case DISCARD_PENDING:
-      return {...state, isPending: true}
+//     case DISCARD_PENDING:
+//       return {...state, isPending: true, time: Date.now()}
 
-    case DISCARD_SUCCESS: // 안쏘임
-      return {...state, discarded: state.push(action.payload), isPending: false}
+//     case DISCARD_SUCCESS: // 안쏘임
+//       state.discarded.push(action.payload)
+//       return {...state, isPending: false, time: Date.now()}
 
-    case DEAL_IN:
-      return {...state, gameEnd: true, score: action.payload.score, isPending: false}
+//     case DEAL_IN:
+//       return {...state, gameEnd: true, score: action.payload.score, isPending: false, time: Date.now()}
 
-    default:
-      return state
-  }
+//     default:
+//       return state
+//   }
 
-}
+// }

@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useEffect, useReducer } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet';
 import HowToPlay from '../components/HowToPlay'
 import StartButton from '../components/StartButton';
@@ -12,14 +12,22 @@ import MyHand from './MyHand'
 import DecidedHand from './DecidedHand'
 import DecidedField from './DecidedField'
 import Discarded from './Discarded'
+import Circular from '../components/Circular';
 
 
 const App = () => {
 
   const background = useSelector(state => state.enableDarkMode.background)
   const route = useSelector(state => state.changeRoute.route)
+  const gameEnd = useSelector(state => state.switchHand.gameEnd)
   // const cards = useSelector(state => state.switchHand.cards)
   // const dispatch = useDispatch()
+
+  const time = useSelector(state => state.switchHand.time)
+  const isPending = useSelector(state => state.switchHand.isPending)
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
+
+  useEffect(() => forceUpdate(), [time])
 
 
   const renderSwitch = (route) => {
@@ -58,12 +66,16 @@ const App = () => {
   return (
     <div className="tc">
       <Helmet>
+        <meta charSet='utf-8'/>
         <style>{background}</style>
       </Helmet>
       <h1 className='title'>지뢰 게임 17보</h1>
       
       <HowToPlay />
       <Darkmode />
+      {
+        (isPending) ? <Circular /> : <div />
+      }
       {renderSwitch(route)
         // route === 'home'
         // ? <div className='routeTest'>홈화면</div>

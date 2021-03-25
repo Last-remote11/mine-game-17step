@@ -4,7 +4,11 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk';
-import { enableDarkMode, changeRoute, switchHand } from './reducer'
+import { 
+  enableDarkMode,
+  changeRoute, 
+  switchHand
+} from './reducer'
 import './index.css';
 import App from './containers/App';
 import reportWebVitals from './reportWebVitals';

@@ -10,3 +10,6 @@ export const DISCARD_PENDING = 'DISCARD_PENDING';
 export const DISCARD_SUCCESS = 'DISCARD_SUCCESS';
 export const DISCARD_FAILED = 'DISCARD_FAILED';
 export const DEAL_IN = 'DEAL_IN';
+export const START_PENDING = 'START_PENDING';
+export const START_SUCCESS = 'START_SUCCESS';
+export const START_FAILED = 'START_FAILED';

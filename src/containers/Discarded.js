@@ -9,20 +9,21 @@ import './CardList.css'
 const CardList = () => {
 
   const cards = useSelector(state => state.switchHand.cards)
-  const hello = useSelector(state => state.switchHand.hello)
-  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
+  const time = useSelector(state => state.switchHand.time)
 
-  useEffect(() => setTimeout(forceUpdate(), 1000), [hello])
-
-  let discardedCards = 
+  let discardCards = 
   cards.filter(card => { return card.discard === true })
+  .sort((a, b) => {return a.order - b.order})
+
+  // let discardedCards = 
+  // cards.filter(card => { return card.discard === true })
 
   return (
     <div>
       <h2>버려진 패들</h2>
       <div className='CardList-container'>
         {
-          discardedCards.map((card, i) => {
+          discardCards.map((card, i) => {
             return (<Card card={card} switchHand = {doNothing} key={i}></Card>)
           })
         }

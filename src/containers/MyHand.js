@@ -9,13 +9,6 @@ import './MyHand.css'
 const MyHand = () => {
 
   const cards = useSelector(state => state.switchHand.cards)
-  const hello = useSelector(state => state.switchHand.hello)
-  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
-  
-  useEffect(() => {
-    console.log('hi')
-    forceUpdate()
-  }, [hello])
 
   let trueCards = 
   cards.filter(card => { return card.myHand === true })
@@ -23,7 +16,7 @@ const MyHand = () => {
   
   return (
     <div>
-      <h2>사용할 패{' '}{trueCards.length} / 13 {hello.myHand}</h2>
+      <h2>사용할 패{' '}{trueCards.length} / 13 </h2>
       <div className='MyHand-container'>
         {
           trueCards.map((card, i) => {
