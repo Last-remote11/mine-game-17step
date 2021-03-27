@@ -1,6 +1,6 @@
 import { 
   ENABLE_DARKMODE,
-  CHANGE_ROUTE,
+  CHANGE_PHASE,
   CARD_TO_HAND,
   HAND_TO_CARD,
   START_GAME,
@@ -17,26 +17,25 @@ import {
 } from './constants'
 
 import { cardData } from './components/MockDatabase'
-import { TextareaAutosize } from '@material-ui/core'
 
 const initialStateBackground = {
   background: 'body { background-color: black; }'
 }
 
 export const enableDarkMode = (state = initialStateBackground, action={}) => {
-    if (action.type === ENABLE_DARKMODE) {
-        switch (state.background) {
-            case 'body { background-color: black; }':
-                return {...state, background: 'body { background-color: white; }'}
-            case 'body { background-color: white; }':
-                return {...state, background: 'body { background-color: black; }'}
-            default:
-                return state
-        }
-    }
-    else {
+  if (action.type === ENABLE_DARKMODE) {
+    switch (state.background) {
+      case 'body { background-color: black; }':
+        return {...state, background: 'body { background-color: white; }'}
+      case 'body { background-color: white; }':
+        return {...state, background: 'body { background-color: black; }'}
+      default:
         return state
     }
+  }
+  else {
+    return state
+  }
 }
 
 const initialRoute = {
@@ -45,7 +44,7 @@ const initialRoute = {
 
 export const changeRoute = (state=initialRoute, action={}) => {
   switch (action.type) {
-    case CHANGE_ROUTE:
+    case CHANGE_PHASE:
       return {...state, route: action.payload}
     default:
       return state
@@ -56,14 +55,20 @@ const initialCard = {
   cards: [],
   time: true,
   gameEnd: false,
-  myScore: 32000,
-  opponentScore: 32000,
-  opponentDiscard: []
+  phase: 0,
+  myScore: 35000,
+  opponentScore: 35000,
+  dora: null,
+  opponentDiscard: [],
+  myTurn: true
 }
 
 export const switchHand = (state=initialCard, action={}) => {
   
   switch (action.type) {
+
+    case CHANGE_PHASE:
+      return {...state, phase: action.payload}
 
     case CARD_TO_HAND:
       for (var i = 0; i < state.cards.length; i++) {
@@ -117,14 +122,19 @@ export const switchHand = (state=initialCard, action={}) => {
       return {...state, pending: true}
 
     case START_SUCCESS:
-      for (var i of action.payload) {
+      for (var i of action.payload.playerHand) {
         for (var j of cardData) {
           if (i === j.order) {
             state.cards.push({...j})
           }
         }
       }
-      return {state, pending: false, time: Date.now()}
+      for (var k of cardData) {
+        if (k.order === action.payload.dora) {
+          state.dora = k
+        }
+      }
+      return {...state, phase: 1, pending: false, time: Date.now()}
 
     case START_FAILED:
       return {...state, pending: action.payload}

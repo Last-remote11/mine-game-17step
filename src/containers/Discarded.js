@@ -15,13 +15,10 @@ const CardList = () => {
   cards.filter(card => { return card.discard === true })
   .sort((a, b) => {return a.order - b.order})
 
-  // let discardedCards = 
-  // cards.filter(card => { return card.discard === true })
-
   return (
     <div>
       <h2>버려진 패들</h2>
-      <div className='CardList-container'>
+      <div className='Discard-container'>
         {
           discardCards.map((card, i) => {
             return (<Card card={card} switchHand = {doNothing} key={i}></Card>)

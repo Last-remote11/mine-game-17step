@@ -19,7 +19,7 @@ const CardList = () => {
   .sort((a, b) => {return a.order - b.order})
 
   return (
-    <div>
+    <div className='w-90'>
       <h2>제외할 패</h2>
       <div className='CardList-container'>
         {

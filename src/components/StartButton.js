@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { changeRoute } from '../actions'
+import { startGame } from '../actions'
 import { useDispatch } from 'react-redux'
 
 const StartButton = () => {
@@ -9,7 +9,7 @@ const StartButton = () => {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={() => dispatch(changeRoute('phase1'))}>
+      <Button variant="contained" color="primary" onClick={() => dispatch(startGame())}>
         게임 시작!
       </Button>
     </div>

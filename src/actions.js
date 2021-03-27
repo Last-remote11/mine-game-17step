@@ -1,6 +1,6 @@
 import { 
   ENABLE_DARKMODE,
-  CHANGE_ROUTE,
+  CHANGE_PHASE,
   CARD_TO_HAND,
   HAND_TO_CARD,
   DECIDE_HAND,
@@ -14,15 +14,16 @@ import {
   START_FAILED,
 } from './constants'
 
+import { io } from "socket.io-client";
 
 
 export const enableDarkMode = () => ({
   type: ENABLE_DARKMODE
 })
 
-export const changeRoute = ( route ) => ({
-  type: CHANGE_ROUTE,
-  payload: route
+export const changePhase = ( Phase ) => ({
+  type: CHANGE_PHASE,
+  payload: Phase
 })
 
 export const cardToHand = ( card ) => ({
@@ -84,7 +85,7 @@ export const startGame = () => async ( dispatch ) => {
       method: 'put',
       headers: {'Content-Type': 'application/json'},
     })
-    const data = res.json()
+    const data = await res.json()
 
     dispatch({
       type: START_SUCCESS,

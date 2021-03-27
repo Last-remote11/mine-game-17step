@@ -6,3 +6,55 @@
 .routeTest {
   color: skyblue
 }
+
+.CardList-container {
+  min-height: 200px;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-color: orange;
+  border-style: dotted;
+  border-radius: 25px;
+}
+
+.Dora-container {
+  min-height: 200px;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-color: red;
+  border-style: double;
+  border-radius: 25px;
+}
+
+.field-dora {
+  display: flex;
+}
+
+.MyHand-container {
+  min-height: 200px;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-color: skyblue;
+  border-style: double;
+  border-radius: 25px;
+}
+
+.Discard-container {
+  min-height: 200px;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-color: blue;
+  border-style:groove;
+  border-radius: 25px;
+}

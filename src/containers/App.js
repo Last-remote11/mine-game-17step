@@ -6,8 +6,11 @@ import HowToPlay from '../components/HowToPlay'
 import StartButton from '../components/StartButton';
 import DecideButton from '../components/DecideButton';
 
+import WStest from '../components/WStest'
+
 import Darkmode from '../components/Darkmode'
 import CardList from './CardList'
+import Dora from './Dora'
 import MyHand from './MyHand'
 import DecidedHand from './DecidedHand'
 import DecidedField from './DecidedField'
@@ -18,7 +21,7 @@ import Circular from '../components/Circular';
 const App = () => {
 
   const background = useSelector(state => state.enableDarkMode.background)
-  const route = useSelector(state => state.changeRoute.route)
+  const phase = useSelector(state => state.switchHand.phase)
   const gameEnd = useSelector(state => state.switchHand.gameEnd)
   // const cards = useSelector(state => state.switchHand.cards)
   // const dispatch = useDispatch()
@@ -30,28 +33,34 @@ const App = () => {
   useEffect(() => forceUpdate(), [time])
 
 
-  const renderSwitch = (route) => {
-    switch (route) {
-      case 'home':
+  const renderSwitch = (phase) => {
+    switch (phase) {
+      case 0:
         return (
           <div>
             <StartButton />
             <div className='routeTest'>홈화면</div>
           </div>
         )
-      case 'phase1':
+      case 1:
         return (
           <div className='routeTest'><div>패를만드세요</div>
             <DecideButton />
-            <CardList />
+            <div className='field-dora'>
+              <CardList />
+              <Dora />
+            </div>
             <MyHand />
           </div>
         )
-      case 'phase2':
+      case 2:
         return (
           <div className='routeTest'>2페이즈!
             <Discarded />
-            <DecidedField />
+            <div className='field-dora'>
+              <DecidedField />
+              <Dora />
+            </div>
             <DecidedHand />
           </div>
         )
@@ -70,13 +79,13 @@ const App = () => {
         <style>{background}</style>
       </Helmet>
       <h1 className='title'>지뢰 게임 17보</h1>
-      
+      <WStest />
       <HowToPlay />
       <Darkmode />
       {
         (isPending) ? <Circular /> : <div />
       }
-      {renderSwitch(route)
+      {renderSwitch(phase)
         // route === 'home'
         // ? <div className='routeTest'>홈화면</div>
         // : 
@@ -105,3 +114,12 @@ export default App;
 // 6. 론 선언하면 론한사람 손패에 버림패를 포함하여 점수계산.
 // 7. 론한사람이 점수뺏음 3-1 에서 화료 조건을 만족하지 않으면 촌보(벌금냄)
 // 8. 서로 17개를 버릴때까지 론이 안 나오면 유국
+
+
+// A의 myTurn: true -> A: 버림 -> A의 myTurn: false -> 서버로 전송
+// 서버: A의 요청 받으면 웹소켓으로 B에게 버림패 정보 전송 Ron: false -> 
+// 서로의 discard field에 반영 -> B: myturn: true
+// 론아니면 B: 버림 -> B의 myturn: false -> 서버가 정보 받고 다시 A로 전송 반복
+// 론이면 B: 론 요청 보냄 -> 서버는 받고 웹소켓으로 score, Ron: true 를 A에게 전송
+
+// 점수교환, 만관이상 여부 확인 후 점수교환, 새 게임 시작?

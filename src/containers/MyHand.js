@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 import Card from '../components/Card'
 import { handToCard } from '../actions'
 // import { MockDatabase } from '../components/MockDatabase'
-import './MyHand.css'
 
 
 const MyHand = () => {
