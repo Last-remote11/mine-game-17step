@@ -6,8 +6,6 @@ import HowToPlay from '../components/HowToPlay'
 import StartButton from '../components/StartButton';
 import DecideButton from '../components/DecideButton';
 
-import WStest from '../components/WStest'
-
 import Darkmode from '../components/Darkmode'
 import CardList from './CardList'
 import Dora from './Dora'
@@ -16,7 +14,7 @@ import DecidedHand from './DecidedHand'
 import DecidedField from './DecidedField'
 import Discarded from './Discarded'
 import Circular from '../components/Circular';
-
+import WebSocket from '../components/WebSocket'
 
 const App = () => {
 
@@ -38,7 +36,6 @@ const App = () => {
       case 0:
         return (
           <div>
-            <StartButton />
             <div className='routeTest'>홈화면</div>
           </div>
         )
@@ -46,6 +43,7 @@ const App = () => {
         return (
           <div className='routeTest'><div>패를만드세요</div>
             <DecideButton />
+            <WebSocket />
             <div className='field-dora'>
               <CardList />
               <Dora />
@@ -57,6 +55,7 @@ const App = () => {
         return (
           <div className='routeTest'>2페이즈!
             <Discarded />
+            <WebSocket />
             <div className='field-dora'>
               <DecidedField />
               <Dora />
@@ -79,12 +78,12 @@ const App = () => {
         <style>{background}</style>
       </Helmet>
       <h1 className='title'>지뢰 게임 17보</h1>
-      <WStest />
       <HowToPlay />
       <Darkmode />
       {
         (isPending) ? <Circular /> : <div />
       }
+      <StartButton />
       {renderSwitch(phase)
         // route === 'home'
         // ? <div className='routeTest'>홈화면</div>

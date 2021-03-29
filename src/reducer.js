@@ -14,6 +14,7 @@ import {
   START_PENDING,
   START_SUCCESS,
   START_FAILED,
+  WS_CONNECT
 } from './constants'
 
 import { cardData } from './components/MockDatabase'
@@ -139,6 +140,8 @@ export const switchHand = (state=initialCard, action={}) => {
     case START_FAILED:
       return {...state, pending: action.payload}
 
+    case WS_CONNECT:
+      return {...state, connect: true}
 
     default:
       return state

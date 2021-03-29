@@ -13,3 +13,4 @@ export const DEAL_IN = 'DEAL_IN';
 export const START_PENDING = 'START_PENDING';
 export const START_SUCCESS = 'START_SUCCESS';
 export const START_FAILED = 'START_FAILED';
+export const WS_CONNECT = 'WS_CONNECT';

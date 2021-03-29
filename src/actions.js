@@ -12,9 +12,9 @@ import {
   START_PENDING,
   START_SUCCESS,
   START_FAILED,
+  WS_CONNECT
 } from './constants'
 
-import { io } from "socket.io-client";
 
 
 export const enableDarkMode = () => ({
@@ -44,8 +44,8 @@ export const decideHand = () => ({
 export const discard = ( card ) => async ( dispatch ) => {
   dispatch({ type: DISCARD_PENDING })
 
-
   try {
+
     const res = await fetch('http://localhost:3001/discard',
     {
       method: 'post',
@@ -105,3 +105,4 @@ export const startGame = () => async ( dispatch ) => {
 export const doNothing = () => ({
   type: DO_NOTHING
 })
+
