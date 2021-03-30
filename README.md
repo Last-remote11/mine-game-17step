@@ -2,7 +2,7 @@
 
 ## 절찬 제작중
 
-create-react-app, node.js, express.js, pwa
+create-react-app, node.js, express.js, pwa, REST API에서 socket.io로 변경
 
 # Getting Started with Create React App
 
