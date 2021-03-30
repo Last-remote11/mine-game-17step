@@ -14,3 +14,9 @@ export const START_PENDING = 'START_PENDING';
 export const START_SUCCESS = 'START_SUCCESS';
 export const START_FAILED = 'START_FAILED';
 export const WS_CONNECT = 'WS_CONNECT';
+export const OPPONENT_DECIDE = 'OPPONENT_DECIDE';
+export const INPUT_NAME = 'INPUT_NAME'
+export const SET_ROOMID = 'SET_ROOMID'
+
+
+export const ITSMYTURN = 'ITSMYTURN'

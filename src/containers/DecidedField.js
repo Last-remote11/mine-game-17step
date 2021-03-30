@@ -9,15 +9,20 @@ import './CardList.css'
 const CardList = () => {
 
   const cards = useSelector(state => state.switchHand.cards)
-  const time = useSelector(state => state.switchHand.time)
+  const myTurn = useSelector(state => state.switchHand.myTurn)
+
 
   let abandonedCards = 
   cards.filter(card => { return card.myHand === false && !card.discard })
   .sort((a, b) => {return a.order - b.order})
 
-  // const fetchDiscard = () => {
-
-  // }
+  const checkMyTurn = ( discard ) => {
+    if (myTurn) {
+      return discard
+    } else {
+      alert('자네 차례가 아닐세')
+    }
+  }
 
   return (
     <div>
@@ -25,7 +30,7 @@ const CardList = () => {
       <div className='CardList-container'>
         {
           abandonedCards.map((card, i) => {
-            return (<Card card={card} switchHand = {discard} key={i}></Card>)
+            return (<Card card={card} switchHand = {checkMyTurn(discard)} key={i}></Card>)
           })
         }
       </div>

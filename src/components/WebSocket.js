@@ -1,38 +1,33 @@
 import React, { useState, useEffect } from 'react'
-import { io } from 'socket.io-client';
+import { useDispatch } from 'react-redux'
 
+import { socket, opponentDecide, itsMyTurn, setRoomID } from '../actions'
 
 
 const WebSocket = () => {
 
-  const [foo, setFoo] = useState('not login')
+  const dispatch = useDispatch()
 
-  const socket = io("http://localhost:3001");
-
-  socket.emit('login', {
-    id: 'hello',
-    name: 'haha'
+  socket.on('connection', (roomID) => {
+    console.log(roomID)
+    dispatch(setRoomID(roomID))
   })
-
-  socket.on('login', (data) => {
-    setFoo(data)
-  })// 여까지잘됨
-
-  socket.on('message', (data) => {
-    console.log(data)
-  })
-
-  const disconnect = () => socket.emit('forceDisconnect', 'he')
-
 
   socket.on('forceDisconnect', (message) => {
     console.log(message)
   })
 
+  // socket.on('opponentDiscard', (card) => {
+
+  // })
+
+  socket.on('opponentDecide', () => {
+    dispatch(opponentDecide)
+  })
+
   return (
     <div>
-      {foo}
-      <button onClick={() => disconnect()}>disconnect</button>
+      <button onClick={() => dispatch(itsMyTurn())}>강제로 턴 가져오기(테스트)</button>
     </div>
   );
 };

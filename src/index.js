@@ -6,7 +6,6 @@ import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk';
 import { 
   enableDarkMode,
-  changeRoute, 
   switchHand
 } from './reducer'
 import './index.css';
@@ -16,7 +15,7 @@ import 'tachyons';
 
 const logger = createLogger()
 
-const rootReducer = combineReducers({enableDarkMode, changeRoute, switchHand})
+const rootReducer = combineReducers({enableDarkMode, switchHand})
 
 const store = createStore(rootReducer, applyMiddleware(logger, thunk))
 

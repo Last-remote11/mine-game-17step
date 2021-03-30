@@ -15,17 +15,16 @@ import DecidedField from './DecidedField'
 import Discarded from './Discarded'
 import Circular from '../components/Circular';
 import WebSocket from '../components/WebSocket'
+import ScoreBoard from '../components/ScoreBoard'
+import Lobby from '../components/Lobby'
 
 const App = () => {
 
   const background = useSelector(state => state.enableDarkMode.background)
-  const phase = useSelector(state => state.switchHand.phase)
-  const gameEnd = useSelector(state => state.switchHand.gameEnd)
+  const { phase, gameEnd, time, isPending, roomID } = useSelector(state => state.switchHand)
   // const cards = useSelector(state => state.switchHand.cards)
   // const dispatch = useDispatch()
 
-  const time = useSelector(state => state.switchHand.time)
-  const isPending = useSelector(state => state.switchHand.isPending)
   const [, forceUpdate] = useReducer(x => x + 1, 0);
 
   useEffect(() => forceUpdate(), [time])
@@ -33,17 +32,19 @@ const App = () => {
 
   const renderSwitch = (phase) => {
     switch (phase) {
-      case 0:
+      case 0: // 로그인, 연결 전
         return (
           <div>
             <div className='routeTest'>홈화면</div>
+            <Lobby />
+            <StartButton />
           </div>
         )
-      case 1:
+      case 1: // 로그인, 접속, 배패 완료, 조패단계
         return (
           <div className='routeTest'><div>패를만드세요</div>
             <DecideButton />
-            <WebSocket />
+            <ScoreBoard />
             <div className='field-dora'>
               <CardList />
               <Dora />
@@ -51,11 +52,11 @@ const App = () => {
             <MyHand />
           </div>
         )
-      case 2:
+      case 2: // 서로 조패 완료 후, 하나씩 버리는 단계
         return (
           <div className='routeTest'>2페이즈!
+            <ScoreBoard />
             <Discarded />
-            <WebSocket />
             <div className='field-dora'>
               <DecidedField />
               <Dora />
@@ -78,12 +79,15 @@ const App = () => {
         <style>{background}</style>
       </Helmet>
       <h1 className='title'>지뢰 게임 17보</h1>
+      <div className = 'tl light-silver'>방 ID : {' '}{roomID}</div>
+      <WebSocket />
       <HowToPlay />
       <Darkmode />
       {
-        (isPending) ? <Circular /> : <div />
+        isPending 
+        ? <Circular /> 
+        : <div />
       }
-      <StartButton />
       {renderSwitch(phase)
         // route === 'home'
         // ? <div className='routeTest'>홈화면</div>

@@ -10,6 +10,11 @@ const CardList = () => {
 
   const cards = useSelector(state => state.switchHand.cards)
   const time = useSelector(state => state.switchHand.time)
+  const opponentDecide = useSelector(state => state.switchHand.opponentDecide)
+
+  const waitPlease = () => {
+   return <div>상대방이 패를 결정할 때까지 기다려주세요</div>
+  }
 
   let discardCards = 
   cards.filter(card => { return card.discard === true })
@@ -20,7 +25,9 @@ const CardList = () => {
       <h2>버려진 패들</h2>
       <div className='Discard-container'>
         {
-          discardCards.map((card, i) => {
+          opponentDecide 
+          ? waitPlease
+          : discardCards.map((card, i) => {
             return (<Card card={card} switchHand = {doNothing} key={i}></Card>)
           })
         }

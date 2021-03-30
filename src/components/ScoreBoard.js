@@ -1,15 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
 
-const Score = () => {
+const ScoreBoard = () => {
 
-  const myScore = useSelector(state => state.switchHand.myScore)
-  const opponentScore = useSelector(state => state.switchHand.opponentScore)
+  const { myScore, opponentScore, myName } = useSelector(state => state.switchHand)
 
   return (
     <table>
       <tr>
-        <th>내점수</th>
+        <th>{myName}</th>
         <th>상대점수</th>
       </tr>
       <tr>
@@ -20,4 +19,4 @@ const Score = () => {
   );
 };
 
-export default Score;
+export default ScoreBoard;

@@ -14,7 +14,11 @@ import {
   START_PENDING,
   START_SUCCESS,
   START_FAILED,
-  WS_CONNECT
+  WS_CONNECT,
+  OPPONENT_DECIDE,
+  ITSMYTURN,
+  INPUT_NAME,
+  SET_ROOMID
 } from './constants'
 
 import { cardData } from './components/MockDatabase'
@@ -39,18 +43,6 @@ export const enableDarkMode = (state = initialStateBackground, action={}) => {
   }
 }
 
-const initialRoute = {
-  route: 'home'
-}
-
-export const changeRoute = (state=initialRoute, action={}) => {
-  switch (action.type) {
-    case CHANGE_PHASE:
-      return {...state, route: action.payload}
-    default:
-      return state
-  }
-}
 
 const initialCard = {
   cards: [],
@@ -61,6 +53,7 @@ const initialCard = {
   opponentScore: 35000,
   dora: null,
   opponentDiscard: [],
+  opponentDecide: false,
   myTurn: true
 }
 
@@ -68,8 +61,41 @@ export const switchHand = (state=initialCard, action={}) => {
   
   switch (action.type) {
 
+    // 로그인, 배패 단계***********************************************
+
+    case INPUT_NAME:
+      return {...state, myName: action.payload}
+    
+    case SET_ROOMID:
+      return {...state, roomID: action.payload}
+
+    case START_PENDING:
+      return {...state, pending: true}
+
+    case START_SUCCESS:
+      console.log(action)
+      for (var i of action.payload.playerHand) {
+        for (var j of cardData) {
+          if (i === j.order) {
+            state.cards.push({...j})
+          }
+        }
+      }
+      for (var k of cardData) {
+        if (k.order === action.payload.dora) {
+          state.dora = k
+        }
+      }
+      return {...state, phase: 1, pending: false, time: Date.now()}
+
+    case START_FAILED:
+      return {...state, pending: action.payload}
+
     case CHANGE_PHASE:
-      return {...state, phase: action.payload}
+      return {...state, phase: action.payload, pending: false}
+
+
+    // 조패 단계******************************************************
 
     case CARD_TO_HAND:
       for (var i = 0; i < state.cards.length; i++) {
@@ -89,9 +115,16 @@ export const switchHand = (state=initialCard, action={}) => {
       }
       return {...state, time : Date.now()}
 
+    
+    case OPPONENT_DECIDE:
+      return {...state, opponentDecide: true}
+
+
+    // 패 하나씩 버리는 단계 *********************************************
+
     case DISCARD_PENDING:
       return {...state, isPending: true, time: Date.now()}
-
+        
     case DISCARD_SUCCESS:
       for (var i = 0; i < state.cards.length; i++) {
         if (state.cards[i].order === action.payload.card.order && state.cards[i].myHand === false && !state.cards[i].discard) {
@@ -115,33 +148,19 @@ export const switchHand = (state=initialCard, action={}) => {
       state.opponentScore += action.payload.score
       return {...state, gameEnd: true, score: action.payload.card.score, isPending: false, time: Date.now()}
 
+
+
+      // 기타 **************************************************************
+
     case DO_NOTHING:
       return state
 
-
-    case START_PENDING:
-      return {...state, pending: true}
-
-    case START_SUCCESS:
-      for (var i of action.payload.playerHand) {
-        for (var j of cardData) {
-          if (i === j.order) {
-            state.cards.push({...j})
-          }
-        }
-      }
-      for (var k of cardData) {
-        if (k.order === action.payload.dora) {
-          state.dora = k
-        }
-      }
-      return {...state, phase: 1, pending: false, time: Date.now()}
-
-    case START_FAILED:
-      return {...state, pending: action.payload}
-
     case WS_CONNECT:
       return {...state, connect: true}
+
+    // 강제로 턴을 가져옴 (테스트용)
+    case ITSMYTURN:
+      return {...state, myTurn: true}
 
     default:
       return state
