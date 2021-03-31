@@ -18,7 +18,9 @@ import {
   OPPONENT_DECIDE,
   ITSMYTURN,
   INPUT_NAME,
-  SET_ROOMID
+  SET_ROOMID,
+  ONE_USER,
+  TWO_USER
 } from './constants'
 
 import { cardData } from './components/MockDatabase'
@@ -43,6 +45,7 @@ export const enableDarkMode = (state = initialStateBackground, action={}) => {
   }
 }
 
+export const initialRoomID = Math.floor(100000 + Math.random() * 900000)
 
 const initialCard = {
   cards: [],
@@ -54,8 +57,12 @@ const initialCard = {
   dora: null,
   opponentDiscard: [],
   opponentDecide: false,
-  myTurn: true
+  myTurn: true,
+  isTwoUser: false,
+  roomID: initialRoomID
 }
+
+
 
 export const switchHand = (state=initialCard, action={}) => {
   
@@ -86,8 +93,15 @@ export const switchHand = (state=initialCard, action={}) => {
           state.dora = k
         }
       }
-      return {...state, phase: 1, pending: false, time: Date.now()}
 
+      return {...state, phase: 1, pending: false, time: Date.now(), myTurn: action.payload.myTurn}
+
+    case ONE_USER:
+      return {...state, isTwoUser: false}
+
+    case TWO_USER:
+      return {...state, isTwoUser: true}
+      
     case START_FAILED:
       return {...state, pending: action.payload}
 

@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { socket, opponentDecide, itsMyTurn, setRoomID } from '../actions'
+import { socket, opponentDecide, itsMyTurn, setRoomID, oneUser, twoUser } from '../actions'
+import { initialRoomID } from '../reducer'
 
 
 const WebSocket = () => {
 
   const dispatch = useDispatch()
 
-  socket.on('connection', (roomID) => {
-    console.log(roomID)
-    dispatch(setRoomID(roomID))
-  })
+  socket.emit('join', initialRoomID)
 
   socket.on('forceDisconnect', (message) => {
     console.log(message)
@@ -21,8 +19,25 @@ const WebSocket = () => {
 
   // })
 
+  socket.on('fullRoom', () => {
+    alert('이미 다 찬 방입니다.')
+  })
+
   socket.on('opponentDecide', () => {
     dispatch(opponentDecide)
+  })
+
+  socket.on('oneUser', () => {
+    dispatch(oneUser)
+  })
+
+  socket.on('twoUser', () => {
+    dispatch(twoUser)
+    alert('HERE COMES A NEW CHALLENGER !')
+  })
+  
+  socket.on('fullUser', () => {
+    alert('이미 찬 방입니다.')
   })
 
   return (

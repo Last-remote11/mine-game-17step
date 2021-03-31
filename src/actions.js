@@ -16,14 +16,17 @@ import {
   OPPONENT_DECIDE,
   ITSMYTURN,
   INPUT_NAME,
-  SET_ROOMID
+  SET_ROOMID,
+  ONE_USER,
+  TWO_USER,
+  JOIN_ROOM
 } from './constants'
 
+import initialRoomID from './reducer'
 import { useSelector } from 'react-redux'
 import { io } from 'socket.io-client'
 
 export const socket = io("http://localhost:3001");
-
 
 export const enableDarkMode = () => ({
   type: ENABLE_DARKMODE
@@ -43,8 +46,16 @@ export const setRoomID = ( roomID ) => ({
   payload: roomID
 })
 
+export const oneUser = () => ({
+  type: ONE_USER
+})
 
-export const startGame = (myName) => async ( dispatch ) => {
+export const twoUser = () => ({
+  type: TWO_USER
+})
+
+
+export const startGame = ( myName ) => async ( dispatch ) => {
   dispatch({ type: START_PENDING })
 
   await socket.emit('login', {
@@ -57,7 +68,7 @@ export const startGame = (myName) => async ( dispatch ) => {
     payload: data
   }
 ))
-
+}
 
 
   // try {
@@ -78,7 +89,7 @@ export const startGame = (myName) => async ( dispatch ) => {
   //     payload: error
   //   })
   // }
-}
+
 
 // 조패 단계 *********************************************
 

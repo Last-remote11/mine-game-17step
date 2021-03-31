@@ -17,6 +17,9 @@ export const WS_CONNECT = 'WS_CONNECT';
 export const OPPONENT_DECIDE = 'OPPONENT_DECIDE';
 export const INPUT_NAME = 'INPUT_NAME'
 export const SET_ROOMID = 'SET_ROOMID'
+export const ONE_USER = 'ONE_USER'
+export const TWO_USER = 'TWO_USER'
+export const JOIN_ROOM = 'JOIN_ROOM'
 
 
 export const ITSMYTURN = 'ITSMYTURN'

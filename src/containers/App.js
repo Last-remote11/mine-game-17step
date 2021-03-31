@@ -32,10 +32,12 @@ const App = () => {
 
   const renderSwitch = (phase) => {
     switch (phase) {
+
       case 0: // 로그인, 연결 전
         return (
           <div>
             <div className='routeTest'>홈화면</div>
+            
             <Lobby />
             <StartButton />
           </div>
