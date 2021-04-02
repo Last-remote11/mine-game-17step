@@ -20,6 +20,7 @@ export const SET_ROOMID = 'SET_ROOMID'
 export const ONE_USER = 'ONE_USER'
 export const TWO_USER = 'TWO_USER'
 export const JOIN_ROOM = 'JOIN_ROOM'
+export const OPPONENT_DISCARD = 'OPPONENT_DISCARD'
 
 
 export const ITSMYTURN = 'ITSMYTURN'

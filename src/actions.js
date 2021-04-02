@@ -14,6 +14,7 @@ import {
   START_FAILED,
   WS_CONNECT,
   OPPONENT_DECIDE,
+  OPPONENT_DISCARD,
   ITSMYTURN,
   INPUT_NAME,
   SET_ROOMID,
@@ -118,12 +119,10 @@ export const changePhase = ( Phase, socket ) => async ( dispatch ) => {
   await socket.emit('decide', true)
 
   // 상대방도 준비완료해야 넘어감
-  await socket.on('opponentDecide', data =>   
   dispatch({
     type: CHANGE_PHASE,
     payload: Phase
   })
-)
 };
 
 // 버림 단계 ***********************************************
@@ -133,47 +132,21 @@ export const discard = ( card, socket ) => async ( dispatch ) => {
 
   await socket.emit('discard', card)
 
-  await socket.on('discard', data =>   
   dispatch({
     type: DISCARD_SUCCESS,
-    payload: data
+    payload: card
   })
-)
-
-  // try {
-
-  //   const res = await fetch('http://localhost:3001/discard',
-  //   {
-  //     method: 'post',
-  //     headers: {'Content-Type': 'application/json'},
-  //     body: JSON.stringify({
-  //     card
-  //   })
-  // })
-  //   const data = await res.json()
-
-  //   if (!data.card.ron) { // 버렸는데 안쏘임
-  //     dispatch({
-  //       type: DISCARD_SUCCESS,
-  //       payload: data
-  //     })
-  //   } else { // 쏘임
-  //     dispatch({
-  //       type: DEAL_IN,
-  //       payload: data
-  //     })
-  //   }
-  // } catch(error) {
-  //   dispatch({
-  //     type: DISCARD_FAILED,
-  //     payload: error
-  //   })
-  // }
-
 }
 
+export const opponentDiscard = ( card ) => ({
+  type: OPPONENT_DISCARD,
+  payload: card
+})
 
-    
+
+export const ron = () => ({
+  type: 'RON'
+})
 
 // 강제로 턴을 가져옴 (테스트용)
 export const itsMyTurn = () => ({

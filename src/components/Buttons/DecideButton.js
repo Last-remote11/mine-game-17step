@@ -1,9 +1,9 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { useSelector } from 'react-redux'
-import { changePhase } from '../actions'
+import { changePhase } from '../../actions'
 import { useDispatch } from 'react-redux'
-import { socket } from './WebSocket'
+import { socket } from '../WebSocket'
 
 const StartButton = () => {
 

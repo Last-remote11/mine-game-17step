@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     '& > * + *': {
       marginLeft: theme.spacing(2),
+      color: 'blue'
     },
   },
 }));
@@ -16,7 +17,7 @@ export default function Circular() {
 
   return (
     <div className={classes.root}>
-      <CircularProgress />
+      <CircularProgress /> 상대방의 결정을 기다리는중...
     </div>
   );
 }

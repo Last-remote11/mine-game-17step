@@ -2,21 +2,24 @@ import './App.css';
 import React, { useEffect, useReducer } from 'react';
 import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet';
-import HowToPlay from '../components/HowToPlay'
-import StartButton from '../components/StartButton';
-import DecideButton from '../components/DecideButton';
+import HowToPlay from '../components/Buttons/HowToPlay'
+import StartButton from '../components/Buttons/StartButton';
+import DecideButton from '../components/Buttons/DecideButton';
 
-import Darkmode from '../components/Darkmode'
+import Darkmode from '../components/Buttons/Darkmode'
 import CardList from './CardList'
 import Dora from './Dora'
 import MyHand from './MyHand'
 import DecidedHand from './DecidedHand'
 import DecidedField from './DecidedField'
-import Discarded from './Discarded'
+import MyDiscard from './MyDiscard'
+import OpponentDiscard from './OpponentDiscard'
 import Circular from '../components/Circular';
 import WebSocket from '../components/WebSocket'
 import ScoreBoard from '../components/ScoreBoard'
 import Lobby from '../components/Lobby'
+import WhoseTurn from '../components/WhoseTurn'
+import Ron from '../components/Buttons/Ron'
 
 const App = () => {
 
@@ -44,7 +47,7 @@ const App = () => {
         )
       case 1: // 로그인, 접속, 배패 완료, 조패단계
         return (
-          <div className='routeTest'><div>패를만드세요</div>
+          <div className='routeTest'><h4 className='blue'>패를 만든 후 완료를 누르세요</h4>
             <DecideButton />
             <ScoreBoard />
             <div className='field-dora'>
@@ -58,11 +61,16 @@ const App = () => {
         return (
           <div className='routeTest'>2페이즈!
             <ScoreBoard />
-            <Discarded />
+            <WhoseTurn /> 
+            <div className='Discard-container2'>
+              <MyDiscard />
+              <OpponentDiscard />
+            </div>
             <div className='field-dora'>
               <DecidedField />
               <Dora />
             </div>
+            <Ron />
             <DecidedHand />
           </div>
         )
@@ -128,3 +136,8 @@ export default App;
 // 론이면 B: 론 요청 보냄 -> 서버는 받고 웹소켓으로 score, Ron: true 를 A에게 전송
 
 // 점수교환, 만관이상 여부 확인 후 점수교환, 새 게임 시작?
+
+// 론누르면 :
+// (opponentDiscard 배열의 마지막 카드 + myHand가 true인 카드)의 순서(혹은 이름)의 배열을
+// 서버에 전달.
+// 서버는 만관여부 후리텐 여부 등을 확인해 점수통보

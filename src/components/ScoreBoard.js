@@ -8,7 +8,7 @@ const ScoreBoard = () => {
   return (
     <table>
       <tr>
-        <th>{myName}</th>
+        <th>내점수</th>
         <th>상대점수</th>
       </tr>
       <tr>

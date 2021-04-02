@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { discard } from '../actions'
+import { discard, doNothing } from '../actions'
 import { socket } from '../components/WebSocket'
 import './CardList.css'
 
@@ -20,6 +20,7 @@ const CardList = () => {
       return discard
     } else {
       alert('자네 차례가 아닐세')
+      return doNothing()
     }
   }
 
@@ -31,8 +32,8 @@ const CardList = () => {
           abandonedCards.map((card, i) => {
             return (
             <div className='tc bg-light-blue dib br3 ma1 grow bw2 shadow-5'>
-            <img src={card.img} width='66px' height='118px' alt='card' className='br3' 
-            onClick={() => dispatch(checkMyTurn(discard(card, socket)))}/>
+              <img src={card.img} width='66px' height='118px' alt='card' className='br3' 
+              onClick={() => dispatch(checkMyTurn(discard(card, socket)))}/>
             </div>)
           })
         }

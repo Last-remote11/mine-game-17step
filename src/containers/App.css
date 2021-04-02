@@ -58,3 +58,14 @@
   border-style: groove;
   border-radius: 25px;
 }
+
+.Discard-container2 {
+  min-height: 200px;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-color: none;
+  border-style: groove;
+}

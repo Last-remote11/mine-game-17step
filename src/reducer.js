@@ -16,6 +16,7 @@ import {
   START_FAILED,
   WS_CONNECT,
   OPPONENT_DECIDE,
+  OPPONENT_DISCARD,
   ITSMYTURN,
   INPUT_NAME,
   SET_ROOMID,
@@ -26,16 +27,16 @@ import {
 import { cardData } from './components/MockDatabase'
 
 const initialStateBackground = {
-  background: 'body { background-color: black; }'
+  background: 'body { background-color: #1a1a1a; }'
 }
 
 export const enableDarkMode = (state = initialStateBackground, action={}) => {
   if (action.type === ENABLE_DARKMODE) {
     switch (state.background) {
-      case 'body { background-color: black; }':
-        return {...state, background: 'body { background-color: white; }'}
-      case 'body { background-color: white; }':
-        return {...state, background: 'body { background-color: black; }'}
+      case 'body { background-color: #1a1a1a; }':
+        return {...state, background: 'body { background-color: #e6e6e6; }'}
+      case 'body { background-color: #e6e6e6; }':
+        return {...state, background: 'body { background-color: #1a1a1a; }'}
       default:
         return state
     }
@@ -55,7 +56,9 @@ const initialCard = {
   myScore: 35000,
   opponentScore: 35000,
   dora: null,
-  opponentDiscard: [],
+  myDiscards: [],
+  opponentDiscards: [],
+  meDecide: false,
   opponentDecide: false,
   myTurn: true,
   isTwoUser: false,
@@ -105,7 +108,11 @@ export const switchHand = (state=initialCard, action={}) => {
       return {...state, pending: action.payload}
 
     case CHANGE_PHASE:
-      return {...state, phase: action.payload, pending: false}
+      if (state.opponentDecide) {
+        return {...state, phase: action.payload, meDecide: true, pending: false}
+      } else {
+        return {...state, meDecide: true}
+      }
 
 
     // 조패 단계******************************************************
@@ -130,25 +137,42 @@ export const switchHand = (state=initialCard, action={}) => {
 
     
     case OPPONENT_DECIDE:
-      return {...state, opponentDecide: true}
+      if (state.meDecide) {
+        return {...state, opponentDecide: true, phase: 2, pending: false}
+      } else {
+        return {...state, opponentDecide: true}
+      }
+      
 
 
     // 패 하나씩 버리는 단계 *********************************************
 
     case DISCARD_PENDING:
-      return {...state, isPending: true, time: Date.now()}
+      return {...state, pending: true, time: Date.now()}
         
     case DISCARD_SUCCESS:
       for (var i = 0; i < state.cards.length; i++) {
-        if (state.cards[i].order === action.payload.card.order && state.cards[i].myHand === false && !state.cards[i].discard) {
+        if (state.cards[i].order === action.payload.order && state.cards[i].myHand === false && !state.cards[i].discard) {
           state.cards[i].discard = true
+          state.myDiscards.push(state.cards[i])
           break
         }
       }
-      return {...state, time : Date.now()}
+      return {...state, time : Date.now(), myTurn: false, pending: false}
 
     case DISCARD_FAILED:
       return {...state, error: action.payload}
+
+    case OPPONENT_DISCARD:
+      for (var i = 0; i < cardData.length; i++) {
+        if (cardData[i].order === action.payload.order) {
+          state.opponentDiscards.push(action.payload)
+          break
+        }
+        
+      }
+      return {...state, myTurn: true}
+      
 
     case DEAL_IN:
       for (var i = 0; i < state.cards.length; i++) {
@@ -159,9 +183,10 @@ export const switchHand = (state=initialCard, action={}) => {
       }
       state.myScore -= action.payload.score
       state.opponentScore += action.payload.score
-      return {...state, gameEnd: true, score: action.payload.card.score, isPending: false, time: Date.now()}
+      return {...state, gameEnd: true, score: action.payload.card.score, pending: false, time: Date.now()}
 
-
+    case 'RON':
+      return {...state, pending: true, myTurn: false}
 
       // 기타 **************************************************************
 
@@ -183,7 +208,7 @@ export const switchHand = (state=initialCard, action={}) => {
 
 // const initialDiscarded = {
 //   discarded: [],
-//   isPending: false,
+//   pending: false,
 //   time: true
 // }
 

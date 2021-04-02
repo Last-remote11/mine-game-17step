@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { opponentDecide, itsMyTurn, setRoomID, oneUser, twoUser, startSuccess } from '../actions'
+import { opponentDecide, opponentDiscard, itsMyTurn, setRoomID, oneUser, twoUser, startSuccess } from '../actions'
 import { initialRoomID } from '../reducer'
 import { io } from 'socket.io-client'
 
@@ -13,24 +13,31 @@ const WebSocket = () => {
 
   const [connected, setConnected] = useState(false);
 
-  // useEffect(() => {
-  //   socket.emit('joinroom', initialRoomID);
-  //   const eventHandler = () => setConnected(true);
-  //   socket.on('joined', eventHandler);
-  //   return () => {
-  //       socket.off('joined', eventHandler);
-  //   };
-  // }, []);
-  useEffect(()=> {
-    socket.on('fullRoom', () => {
-      alert('이미 다 찬 방입니다.')
+  useEffect(() => {
+    socket.emit('joinroom', initialRoomID);
+    const eventHandler = () => setConnected(true);
+    socket.on('joined', eventHandler);
+    return () => {
+        socket.off('joined', eventHandler);
+    };
+  }, []);
+
+
+  useEffect(()=> { // 유저 안모임(방에 1명있다)
+    socket.on('oneUser', () => {
+      dispatch(oneUser())
     })
   }, [])
 
   useEffect(()=> { // 유저 모임
     socket.on('twoUser', () => {
-      socket.off('twoUser')
       dispatch(twoUser())
+    })
+  }, [])
+  
+  useEffect(()=> { // 방꽉참
+    socket.on('fullRoom', () => {
+      alert('이미 다 찬 방입니다.')
     })
   }, [])
 
@@ -57,19 +64,42 @@ const WebSocket = () => {
 
   useEffect(()=> {
     socket.on('opponentDiscard', (card) => {
-
+      dispatch(opponentDiscard(card))
     })
   }, [])
 
+  useEffect(()=> { // 론성공
+    socket.on('win', (card) => {
+      dispatch(opponentDiscard(card))
+    })
+  }, [])
 
+  useEffect(()=> { // 쏘임
+    socket.on('lose', (card) => {
+      dispatch(opponentDiscard(card))
+    })
+  }, [])
+  
+  useEffect(()=> { // 유국
+    socket.on('draw', (card) => {
+      dispatch(opponentDiscard(card))
+    })
+  }, [])
 
+  useEffect(()=> { // 최종승리
+    socket.on('finalWin', (card) => {
+      dispatch(opponentDiscard(card))
+    })
+  }, [])
 
-
-
+  useEffect(()=> { // 최종패배
+    socket.on('finalLose', (card) => {
+      dispatch(opponentDiscard(card))
+    })
+  }, [])
 
   return (
     <div>
-      <button onClick={() => dispatch(itsMyTurn())}>강제로 턴 가져오기(테스트)</button>
     </div>
   );
 };
