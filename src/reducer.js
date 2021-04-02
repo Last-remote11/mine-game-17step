@@ -80,7 +80,6 @@ export const switchHand = (state=initialCard, action={}) => {
       return {...state, pending: true}
 
     case START_SUCCESS:
-      console.log(action)
       for (var i of action.payload.playerHand) {
         for (var j of cardData) {
           if (i === j.order) {

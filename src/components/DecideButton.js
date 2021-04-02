@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import { useSelector } from 'react-redux'
 import { changePhase } from '../actions'
 import { useDispatch } from 'react-redux'
+import { socket } from './WebSocket'
 
 const StartButton = () => {
 
@@ -12,7 +13,7 @@ const StartButton = () => {
   const goTo2Phase = () => {
     let trueCards = cards.filter(card => { return card.myHand === true })
     if (trueCards.length === 13) {
-      dispatch(changePhase(2))
+      dispatch(changePhase(2, socket))
     } else {
       alert('13장을 골라주세요')
     }

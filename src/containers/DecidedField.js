@@ -1,8 +1,7 @@
-import React, { useEffect, useReducer } from 'react'
-import { useSelector } from 'react-redux'
-import Card from '../components/Card'
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { discard } from '../actions'
-// import { MockDatabase } from '../components/MockDatabase'
+import { socket } from '../components/WebSocket'
 import './CardList.css'
 
 
@@ -10,7 +9,7 @@ const CardList = () => {
 
   const cards = useSelector(state => state.switchHand.cards)
   const myTurn = useSelector(state => state.switchHand.myTurn)
-
+  const dispatch = useDispatch()
 
   let abandonedCards = 
   cards.filter(card => { return card.myHand === false && !card.discard })
@@ -30,7 +29,11 @@ const CardList = () => {
       <div className='CardList-container'>
         {
           abandonedCards.map((card, i) => {
-            return (<Card card={card} switchHand = {checkMyTurn(discard)} key={i}></Card>)
+            return (
+            <div className='tc bg-light-blue dib br3 ma1 grow bw2 shadow-5'>
+            <img src={card.img} width='66px' height='118px' alt='card' className='br3' 
+            onClick={() => dispatch(checkMyTurn(discard(card, socket)))}/>
+            </div>)
           })
         }
       </div>
@@ -39,3 +42,4 @@ const CardList = () => {
 };
 
 export default CardList;
+

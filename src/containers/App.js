@@ -21,7 +21,7 @@ import Lobby from '../components/Lobby'
 const App = () => {
 
   const background = useSelector(state => state.enableDarkMode.background)
-  const { phase, gameEnd, time, isPending, roomID } = useSelector(state => state.switchHand)
+  const { phase, gameEnd, time, pending, roomID } = useSelector(state => state.switchHand)
   // const cards = useSelector(state => state.switchHand.cards)
   // const dispatch = useDispatch()
 
@@ -86,7 +86,7 @@ const App = () => {
       <HowToPlay />
       <Darkmode />
       {
-        isPending 
+        pending 
         ? <Circular /> 
         : <div />
       }

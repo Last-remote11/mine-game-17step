@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { setName, socket, setRoomID } from '../actions' 
+import { setName, setRoomID } from '../actions' 
 import { useDispatch, useSelector } from 'react-redux'
-
+import { socket } from './WebSocket'
 
 const Lobby = () => {
 
@@ -10,11 +10,7 @@ const Lobby = () => {
   
   const [joinID, setJoinID] = useState('')
 
-  socket.emit('join', roomID)
-
-  const createRoom = () => {
-    socket.emit('connection')
-  }
+  
 
   return (
     <div>
@@ -25,8 +21,7 @@ const Lobby = () => {
       onChange={(e) => setJoinID(e.target.value)}>
       </input>
       <br/>
-      <button onClick={() => console.log('방만들기')}>방 만들기</button>
-      <button onClick={() => socket.emit('join', joinID)}>방에 참가</button>
+      <button onClick={() => socket.emit('joinroom', joinID)}>방에 참가</button>
     </div>
   );
 };

@@ -22,11 +22,7 @@ import {
   JOIN_ROOM
 } from './constants'
 
-import initialRoomID from './reducer'
-import { useSelector } from 'react-redux'
-import { io } from 'socket.io-client'
 
-export const socket = io("http://localhost:3001");
 
 export const enableDarkMode = () => ({
   type: ENABLE_DARKMODE
@@ -55,20 +51,21 @@ export const twoUser = () => ({
 })
 
 
-export const startGame = ( myName ) => async ( dispatch ) => {
-  dispatch({ type: START_PENDING })
+export const startGameReq = () => ({
+  type: START_PENDING
+})
 
-  await socket.emit('login', {
-    name: myName
-  })
+// await socket.on('login', data =>   
+// dispatch({
+//   type: START_SUCCESS,
+//   payload: data
+// }
+// ))
 
-  await socket.on('login', data =>   
-  dispatch({
-    type: START_SUCCESS,
-    payload: data
-  }
-))
-}
+export const startSuccess = ( data ) => ({
+  type: START_SUCCESS,
+  payload: data
+})
 
 
   // try {
@@ -114,7 +111,7 @@ export const opponentDecide = () => ({
 
 // 조패끝 결정 *********************************************
 
-export const changePhase = ( Phase ) => async ( dispatch ) => {
+export const changePhase = ( Phase, socket ) => async ( dispatch ) => {
 
   dispatch({ type: START_PENDING })
 
@@ -131,7 +128,7 @@ export const changePhase = ( Phase ) => async ( dispatch ) => {
 
 // 버림 단계 ***********************************************
 
-export const discard = ( card ) => async ( dispatch ) => {
+export const discard = ( card, socket ) => async ( dispatch ) => {
   dispatch({ type: DISCARD_PENDING })
 
   await socket.emit('discard', card)
