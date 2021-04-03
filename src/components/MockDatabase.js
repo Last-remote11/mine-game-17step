@@ -402,7 +402,7 @@ const e = {
   letter: true,
   threeGrand: false, 
   wind: true, 
-  order: 30,
+  order: 31,
   green: false
 }
 const s = {
@@ -414,7 +414,7 @@ const s = {
   letter: true,
   threeGrand: false, 
   wind: true, 
-  order: 31,
+  order: 32,
   green: false
 }
 const w = {
@@ -426,7 +426,7 @@ const w = {
   letter: true,
   threeGrand: false, 
   wind: true, 
-  order: 32,
+  order: 33,
   green: false
 }
 const n = {
@@ -438,7 +438,7 @@ const n = {
   letter: true,
   threeGrand: false, 
   wind: true, 
-  order: 33,
+  order: 34,
   green: false
 }
 const wh = {
@@ -450,7 +450,7 @@ const wh = {
   letter: true,
   threeGrand: true, 
   wind: false, 
-  order: 34,
+  order: 35,
   green: false
 }
 const gn = {
@@ -462,7 +462,7 @@ const gn = {
   letter: true,
   threeGrand: true, 
   wind: false, 
-  order: 35,
+  order: 36,
   green: true
 }
 const cn = {
@@ -474,7 +474,7 @@ const cn = {
   letter: true,
   threeGrand: true, 
   wind: false, 
-  order: 36,
+  order: 37,
   green: false
 }
 
