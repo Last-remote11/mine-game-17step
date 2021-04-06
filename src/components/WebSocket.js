@@ -69,14 +69,16 @@ const WebSocket = () => {
   }, [])
 
   useEffect(()=> { // 론성공
-    socket.on('win', (card) => {
-      dispatch(opponentDiscard(card))
+    socket.on('win', (yakuNameArrAndPoint) => {
+      console.log(yakuNameArrAndPoint)
+      // dispatch(opponentDiscard(card))
     })
   }, [])
 
   useEffect(()=> { // 쏘임
-    socket.on('lose', (card) => {
-      dispatch(opponentDiscard(card))
+    socket.on('lose', (yakuNameArrAndPoint) => {
+      console.log(yakuNameArrAndPoint)
+      // dispatch(opponentDiscard(card))
     })
   }, [])
   
