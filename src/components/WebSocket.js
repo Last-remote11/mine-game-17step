@@ -68,7 +68,7 @@ const WebSocket = () => {
     })
   }, [])
 
-  useEffect(()=> { // 론성공
+  useEffect(()=> { // 론성공 or 촌보
     socket.on('win', (yakuNameArrAndPoint) => {
       console.log(yakuNameArrAndPoint)
       // dispatch(opponentDiscard(card))

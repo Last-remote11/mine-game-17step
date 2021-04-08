@@ -98,17 +98,7 @@ const App = () => {
         ? <Circular /> 
         : <div />
       }
-      {renderSwitch(phase)
-        // route === 'home'
-        // ? <div className='routeTest'>홈화면</div>
-        // : 
-        // <div className='routeTest'>게임중
-
-        //    <CardList />
-        //    <MyHand />
-
-        // </div>
-      }
+      {renderSwitch(phase)}
 
     </div>
   );

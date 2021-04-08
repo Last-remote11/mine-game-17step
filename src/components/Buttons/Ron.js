@@ -16,11 +16,15 @@ const Ron = () => {
 
   const emitRon = async ( socket ) => {
 
-    const ronCard = opponentDiscards[opponentDiscards.length - 1]
+    const ronCard = opponentDiscards[opponentDiscards.length - 1].order
 
-    console.log(trueCards)
-
-    socket.emit('ron', {trueCards, ronCard})
+    let tiles = []
+    for (var i of trueCards) {
+      tiles.push(i.order)
+    }
+    tiles.push(ronCard)
+    
+    socket.emit('ron', {tiles, ronCard})
     dispatch(ron())
   }
 
