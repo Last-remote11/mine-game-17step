@@ -62,7 +62,12 @@ const initialCard = {
   opponentDecide: false,
   myTurn: true,
   isTwoUser: false,
-  roomID: initialRoomID
+  roomID: initialRoomID,
+  meAccept: false,
+  opponentAccept: false,
+  resultTiles: [],
+  yakuNameArr: [],
+  point: 0
 }
 
 
@@ -96,7 +101,7 @@ export const switchHand = (state=initialCard, action={}) => {
         }
       }
 
-      return {...state, phase: 1, pending: false, time: Date.now(), myTurn: action.payload.myTurn}
+      return {...state, phase: 1, pending: false, time: Date.now(), myTurn: action.payload.myTurn, gameEnd: false}
 
     case ONE_USER:
       return {...state, isTwoUser: false}
@@ -187,6 +192,66 @@ export const switchHand = (state=initialCard, action={}) => {
 
     case 'RON':
       return {...state, pending: true, myTurn: false}
+
+      // 개별 결과
+
+    case 'WIN':
+      state.myScore += action.point
+      state.opponentScore -= action.point
+      state.yakuman = action.yakuman
+      state.resultTiles = action.tiles
+      state.pan = action.pan
+      state.yakuNameArr = action.yakuNameArr
+      state.uradora = action.uradora
+      return { ...state,
+        gameEnd: true,
+        point: action.point, 
+        }
+
+    case 'LOSE':
+      state.myScore -= action.point
+      state.opponentScore += action.point
+      state.yakuman = action.yakuman
+      state.resultTiles = action.tiles
+      state.pan = action.pan
+      state.yakuNameArr = action.yakuNameArr
+      state.uradora = action.uradora
+      return { ...state,
+        gameEnd: true,
+        point: action.point, 
+        }
+
+
+      // 새게임
+
+    case 'ACCEPT':
+      if (state.opponentAccept) {
+        return {...state,
+          cards: [],
+          gameEnd: false,
+          phase: 0,
+          dora: null,
+          myDiscards: [],
+          opponentDiscards: [],
+          meDecide: false,
+          opponentDecide: false,
+          myTurn: true,
+          meAccept: true }
+      } else {
+        return {...state,
+          cards: [],
+          gameEnd: false,
+          dora: null,
+          myDiscards: [],
+          opponentDiscards: [],
+          meDecide: false,
+          opponentDecide: false,
+          myTurn: true,
+          meAccept: true }
+      }
+
+    case 'OPPONENT_ACCEPT':
+      return {...state, opponentAccept: true}
 
       // 기타 **************************************************************
 

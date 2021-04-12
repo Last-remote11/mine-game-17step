@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { opponentDecide, opponentDiscard, itsMyTurn, setRoomID, oneUser, twoUser, startSuccess } from '../actions'
+import { opponentDecide, opponentDiscard, itsMyTurn, setRoomID, oneUser, twoUser, startSuccess,
+   opponentAccept, win, lose } from '../actions'
 import { initialRoomID } from '../reducer'
 import { io } from 'socket.io-client'
 
@@ -67,24 +68,32 @@ const WebSocket = () => {
       dispatch(opponentDiscard(card))
     })
   }, [])
-
+  
   useEffect(()=> { // 론성공 or 촌보
     socket.on('win', (yakuNameArrAndPoint) => {
+      console.log('win')
       console.log(yakuNameArrAndPoint)
-      // dispatch(opponentDiscard(card))
+      dispatch(win(yakuNameArrAndPoint))
     })
   }, [])
-
+  
   useEffect(()=> { // 쏘임
     socket.on('lose', (yakuNameArrAndPoint) => {
+      console.log('lose')
       console.log(yakuNameArrAndPoint)
-      // dispatch(opponentDiscard(card))
+      dispatch(lose(yakuNameArrAndPoint))
     })
   }, [])
   
   useEffect(()=> { // 유국
     socket.on('draw', (card) => {
       dispatch(opponentDiscard(card))
+    })
+  }, [])
+  
+  useEffect(()=> {
+    socket.on('opponentAccept', () => {
+      dispatch(opponentAccept())
     })
   }, [])
 

@@ -85,6 +85,7 @@ const HowToPlay = () => {
       >
         {body}
       </Modal>
+      
     </div>
   );
 };

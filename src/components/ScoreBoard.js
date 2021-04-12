@@ -7,6 +7,7 @@ const ScoreBoard = () => {
 
   return (
     <table>
+      <tbody>
       <tr>
         <th>내점수</th>
         <th>상대점수</th>
@@ -15,6 +16,7 @@ const ScoreBoard = () => {
         <th>{myScore}</th>
         <th>{opponentScore}</th>
       </tr>
+      </tbody>
     </table>
   );
 };

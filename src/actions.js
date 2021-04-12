@@ -1,3 +1,4 @@
+import { socket } from './components/WebSocket'
 import { 
   ENABLE_DARKMODE,
   CHANGE_PHASE,
@@ -147,6 +148,50 @@ export const opponentDiscard = ( card ) => ({
 export const ron = () => ({
   type: 'RON'
 })
+
+
+// 결과 ******************************************************
+
+export const win = ( result ) => ({
+  type: 'WIN',
+  point: result.point,
+  yakuNameArr: result.yakuNameArr,
+  tiles: result.tiles,
+  uradora: result.uradora
+})
+
+export const lose = ( result ) => ({
+  type: 'LOSE',
+  point: result.point,
+  yakuNameArr: result.yakuNameArr,
+  tiles: result.tiles,
+  uradora: result.uradora
+})
+
+export const draw = ( result ) => ({
+  type: 'DRAW',
+  point: result.point,
+  yakuNameArr: result.yakuNameArr,
+  tiles: result.tiles,
+  uradora: result.uradora
+})
+
+export const accept = () => ({
+  type: 'ACCEPT'
+})
+
+export const opponentAccept = () => ({
+  type: 'OPPONENT_ACCEPT'
+})
+
+export const newGameReq = () => async (dispatch) => {
+  dispatch({ type: START_PENDING })
+
+  await socket.emit('newGame')
+
+  dispatch({ type: 'ACCEPT'})
+}
+
 
 // 강제로 턴을 가져옴 (테스트용)
 export const itsMyTurn = () => ({

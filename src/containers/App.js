@@ -20,6 +20,8 @@ import ScoreBoard from '../components/ScoreBoard'
 import Lobby from '../components/Lobby'
 import WhoseTurn from '../components/WhoseTurn'
 import Ron from '../components/Buttons/Ron'
+import Result from '../containers/Result'
+import WaitBackdrop from '../components/WaitBackdrop'
 
 const App = () => {
 
@@ -90,6 +92,8 @@ const App = () => {
       </Helmet>
       <h1 className='title'>지뢰 게임 17보</h1>
       <div className = 'tl light-silver'>방 ID : {' '}{roomID}</div>
+      <WaitBackdrop />
+      <Result />
       <WebSocket />
       <HowToPlay />
       <Darkmode />
