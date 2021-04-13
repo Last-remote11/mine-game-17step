@@ -25,6 +25,7 @@ import {
 } from './constants'
 
 import { cardData } from './components/MockDatabase'
+import { CardActions } from '@material-ui/core'
 
 const initialStateBackground = {
   background: 'body { background-color: #1a1a1a; }'
@@ -70,7 +71,10 @@ const initialCard = {
   point: 0,
   win: false,
   meAccept: false,
-  resultCards: []
+  resultCards: [],
+  oya: null,
+  gook: 1,
+  soon: 0
 }
 
 
@@ -103,8 +107,18 @@ export const switchHand = (state=initialCard, action={}) => {
           state.dora = k
         }
       }
-
-      return {...state, phase: 1, pending: false, time: Date.now(), myTurn: action.payload.myTurn, gameEnd: false, resultCards: []}
+        
+      if (state.oya === null) {
+        state.oya = action.payload.myTurn // 맨 처음
+      }
+      if (state.oya) {
+        state.myTurn = false
+        state.oya = false
+      } else {
+        state.myTurn = true
+        state.oya = true
+      }
+      return {...state, phase: 1, pending: false, time: Date.now(), gameEnd: false, resultCards: []}
 
     case ONE_USER:
       return {...state, isTwoUser: false}
@@ -166,6 +180,9 @@ export const switchHand = (state=initialCard, action={}) => {
           break
         }
       }
+      if (!state.oya) {
+        state.soon++
+      }
       return {...state, time : Date.now(), myTurn: false, pending: false}
 
     case DISCARD_FAILED:
@@ -176,8 +193,10 @@ export const switchHand = (state=initialCard, action={}) => {
         if (cardData[i].order === action.payload.order) {
           state.opponentDiscards.push(action.payload)
           break
-        }
-        
+        }        
+      }
+      if (state.oya) {
+        state.soon++
       }
       return {...state, myTurn: true}
       
