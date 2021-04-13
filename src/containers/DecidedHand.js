@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import Card from '../components/Card'
 import { doNothing } from '../actions'
@@ -8,7 +8,6 @@ import { doNothing } from '../actions'
 const DecidedHand = () => {
 
   const cards = useSelector(state => state.switchHand.cards)
-  const time = useSelector(state => state.switchHand.time)
   
   let trueCards = 
   cards.filter(card => { return card.myHand === true })

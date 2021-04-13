@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import Card from '../components/Card'
 import { doNothing } from '../actions'

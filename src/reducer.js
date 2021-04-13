@@ -67,7 +67,10 @@ const initialCard = {
   opponentAccept: false,
   resultTiles: [],
   yakuNameArr: [],
-  point: 0
+  point: 0,
+  win: false,
+  meAccept: false,
+  resultCards: []
 }
 
 
@@ -101,7 +104,7 @@ export const switchHand = (state=initialCard, action={}) => {
         }
       }
 
-      return {...state, phase: 1, pending: false, time: Date.now(), myTurn: action.payload.myTurn, gameEnd: false}
+      return {...state, phase: 1, pending: false, time: Date.now(), myTurn: action.payload.myTurn, gameEnd: false, resultCards: []}
 
     case ONE_USER:
       return {...state, isTwoUser: false}
@@ -203,9 +206,18 @@ export const switchHand = (state=initialCard, action={}) => {
       state.pan = action.pan
       state.yakuNameArr = action.yakuNameArr
       state.uradora = action.uradora
+      for (var i = 0; i < state.resultTiles.length; i++) {
+        for (var j = 0; j < cardData.length; j++) {
+          if (state.resultTiles[i] === cardData[j].order) {
+            state.resultCards.push(cardData[j])
+            break
+          }
+        }
+      }
       return { ...state,
         gameEnd: true,
         point: action.point, 
+        win: true
         }
 
     case 'LOSE':
@@ -216,9 +228,18 @@ export const switchHand = (state=initialCard, action={}) => {
       state.pan = action.pan
       state.yakuNameArr = action.yakuNameArr
       state.uradora = action.uradora
+      for (var i = 0; i < state.resultTiles.length; i++) {
+        for (var j = 0; j < cardData.length; j++) {
+          if (state.resultTiles[i] === cardData[j].order) {
+            state.resultCards.push(cardData[j])
+            break
+          }
+        }
+      }
       return { ...state,
         gameEnd: true,
         point: action.point, 
+        win: false
         }
 
 
@@ -227,18 +248,20 @@ export const switchHand = (state=initialCard, action={}) => {
     case 'ACCEPT':
       if (state.opponentAccept) {
         return {...state,
+          phase: 0,
           cards: [],
           gameEnd: false,
-          phase: 0,
           dora: null,
           myDiscards: [],
           opponentDiscards: [],
           meDecide: false,
           opponentDecide: false,
           myTurn: true,
-          meAccept: true }
+          meAccept: false }
       } else {
         return {...state,
+          phase: 0,
+          pending: true,
           cards: [],
           gameEnd: false,
           dora: null,
@@ -251,7 +274,11 @@ export const switchHand = (state=initialCard, action={}) => {
       }
 
     case 'OPPONENT_ACCEPT':
-      return {...state, opponentAccept: true}
+      if (state.meAccept) {
+        return {...state, phase: 0, opponentAccept: true, pending: false, meAccept: false}
+      } else {
+        return {...state, opponentAccept: true}
+      }
 
       // 기타 **************************************************************
 

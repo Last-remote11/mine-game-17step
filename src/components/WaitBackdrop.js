@@ -16,7 +16,7 @@ const WaitBackdrop = () => {
   const { pending } = useSelector(state => state.switchHand)
 
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
   // const handleClose = () => {
   //   setOpen(false);
   // };

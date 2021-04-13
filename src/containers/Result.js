@@ -27,7 +27,7 @@ const getModalStyle = {
 
 const Result = () => {
 
-  const { resultTiles, point, yakuNameArr, uradora, gameEnd, myTurn, yakuman, pan } = useSelector(state => state.switchHand)
+  const { resultTiles, point, yakuNameArr, uradora, gameEnd, myTurn, yakuman, pan, win, resultCards, myScore } = useSelector(state => state.switchHand)
   const dispatch = useDispatch()
   
   const classes = useStyles();
@@ -44,29 +44,20 @@ const Result = () => {
     // emit?
   };
 
-  const resultCards = []
-  for (var i = 0; i < resultTiles.length; i++) {
-    for (var j = 0; j < cardData.length; j++) {
-      if (resultTiles[i] === j.order) {
-        resultCards.push(j)
-        break
-      }
-    }
-  }
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
       {
-        myTurn
+        win
         ? <h1>인생의 승리자</h1>
         : <h1>쳐발림</h1>
       }
-      <div className='CardList-container'>
+      <div className='Result-container'>
         {resultCards.map(e => {
           return(      
           <div className='tc dib br3 ma1 bw2 shadow-5'>
-          <img src={e.img} width='33px' height='59px' alt='card' className='br3 cards'/>
-        </div>)}
+            <img src={e.img} width='33px' height='59px' alt='card' className='br3 cards'/>
+          </div>)}
         )}
       </div>
       <div>
@@ -75,7 +66,7 @@ const Result = () => {
         })}
         <h3>{pan}판 {point}점</h3>
       </div>
-
+        <h4>{myScore - point}{' '}→{' '}{myScore}점 </h4>
 
     {/* 타이틀 : 인생의 승리자 or 쳐발림 or 유국*/}
     {/* 패, 역, 점수 */}

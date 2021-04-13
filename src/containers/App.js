@@ -14,7 +14,6 @@ import DecidedHand from './DecidedHand'
 import DecidedField from './DecidedField'
 import MyDiscard from './MyDiscard'
 import OpponentDiscard from './OpponentDiscard'
-import Circular from '../components/Circular';
 import WebSocket from '../components/WebSocket'
 import ScoreBoard from '../components/ScoreBoard'
 import Lobby from '../components/Lobby'
@@ -26,7 +25,7 @@ import WaitBackdrop from '../components/WaitBackdrop'
 const App = () => {
 
   const background = useSelector(state => state.enableDarkMode.background)
-  const { phase, gameEnd, time, pending, roomID } = useSelector(state => state.switchHand)
+  const { phase, time, roomID } = useSelector(state => state.switchHand)
   // const cards = useSelector(state => state.switchHand.cards)
   // const dispatch = useDispatch()
 
@@ -97,11 +96,6 @@ const App = () => {
       <WebSocket />
       <HowToPlay />
       <Darkmode />
-      {
-        pending 
-        ? <Circular /> 
-        : <div />
-      }
       {renderSwitch(phase)}
 
     </div>

@@ -43,7 +43,7 @@ const WebSocket = () => {
   }, [])
 
   useEffect(()=> { // 게임 시작
-    socket.once('login', (data) => {
+    socket.on('login', (data) => {
       dispatch(startSuccess(data))
     })
   }, [])

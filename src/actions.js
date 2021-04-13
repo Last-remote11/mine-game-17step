@@ -7,21 +7,16 @@ import {
   DECIDE_HAND,
   DISCARD_PENDING,
   DISCARD_SUCCESS,
-  DISCARD_FAILED,
-  DEAL_IN,
   DO_NOTHING,
   START_PENDING,
   START_SUCCESS,
-  START_FAILED,
-  WS_CONNECT,
   OPPONENT_DECIDE,
   OPPONENT_DISCARD,
   ITSMYTURN,
   INPUT_NAME,
   SET_ROOMID,
   ONE_USER,
-  TWO_USER,
-  JOIN_ROOM
+  TWO_USER
 } from './constants'
 
 
@@ -154,6 +149,8 @@ export const ron = () => ({
 
 export const win = ( result ) => ({
   type: 'WIN',
+  pan: result.pan,
+  yakuman: result.yakuman,
   point: result.point,
   yakuNameArr: result.yakuNameArr,
   tiles: result.tiles,
@@ -162,6 +159,8 @@ export const win = ( result ) => ({
 
 export const lose = ( result ) => ({
   type: 'LOSE',
+  pan: result.pan,
+  yakuman: result.yakuman,
   point: result.point,
   yakuNameArr: result.yakuNameArr,
   tiles: result.tiles,

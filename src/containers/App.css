@@ -69,3 +69,12 @@
   border-color: none;
   border-style: groove;
 }
+
+.Result-container {
+  min-height: 200px;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
