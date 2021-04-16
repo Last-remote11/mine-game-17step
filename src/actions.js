@@ -167,13 +167,16 @@ export const lose = ( result ) => ({
   uradora: result.uradora
 })
 
-export const draw = ( result ) => ({
-  type: 'DRAW',
-  point: result.point,
-  yakuNameArr: result.yakuNameArr,
-  tiles: result.tiles,
-  uradora: result.uradora
+export const draw = () => ({
+  type: 'DRAW'
 })
+// export const draw = ( result ) => ({
+//   type: 'DRAW',
+//   point: result.point,
+//   yakuNameArr: result.yakuNameArr,
+//   tiles: result.tiles,
+//   uradora: result.uradora
+// })
 
 export const accept = () => ({
   type: 'ACCEPT'

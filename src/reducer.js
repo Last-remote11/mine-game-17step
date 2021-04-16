@@ -64,17 +64,17 @@ const initialCard = {
   myTurn: true,
   isTwoUser: false,
   roomID: initialRoomID,
-  meAccept: false,
-  opponentAccept: false,
   resultTiles: [],
   yakuNameArr: [],
   point: 0,
   win: false,
   meAccept: false,
+  opponentAccept: false,
   resultCards: [],
   oya: null,
   gook: 1,
-  soon: 0
+  soon: 1,
+  draw: false
 }
 
 
@@ -261,7 +261,9 @@ export const switchHand = (state=initialCard, action={}) => {
         win: false
         }
 
-
+    case 'DRAW':
+      state.draw = true
+      return {...state, gameEnd: true}
       // 새게임
 
     case 'ACCEPT':
@@ -276,7 +278,10 @@ export const switchHand = (state=initialCard, action={}) => {
           meDecide: false,
           opponentDecide: false,
           myTurn: true,
-          meAccept: false }
+          meAccept: false,
+          draw: false,
+          soon: 1,
+          gook: state.gook + 1 }
       } else {
         return {...state,
           phase: 0,
@@ -289,7 +294,10 @@ export const switchHand = (state=initialCard, action={}) => {
           meDecide: false,
           opponentDecide: false,
           myTurn: true,
-          meAccept: true }
+          meAccept: true,
+          draw: false,
+          soon: 1,
+          gook: state.gook + 1 }
       }
 
     case 'OPPONENT_ACCEPT':

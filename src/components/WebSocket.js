@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { opponentDecide, opponentDiscard, itsMyTurn, setRoomID, oneUser, twoUser, startSuccess,
-   opponentAccept, win, lose } from '../actions'
+   opponentAccept, win, lose, draw } from '../actions'
 import { initialRoomID } from '../reducer'
 import { io } from 'socket.io-client'
 
-export const socket = io("https://intense-brushlands-31556.herokuapp.com/");
+export const socket = io("http://localhost:3000/");
+// export const socket = io("https://intense-brushlands-31556.herokuapp.com/");
 
 const WebSocket = () => {
 
@@ -86,8 +87,8 @@ const WebSocket = () => {
   }, [])
   
   useEffect(()=> { // 유국
-    socket.on('draw', (card) => {
-      dispatch(opponentDiscard(card))
+    socket.on('draw', () => {
+      dispatch(draw())
     })
   }, [])
   

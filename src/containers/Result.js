@@ -27,7 +27,7 @@ const getModalStyle = {
 
 const Result = () => {
 
-  const { resultTiles, point, yakuNameArr, uradora, gameEnd, myTurn, yakuman, pan, win, resultCards, myScore } = useSelector(state => state.switchHand)
+  const { resultTiles, point, yakuNameArr, uradora, gameEnd, myTurn, yakuman, pan, win, resultCards, myScore, draw } = useSelector(state => state.switchHand)
   const dispatch = useDispatch()
   
   const classes = useStyles();
@@ -60,16 +60,29 @@ const Result = () => {
           </div>)}
         )}
       </div>
+      <hr />
       <div>
         {yakuNameArr.map(yakuName => {
           return (<h4>{yakuName}</h4>)
         })}
-        <h3>{pan}판 {point}점</h3>
+      <hr />
+      {
+        yakuman === 1
+        ? <h1>역만 32000점</h1>
+        : <h3>{pan}판 {point}점</h3>
+      }
+        
       </div>
         <h4>{myScore - point}{' '}→{' '}{myScore}점 </h4>
 
     {/* 타이틀 : 인생의 승리자 or 쳐발림 or 유국*/}
     {/* 패, 역, 점수 */}
+    </div>
+  )
+
+  const drawBody = (
+    <div style={modalStyle} className={classes.paper}>
+      <h1>유국</h1>
     </div>
   )
 
@@ -81,7 +94,7 @@ const Result = () => {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        {body}
+        {draw ? drawBody : body}
       </Modal>
     </div>
   );
