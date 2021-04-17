@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/mine-game-17step/static/css/main.4c221d7e.chunk.css",
-    "main.js": "/mine-game-17step/static/js/main.9a7c8e3b.chunk.js",
-    "main.js.map": "/mine-game-17step/static/js/main.9a7c8e3b.chunk.js.map",
+    "main.js": "/mine-game-17step/static/js/main.bc295e57.chunk.js",
+    "main.js.map": "/mine-game-17step/static/js/main.bc295e57.chunk.js.map",
     "runtime-main.js": "/mine-game-17step/static/js/runtime-main.85c4072a.js",
     "runtime-main.js.map": "/mine-game-17step/static/js/runtime-main.85c4072a.js.map",
     "static/css/2.fe359a49.chunk.css": "/mine-game-17step/static/css/2.fe359a49.chunk.css",
-    "static/js/2.a2f1ab84.chunk.js": "/mine-game-17step/static/js/2.a2f1ab84.chunk.js",
-    "static/js/2.a2f1ab84.chunk.js.map": "/mine-game-17step/static/js/2.a2f1ab84.chunk.js.map",
+    "static/js/2.8c963644.chunk.js": "/mine-game-17step/static/js/2.8c963644.chunk.js",
+    "static/js/2.8c963644.chunk.js.map": "/mine-game-17step/static/js/2.8c963644.chunk.js.map",
     "static/js/3.aae0ab3a.chunk.js": "/mine-game-17step/static/js/3.aae0ab3a.chunk.js",
     "static/js/3.aae0ab3a.chunk.js.map": "/mine-game-17step/static/js/3.aae0ab3a.chunk.js.map",
     "index.html": "/mine-game-17step/index.html",
     "static/css/2.fe359a49.chunk.css.map": "/mine-game-17step/static/css/2.fe359a49.chunk.css.map",
     "static/css/main.4c221d7e.chunk.css.map": "/mine-game-17step/static/css/main.4c221d7e.chunk.css.map",
-    "static/js/2.a2f1ab84.chunk.js.LICENSE.txt": "/mine-game-17step/static/js/2.a2f1ab84.chunk.js.LICENSE.txt"
+    "static/js/2.8c963644.chunk.js.LICENSE.txt": "/mine-game-17step/static/js/2.8c963644.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.85c4072a.js",
     "static/css/2.fe359a49.chunk.css",
-    "static/js/2.a2f1ab84.chunk.js",
+    "static/js/2.8c963644.chunk.js",
     "static/css/main.4c221d7e.chunk.css",
-    "static/js/main.9a7c8e3b.chunk.js"
+    "static/js/main.bc295e57.chunk.js"
   ]
 }
