@@ -50,7 +50,7 @@ const App = () => {
         return (
           <div>
             <div className='routeTest'>홈화면</div>
-            {connected ? '연결되었습니다.' : '서버에 연결 중..'}
+            {connected ? <h4>연결되었습니다.</h4> : <h4>서버에 연결 중..</h4>}
             <Lobby />
             <StartButton />
           </div>
