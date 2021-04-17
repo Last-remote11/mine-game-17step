@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet';
 import HowToPlay from '../components/Buttons/HowToPlay'
@@ -29,10 +29,19 @@ const App = () => {
   // const cards = useSelector(state => state.switchHand.cards)
   // const dispatch = useDispatch()
 
+  const [connected, setConnect] = useState(false)
   const [, forceUpdate] = useReducer(x => x + 1, 0);
 
   useEffect(() => forceUpdate(), [time])
 
+  useEffect( async () => {
+    // const connectResponse = await fetch('http://localhost:3000/')
+    const connectResponse = await fetch('https://intense-brushlands-31556.herokuapp.com/')
+    const connectResponseJson = connectResponse.json()
+    if (connectResponseJson) {
+      setConnect(true)
+    }
+  }, [])
 
   const renderSwitch = (phase) => {
     switch (phase) {
@@ -41,7 +50,7 @@ const App = () => {
         return (
           <div>
             <div className='routeTest'>홈화면</div>
-            
+            {connected ? '연결되었습니다.' : '서버에 연결 중..'}
             <Lobby />
             <StartButton />
           </div>

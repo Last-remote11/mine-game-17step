@@ -6,8 +6,8 @@ import { opponentDecide, opponentDiscard, itsMyTurn, setRoomID, oneUser, twoUser
 import { initialRoomID } from '../reducer'
 import { io } from 'socket.io-client'
 
-export const socket = io("http://localhost:3000/");
-// export const socket = io("https://intense-brushlands-31556.herokuapp.com/");
+// export const socket = io("http://localhost:3000/");
+export const socket = io("https://intense-brushlands-31556.herokuapp.com/");
 
 const WebSocket = () => {
 
