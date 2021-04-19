@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { cardData } from '../components/MockDatabase'
 import { useSelector, useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import { socket } from '../components/WebSocket'
-import { accept, newGameReq } from '../actions'
+import { accept } from '../actions'
 import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
 
 
 const useStyles = makeStyles((theme) => ({

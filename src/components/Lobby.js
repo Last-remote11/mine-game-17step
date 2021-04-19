@@ -19,7 +19,7 @@ const Lobby = () => {
         <div></div>
         : 
         <div>
-            <input type='text' placeholder='[여기에 room ID(숫자) 입력]' 
+            <input type='text' placeholder='[여기에 방번호 입력]' 
             onChange={(e) => setJoinID(e.target.value)}>
             </input>
             <button onClick={() => socket.emit('joinroom', joinID)}>방에 참가</button>

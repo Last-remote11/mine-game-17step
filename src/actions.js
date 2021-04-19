@@ -12,7 +12,6 @@ import {
   START_SUCCESS,
   OPPONENT_DECIDE,
   OPPONENT_DISCARD,
-  ITSMYTURN,
   INPUT_NAME,
   SET_ROOMID,
   ONE_USER,
@@ -47,42 +46,14 @@ export const twoUser = () => ({
   type: TWO_USER
 })
 
-
 export const startGameReq = () => ({
   type: START_PENDING
 })
-
-// await socket.on('login', data =>   
-// dispatch({
-//   type: START_SUCCESS,
-//   payload: data
-// }
-// ))
 
 export const startSuccess = ( data ) => ({
   type: START_SUCCESS,
   payload: data
 })
-
-
-  // try {
-  //   const res = await fetch('http://localhost:3001/start',
-  //   {
-  //     method: 'put',
-  //     headers: {'Content-Type': 'application/json'},
-  //   })
-  //   const data = await res.json()
-
-  //   dispatch({
-  //     type: START_SUCCESS,
-  //     payload: data
-  //   })
-  // } catch(error) {
-  //   dispatch({
-  //     type: START_FAILED,
-  //     payload: error
-  //   })
-  // }
 
 
 // 조패 단계 *********************************************
@@ -170,13 +141,6 @@ export const lose = ( result ) => ({
 export const draw = () => ({
   type: 'DRAW'
 })
-// export const draw = ( result ) => ({
-//   type: 'DRAW',
-//   point: result.point,
-//   yakuNameArr: result.yakuNameArr,
-//   tiles: result.tiles,
-//   uradora: result.uradora
-// })
 
 export const accept = () => ({
   type: 'ACCEPT'
@@ -194,13 +158,6 @@ export const newGameReq = () => async (dispatch) => {
   dispatch({ type: 'ACCEPT'})
 }
 
-
-// 강제로 턴을 가져옴 (테스트용)
-export const itsMyTurn = () => ({
-  type: ITSMYTURN
-})
-
 export const doNothing = () => ({
   type: DO_NOTHING
 })
-

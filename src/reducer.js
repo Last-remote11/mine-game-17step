@@ -3,21 +3,17 @@ import {
   CHANGE_PHASE,
   CARD_TO_HAND,
   HAND_TO_CARD,
-  START_GAME,
-  DECIDE_HAND,
   DO_NOTHING,
   DISCARD_PENDING,
   DISCARD_SUCCESS,
   DISCARD_FAILED,
   DEAL_IN,
-  DISCARD,
   START_PENDING,
   START_SUCCESS,
   START_FAILED,
   WS_CONNECT,
   OPPONENT_DECIDE,
   OPPONENT_DISCARD,
-  ITSMYTURN,
   INPUT_NAME,
   SET_ROOMID,
   ONE_USER,
@@ -25,7 +21,6 @@ import {
 } from './constants'
 
 import { cardData } from './components/MockDatabase'
-import { CardActions } from '@material-ui/core'
 
 const initialStateBackground = {
   background: 'body { background-color: #1a1a1a; }'
@@ -49,7 +44,7 @@ export const enableDarkMode = (state = initialStateBackground, action={}) => {
 
 export const initialRoomID = Math.floor(100000 + Math.random() * 900000)
 
-const initialCard = {
+const initialState = {
   cards: [],
   time: true,
   gameEnd: false,
@@ -79,7 +74,7 @@ const initialCard = {
 
 
 
-export const switchHand = (state=initialCard, action={}) => {
+export const switchHand = (state=initialState, action={}) => {
   
   switch (action.type) {
 
@@ -267,6 +262,12 @@ export const switchHand = (state=initialCard, action={}) => {
       // 새게임
 
     case 'ACCEPT':
+      if (state.opponentScore < 0) {
+        alert('승리')
+      if (state.myScore < 0) {
+        alert('패배')
+      }
+      }
       if (state.opponentAccept) {
         return {...state,
           phase: 0,
@@ -314,10 +315,6 @@ export const switchHand = (state=initialCard, action={}) => {
 
     case WS_CONNECT:
       return {...state, connect: true}
-
-    // 강제로 턴을 가져옴 (테스트용)
-    case ITSMYTURN:
-      return {...state, myTurn: true}
 
     default:
       return state

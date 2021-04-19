@@ -21,6 +21,7 @@ import WhoseTurn from '../components/WhoseTurn'
 import Ron from '../components/Buttons/Ron'
 import Result from '../containers/Result'
 import WaitBackdrop from '../components/WaitBackdrop'
+import Footer from '../components/Footer'
 
 const App = () => {
 
@@ -49,8 +50,8 @@ const App = () => {
       case 0: // 로그인, 연결 전
         return (
           <div>
-            <div className='routeTest'>홈화면</div>
-            {connected ? <h4>연결되었습니다.</h4> : <h4>서버에 연결 중..</h4>}
+            <div className='routeTest'></div>
+            {connected ? <h4 style={{color:'blue'}}>연결되었습니다.</h4> : <h4 style={{color:'red'}}>서버에 접속중..</h4>}
             <Lobby />
             <StartButton />
           </div>
@@ -106,7 +107,7 @@ const App = () => {
       <HowToPlay />
       <Darkmode />
       {renderSwitch(phase)}
-
+      <Footer />
     </div>
   );
 }
