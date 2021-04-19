@@ -25,22 +25,28 @@ const getModalStyle = {
 
 const Result = () => {
 
-  const { resultTiles, point, yakuNameArr, uradora, gameEnd, myTurn, yakuman, pan, win, resultCards, myScore, draw } = useSelector(state => state.switchHand)
+  const { point, yakuNameArr, uradora, gameEnd, yakuman, pan, win, resultCards, myScore, draw } = useSelector(state => state.switchHand)
   const dispatch = useDispatch()
   
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
-  const [open, setOpen] = useState(false);
 
 
   const handleClose = () => {
-    setOpen(false);
     socket.emit('accept')
     dispatch(accept())
     // gameEnd를 false로
     // 점수제외 게임 초기화
     // emit?
   };
+
+  const UradoraImg = (uradora) => {
+    return (
+      <div className='tc dib br3 ma1 bw2 shadow-5'>
+        <img src={uradora.img} width='39.6px' height='70.8px' alt='card' className='br3 cards'/> 
+      </div>
+    )
+  }
 
 
   const body = (
@@ -59,6 +65,8 @@ const Result = () => {
           </div>)}
         )}
       </div>
+      우라도라
+      {UradoraImg(uradora)}
       <hr />
       <div>
         {yakuNameArr.map(yakuName => {

@@ -10,7 +10,7 @@ const CardList = () => {
 
   const cards = useSelector(state => state.switchHand.cards)
   const time = useSelector(state => state.switchHand.time)
-  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
 
   useEffect(() => setTimeout(forceUpdate(),1000), [time])
 

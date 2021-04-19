@@ -14,9 +14,15 @@ const Ron = () => {
   cards.filter(card => { return card.myHand === true })
   .sort((a, b) => {return a.order - b.order})
 
-  const emitRon = async ( socket ) => {
+  const emitRon = ( socket ) => {
 
     const ronCard = opponentDiscards[opponentDiscards.length - 1].order
+    console.log(opponentDiscards.slice(0, opponentDiscards.length - 1))
+
+    if (opponentDiscards.slice(0, opponentDiscards.length - 1).map(e => e.order).includes(ronCard)) {
+      alert('후리텐입니다')
+      return
+    }
 
     let tiles = []
     for (var i of trueCards) {
@@ -26,12 +32,13 @@ const Ron = () => {
     
     socket.emit('ron', {tiles, ronCard, oya, soon})
     dispatch(ron())
+
   }
 
 
   return (
     <div>
-      <Button variant="contained" color="primary" disabled={!myTurn} onClick={() => emitRon(socket)}>
+      <Button variant="contained" color="primary" disabled={!myTurn || ( oya && soon === 1 )} onClick={() => emitRon(socket)}>
         론
       </Button>
     </div>

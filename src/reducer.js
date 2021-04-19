@@ -45,6 +45,7 @@ export const enableDarkMode = (state = initialStateBackground, action={}) => {
 export const initialRoomID = Math.floor(100000 + Math.random() * 900000)
 
 const initialState = {
+  serverConnected: false,
   cards: [],
   time: true,
   gameEnd: false,
@@ -69,7 +70,8 @@ const initialState = {
   oya: null,
   gook: 1,
   soon: 1,
-  draw: false
+  draw: false,
+  uradora: {img: 'hello?'}
 }
 
 
@@ -90,14 +92,14 @@ export const switchHand = (state=initialState, action={}) => {
       return {...state, pending: true}
 
     case START_SUCCESS:
-      for (var i of action.payload.playerHand) {
-        for (var j of cardData) {
+      for (let i of action.payload.playerHand) {
+        for (let j of cardData) {
           if (i === j.order) {
             state.cards.push({...j})
           }
         }
       }
-      for (var k of cardData) {
+      for (let k of cardData) {
         if (k.order === action.payload.dora) {
           state.dora = k
         }
@@ -116,7 +118,7 @@ export const switchHand = (state=initialState, action={}) => {
       return {...state, phase: 1, pending: false, time: Date.now(), gameEnd: false, resultCards: []}
 
     case ONE_USER:
-      return {...state, isTwoUser: false}
+      return {...state, isTwoUser: false, serverConnected: true}
 
     case TWO_USER:
       return {...state, isTwoUser: true}
@@ -135,7 +137,7 @@ export const switchHand = (state=initialState, action={}) => {
     // 조패 단계******************************************************
 
     case CARD_TO_HAND:
-      for (var i = 0; i < state.cards.length; i++) {
+      for (let i = 0; i < state.cards.length; i++) {
         if (state.cards[i].order === action.payload.order && state.cards[i].myHand === false) {
           state.cards[i].myHand = true
           break
@@ -144,9 +146,9 @@ export const switchHand = (state=initialState, action={}) => {
       return {...state, time : Date.now()}
 
     case HAND_TO_CARD:
-      for (var i = 0; i < state.cards.length; i++) {
-        if (state.cards[i].order === action.payload.order && state.cards[i].myHand === true) {
-          state.cards[i].myHand = false
+      for (let idx = 0; idx < state.cards.length; idx++) {
+        if (state.cards[idx].order === action.payload.order && state.cards[idx].myHand === true) {
+          state.cards[idx].myHand = false
           break
         }
       }
@@ -168,7 +170,7 @@ export const switchHand = (state=initialState, action={}) => {
       return {...state, pending: true, time: Date.now()}
         
     case DISCARD_SUCCESS:
-      for (var i = 0; i < state.cards.length; i++) {
+      for (let i = 0; i < state.cards.length; i++) {
         if (state.cards[i].order === action.payload.order && state.cards[i].myHand === false && !state.cards[i].discard) {
           state.cards[i].discard = true
           state.myDiscards.push(state.cards[i])
@@ -184,7 +186,7 @@ export const switchHand = (state=initialState, action={}) => {
       return {...state, error: action.payload}
 
     case OPPONENT_DISCARD:
-      for (var i = 0; i < cardData.length; i++) {
+      for (let i = 0; i < cardData.length; i++) {
         if (cardData[i].order === action.payload.order) {
           state.opponentDiscards.push(action.payload)
           break
@@ -197,7 +199,7 @@ export const switchHand = (state=initialState, action={}) => {
       
 
     case DEAL_IN:
-      for (var i = 0; i < state.cards.length; i++) {
+      for (let i = 0; i < state.cards.length; i++) {
         if (state.cards[i].order === action.payload.card.order && state.cards[i].myHand === false && !state.cards[i].discard) {
           state.cards[i].discard = true
           break
@@ -219,9 +221,14 @@ export const switchHand = (state=initialState, action={}) => {
       state.resultTiles = action.tiles
       state.pan = action.pan
       state.yakuNameArr = action.yakuNameArr
-      state.uradora = action.uradora
-      for (var i = 0; i < state.resultTiles.length; i++) {
-        for (var j = 0; j < cardData.length; j++) {
+
+      for (let j = 0; j < cardData.length; j++) {
+        if (j.order === action.uradora)
+        state.uradora = j
+      }
+
+      for (let i = 0; i < state.resultTiles.length; i++) {
+        for (let j = 0; j < cardData.length; j++) {
           if (state.resultTiles[i] === cardData[j].order) {
             state.resultCards.push(cardData[j])
             break
@@ -242,8 +249,8 @@ export const switchHand = (state=initialState, action={}) => {
       state.pan = action.pan
       state.yakuNameArr = action.yakuNameArr
       state.uradora = action.uradora
-      for (var i = 0; i < state.resultTiles.length; i++) {
-        for (var j = 0; j < cardData.length; j++) {
+      for (let i = 0; i < state.resultTiles.length; i++) {
+        for (let j = 0; j < cardData.length; j++) {
           if (state.resultTiles[i] === cardData[j].order) {
             state.resultCards.push(cardData[j])
             break

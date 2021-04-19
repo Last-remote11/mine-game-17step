@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { useSelector } from 'react-redux'
 import { Helmet } from 'react-helmet';
 import HowToPlay from '../components/Buttons/HowToPlay'
@@ -26,23 +26,27 @@ import Footer from '../components/Footer'
 const App = () => {
 
   const background = useSelector(state => state.enableDarkMode.background)
-  const { phase, time, roomID } = useSelector(state => state.switchHand)
+  const { phase, time, roomID, serverConnected } = useSelector(state => state.switchHand)
   // const cards = useSelector(state => state.switchHand.cards)
   // const dispatch = useDispatch()
 
-  const [connected, setConnect] = useState(false)
+  // const [connected, setConnect] = useState(false)
   const [, forceUpdate] = useReducer(x => x + 1, 0);
 
   useEffect(() => forceUpdate(), [time])
 
-  useEffect( async () => {
-    // const connectResponse = await fetch('http://localhost:3000/')
-    const connectResponse = await fetch('https://intense-brushlands-31556.herokuapp.com/')
-    const connectResponseJson = connectResponse.json()
-    if (connectResponseJson) {
-      setConnect(true)
-    }
-  }, [])
+  // useEffect(() => {
+  //   // const connectResponse = await fetch('http://localhost:3000/')
+  //   const fetchData = async () => {
+  //     const connectResponse = await fetch('https://intense-brushlands-31556.herokuapp.com/')
+  //     const connectResponseJson = await connectResponse.json()
+  //     console.log(connectResponseJson)
+  //     if (connectResponseJson) {
+  //       setConnect(true)
+  //     }
+  //   }
+  //   fetchData()
+  // }, [])
 
   const renderSwitch = (phase) => {
     switch (phase) {
@@ -51,7 +55,7 @@ const App = () => {
         return (
           <div>
             <div className='routeTest'></div>
-            {connected ? <h4 style={{color:'blue'}}>연결되었습니다.</h4> : <h4 style={{color:'red'}}>서버에 접속중..</h4>}
+            {serverConnected ? <h4 style={{color:'blue'}}>연결되었습니다.</h4> : <h4 style={{color:'red'}}>서버에 접속중..</h4>}
             <Lobby />
             <StartButton />
           </div>

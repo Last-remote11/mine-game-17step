@@ -11,7 +11,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary">
       <Link color="inherit" href="https://github.com/Last-remote11/mine-game-17step">
-        <img src={GitHubIcon} />
+        <img src={GitHubIcon} alt='github icon' />
       </Link>
     </Typography>
   );
