@@ -177,7 +177,7 @@ export const switchHand = (state=initialState, action={}) => {
           break
         }
       }
-      if (!state.oya) {
+      if (state.oya) {
         state.soon++
       }
       return {...state, time : Date.now(), myTurn: false, pending: false}
@@ -192,7 +192,7 @@ export const switchHand = (state=initialState, action={}) => {
           break
         }        
       }
-      if (state.oya) {
+      if (!state.oya) {
         state.soon++
       }
       return {...state, myTurn: true}
@@ -288,7 +288,7 @@ export const switchHand = (state=initialState, action={}) => {
           myTurn: true,
           meAccept: false,
           draw: false,
-          soon: 1,
+          soon: 0,
           gook: state.gook + 1 }
       } else {
         return {...state,
