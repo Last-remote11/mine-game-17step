@@ -69,7 +69,7 @@ const initialState = {
   resultCards: [],
   oya: null,
   gook: 1,
-  soon: 1,
+  soon: 0,
   draw: false,
   uradora: {img: 'hello?'}
 }
