@@ -304,7 +304,7 @@ export const switchHand = (state=initialState, action={}) => {
           myTurn: true,
           meAccept: true,
           draw: false,
-          soon: 1,
+          soon: 0,
           gook: state.gook + 1 }
       }
 
