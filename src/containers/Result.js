@@ -54,7 +54,8 @@ const Result = () => {
         {resultCards.map(e => {
           return(      
           <div className='tc dib br3 ma1 bw2 shadow-5'>
-            <img src={e.img} width='33px' height='59px' alt='card' className='br3 cards'/>
+            <img src={e.img} width='39.6px' height='70.8px' alt='card' className='br3 cards'/> 
+            {/* 33:59 */}
           </div>)}
         )}
       </div>
