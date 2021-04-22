@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/mine-game-17step/static/css/main.4c221d7e.chunk.css",
-    "main.js": "/mine-game-17step/static/js/main.291a8ad7.chunk.js",
-    "main.js.map": "/mine-game-17step/static/js/main.291a8ad7.chunk.js.map",
-    "runtime-main.js": "/mine-game-17step/static/js/runtime-main.47c68ed2.js",
-    "runtime-main.js.map": "/mine-game-17step/static/js/runtime-main.47c68ed2.js.map",
+    "main.js": "/mine-game-17step/static/js/main.44f67d52.chunk.js",
+    "main.js.map": "/mine-game-17step/static/js/main.44f67d52.chunk.js.map",
+    "runtime-main.js": "/mine-game-17step/static/js/runtime-main.99f62c63.js",
+    "runtime-main.js.map": "/mine-game-17step/static/js/runtime-main.99f62c63.js.map",
     "static/css/2.fe359a49.chunk.css": "/mine-game-17step/static/css/2.fe359a49.chunk.css",
-    "static/js/2.1800efea.chunk.js": "/mine-game-17step/static/js/2.1800efea.chunk.js",
-    "static/js/2.1800efea.chunk.js.map": "/mine-game-17step/static/js/2.1800efea.chunk.js.map",
-    "static/js/3.2a645f83.chunk.js": "/mine-game-17step/static/js/3.2a645f83.chunk.js",
-    "static/js/3.2a645f83.chunk.js.map": "/mine-game-17step/static/js/3.2a645f83.chunk.js.map",
+    "static/js/2.638ef070.chunk.js": "/mine-game-17step/static/js/2.638ef070.chunk.js",
+    "static/js/2.638ef070.chunk.js.map": "/mine-game-17step/static/js/2.638ef070.chunk.js.map",
+    "static/js/3.e64fe363.chunk.js": "/mine-game-17step/static/js/3.e64fe363.chunk.js",
+    "static/js/3.e64fe363.chunk.js.map": "/mine-game-17step/static/js/3.e64fe363.chunk.js.map",
     "index.html": "/mine-game-17step/index.html",
     "static/css/2.fe359a49.chunk.css.map": "/mine-game-17step/static/css/2.fe359a49.chunk.css.map",
     "static/css/main.4c221d7e.chunk.css.map": "/mine-game-17step/static/css/main.4c221d7e.chunk.css.map",
-    "static/js/2.1800efea.chunk.js.LICENSE.txt": "/mine-game-17step/static/js/2.1800efea.chunk.js.LICENSE.txt"
+    "static/js/2.638ef070.chunk.js.LICENSE.txt": "/mine-game-17step/static/js/2.638ef070.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.47c68ed2.js",
+    "static/js/runtime-main.99f62c63.js",
     "static/css/2.fe359a49.chunk.css",
-    "static/js/2.1800efea.chunk.js",
+    "static/js/2.638ef070.chunk.js",
     "static/css/main.4c221d7e.chunk.css",
-    "static/js/main.291a8ad7.chunk.js"
+    "static/js/main.44f67d52.chunk.js"
   ]
 }
