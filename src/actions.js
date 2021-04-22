@@ -92,6 +92,15 @@ export const changePhase = ( Phase, socket ) => async ( dispatch ) => {
   })
 };
 
+export const hintAction = ( card ) => ({
+  type: 'HINT',
+  payload: card
+})
+
+export const initHint = () => ({
+  type: 'INIT_HINT'
+})
+
 // 버림 단계 ***********************************************
 
 export const discard = ( card, socket ) => async ( dispatch ) => {

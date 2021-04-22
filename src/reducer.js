@@ -64,6 +64,7 @@ const initialState = {
   yakuNameArr: [],
   point: 0,
   win: false,
+  lose: false,
   meAccept: false,
   opponentAccept: false,
   resultCards: [],
@@ -71,7 +72,8 @@ const initialState = {
   gook: 1,
   soon: 0,
   draw: false,
-  uradora: {img: 'hello?'}
+  uradora: {img: 'hello?'},
+  hint:[]
 }
 
 
@@ -162,7 +164,18 @@ export const switchHand = (state=initialState, action={}) => {
         return {...state, opponentDecide: true}
       }
       
+    case 'HINT':
+      for (let i of cardData) {
+        for (let j of action.payload) {
+          if (i.order === j) {
+            state.hint.push(i)
+          }
+        }
+      }
+      return {...state}
 
+    case 'INIT_HINT':
+      return {...state, hint:[]}
 
     // 패 하나씩 버리는 단계 *********************************************
 
@@ -238,7 +251,8 @@ export const switchHand = (state=initialState, action={}) => {
       return { ...state,
         gameEnd: true,
         point: action.point, 
-        win: true
+        win: true,
+        lose: false,
         }
 
     case 'LOSE':
@@ -266,7 +280,8 @@ export const switchHand = (state=initialState, action={}) => {
       return { ...state,
         gameEnd: true,
         point: action.point, 
-        win: false
+        win: false,
+        lose: true
         }
 
     case 'DRAW':

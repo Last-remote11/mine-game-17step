@@ -22,10 +22,12 @@ import Ron from '../components/Buttons/Ron'
 import Result from '../containers/Result'
 import WaitBackdrop from '../components/WaitBackdrop'
 import Footer from '../components/Footer'
+import SnackBarGroup from '../components/SnackBarGroup'
+import Hint from '../components/Hint'
 
 const App = () => {
 
-  const background = useSelector(state => state.enableDarkMode.background)
+  const { background } = useSelector(state => state.enableDarkMode)
   const { phase, time, roomID, serverConnected } = useSelector(state => state.switchHand)
   // const cards = useSelector(state => state.switchHand.cards)
   // const dispatch = useDispatch()
@@ -69,6 +71,7 @@ const App = () => {
               <CardList />
               <Dora />
             </div>
+            <Hint />
             <MyHand />
           </div>
         )
@@ -85,6 +88,7 @@ const App = () => {
               <DecidedField />
               <Dora />
             </div>
+            <Hint />
             <Ron />
             <DecidedHand />
           </div>
@@ -106,6 +110,7 @@ const App = () => {
       <h1 className='title'>지뢰 게임 17보</h1>
       <div className = 'tl light-silver'>방 ID : {' '}{roomID}</div>
       <WaitBackdrop />
+      <SnackBarGroup />
       <Result />
       <WebSocket />
       <HowToPlay />
