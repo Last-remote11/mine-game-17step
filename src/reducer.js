@@ -222,9 +222,9 @@ export const switchHand = (state=initialState, action={}) => {
       state.pan = action.pan
       state.yakuNameArr = action.yakuNameArr
 
-      for (let j = 0; j < cardData.length; j++) {
-        if (j.order === action.uradora)
-        state.uradora = j
+      for (let card of cardData) {
+        if (card.order === action.uradora)
+        state.uradora = card
       }
 
       for (let i = 0; i < state.resultTiles.length; i++) {
@@ -249,6 +249,12 @@ export const switchHand = (state=initialState, action={}) => {
       state.pan = action.pan
       state.yakuNameArr = action.yakuNameArr
       state.uradora = action.uradora
+
+      for (let card of cardData) {
+        if (card.order === action.uradora)
+        state.uradora = card
+      }
+
       for (let i = 0; i < state.resultTiles.length; i++) {
         for (let j = 0; j < cardData.length; j++) {
           if (state.resultTiles[i] === cardData[j].order) {
