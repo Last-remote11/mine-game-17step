@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/mine-game-17step/static/css/main.4c221d7e.chunk.css",
-    "main.js": "/mine-game-17step/static/js/main.44f67d52.chunk.js",
-    "main.js.map": "/mine-game-17step/static/js/main.44f67d52.chunk.js.map",
+    "main.js": "/mine-game-17step/static/js/main.592d0fbe.chunk.js",
+    "main.js.map": "/mine-game-17step/static/js/main.592d0fbe.chunk.js.map",
     "runtime-main.js": "/mine-game-17step/static/js/runtime-main.99f62c63.js",
     "runtime-main.js.map": "/mine-game-17step/static/js/runtime-main.99f62c63.js.map",
     "static/css/2.fe359a49.chunk.css": "/mine-game-17step/static/css/2.fe359a49.chunk.css",
@@ -20,6 +20,6 @@
     "static/css/2.fe359a49.chunk.css",
     "static/js/2.638ef070.chunk.js",
     "static/css/main.4c221d7e.chunk.css",
-    "static/js/main.44f67d52.chunk.js"
+    "static/js/main.592d0fbe.chunk.js"
   ]
 }
