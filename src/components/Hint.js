@@ -189,13 +189,10 @@ const Hint = () => {
     }
     let tenpaiCardNum = findRoncard(trueCardsNum)
     console.log(tenpaiCardNum)
-    if (tenpaiCardNum.length === 0) {
-      alert('노텐')
-    } else {
+    if (tenpaiCardNum.length !== 0) {
       dispatch(hintAction(tenpaiCardNum))
       setAnchorEl(event.currentTarget);
     }
-    
   };
 
   const handlePopoverClose = () => {

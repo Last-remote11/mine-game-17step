@@ -14,12 +14,19 @@ const Ron = () => {
   cards.filter(card => { return card.myHand === true })
   .sort((a, b) => {return a.order - b.order})
 
+  let myDiscardCards = // 내가 버린 패(후리텐확인용)
+  cards.filter(card => { return card.discard === true })
+  .sort((a, b) => {return a.order - b.order})
+
   const emitRon = ( socket ) => {
 
     const ronCard = opponentDiscards[opponentDiscards.length - 1].order
     console.log(opponentDiscards.slice(0, opponentDiscards.length - 1))
 
-    if (opponentDiscards.slice(0, opponentDiscards.length - 1).map(e => e.order).includes(ronCard)) {
+    if (
+      opponentDiscards.slice(0, opponentDiscards.length - 1).map(e => e.order).includes(ronCard) ||
+      myDiscardCards.map(e => e.order).includes(ronCard)
+    ) {
       alert('후리텐입니다')
       return
     }
