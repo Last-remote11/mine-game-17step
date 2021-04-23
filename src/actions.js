@@ -168,6 +168,10 @@ export const newGameReq = () => async (dispatch) => {
   dispatch({ type: 'ACCEPT'})
 }
 
+export const playerLeft = () => ({
+  type: 'PLAYER_LEFT'
+})
+
 export const doNothing = () => ({
   type: DO_NOTHING
 })

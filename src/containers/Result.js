@@ -80,7 +80,12 @@ const Result = () => {
       }
         
       </div>
-        <h4>{myScore - point}{' '}→{' '}{myScore}점 </h4>
+      {
+        win
+        ? <h4>{myScore - point}{' '}→{' '}{myScore}점 </h4>
+        : <h4>{myScore + point}{' '}→{' '}{myScore}점 </h4>
+      }
+        
 
     {/* 타이틀 : 인생의 승리자 or 쳐발림 or 유국*/}
     {/* 패, 역, 점수 */}

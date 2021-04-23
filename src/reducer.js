@@ -248,6 +248,7 @@ export const switchHand = (state=initialState, action={}) => {
           }
         }
       }
+      state.resultCards.sort((a, b) => a - b)
       return { ...state,
         gameEnd: true,
         point: action.point, 
@@ -337,6 +338,9 @@ export const switchHand = (state=initialState, action={}) => {
       }
 
       // 기타 **************************************************************
+    
+    case 'PLAYER_LEFT':
+      return {...state}
 
     case DO_NOTHING:
       return state
