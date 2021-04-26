@@ -2,9 +2,14 @@
 
 ## 절찬 제작중
 
-create-react-app, redux, node.js, express.js, socket.io
+사용한 것들: create-react-app, redux, node.js, express.js, socket.io
 
-## 중요
+## 해야할것
+
+redis(혹은 dynamoDB)를 통해 방 정보를 key - value 형태로 저장
+
+
+## 참고
 
 따로 텐파이, 대기패 여부를 체크하는 기능이 없어 화료 가능 여부에 상관없이 론 버튼이 활성화됩니다.  플레이어분들의 역량을 믿고 게으름을 피운 것이라 볼 수 있습니다 죄송합니다.!
 
@@ -37,6 +42,8 @@ create-react-app, redux, node.js, express.js, socket.io
 ※장풍패는 없으며, 문풍패는 東/西 고정. 울기(후로) 없음(안깡도 불가), 후리텐 룰 적용. 유국만관 없음, 역만 중첩 가능. 더블리치와 단일 역의 더블역만 없음. 인화는 리치 일발로만 취급한다. (자가 리치를 걸기 전에 오야가 쏘였을 때도 리치로 취급)
 
 보다 자세한 룰은 이 룰의 출처이기도 한 나무위키를 참고하세요
+
+
 
 
 
