@@ -7,7 +7,7 @@
 ## 해야할것
 
 redis(혹은 dynamoDB)를 통해 방 정보를 key - value 형태로 저장
-
+ㅁㄴㅇ
 
 ## 참고
 
