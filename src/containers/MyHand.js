@@ -7,7 +7,7 @@ import { handToCard } from '../actions'
 
 const MyHand = () => {
 
-  const cards = useSelector(state => state.switchHand.cards)
+  const { cards } = useSelector(state => state.gameState)
 
   let trueCards = 
   cards.filter(card => { return card.myHand === true })
@@ -19,7 +19,7 @@ const MyHand = () => {
       <div className='MyHand-container'>
         {
           trueCards.map((card, i) => {
-            return (<Card card={card} key={i} switchHand={handToCard}></Card>)
+            return (<Card card={card} key={i} onClickCard={handToCard}></Card>)
           })
         }
       </div>

@@ -7,8 +7,7 @@ import './CardList.css'
 
 const CardList = () => {
 
-  const cards = useSelector(state => state.switchHand.cards)
-  const myTurn = useSelector(state => state.switchHand.myTurn)
+  const { cards, myTurn } = useSelector(state => state.gameState)
   const dispatch = useDispatch()
 
   let abandonedCards = 

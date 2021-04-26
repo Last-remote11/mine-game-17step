@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 const ScoreBoard = () => {
 
-  const { myScore, opponentScore, oya } = useSelector(state => state.switchHand)
+  const { myScore, opponentScore, oya } = useSelector(state => state.gameState)
 
 
   return (

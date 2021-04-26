@@ -32,15 +32,15 @@ const beginChi = (tilesCopy, chis, pons, heads) => {
         break
       }
     }
-    for( var i = 0; i < tempArr.length; i++) { 
-      if (tempArr[i] === t2) {  
-        tempArr.splice(i, 1); 
+    for( var j = 0; j < tempArr.length; j++) { 
+      if (tempArr[j] === t2) {  
+        tempArr.splice(j, 1); 
         break
       }
     }
-    for( var i = 0; i < tempArr.length; i++) { 
-      if ( tempArr[i] === t3) {  
-        tempArr.splice(i, 1); 
+    for( var k = 0; k < tempArr.length; k++) { 
+      if ( tempArr[k] === t3) {  
+        tempArr.splice(k, 1); 
         break
       }
     }

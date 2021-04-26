@@ -8,7 +8,7 @@ const Draw = () => {
 
   const dispatch = useDispatch()
 
-  const { opponentDiscards, myTurn, cards, oya, soon } = useSelector(state => state.switchHand)
+  const { opponentDiscards, myTurn, cards, oya, soon } = useSelector(state => state.gameState)
 
   let trueCards = 
   cards.filter(card => { return card.myHand === true })

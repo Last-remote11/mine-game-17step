@@ -7,7 +7,7 @@ import { doNothing } from '../actions'
 
 const DecidedHand = () => {
 
-  const cards = useSelector(state => state.switchHand.cards)
+  const { cards } = useSelector(state => state.gameState)
   
   let trueCards = 
   cards.filter(card => { return card.myHand === true })
@@ -19,7 +19,7 @@ const DecidedHand = () => {
       <div className='MyHand-container'>
         {
           trueCards.map((card, i) => {
-            return (<Card card={card} key={i} switchHand={doNothing}></Card>)
+            return (<Card card={card} key={i} onClickCard={doNothing}></Card>)
           })
         }
       </div>

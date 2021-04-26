@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 const SnackBarGroup = () => {
   const classes = useStyles();
 
-  const { isTwoUser, win, lose, myTurn } = useSelector(state => state.switchHand)
+  const { isTwoUser, win, lose, myTurn } = useSelector(state => state.gameState)
 
   const [isTwoUserSnack, setTwoUserSnack] = useState(false)
   const [winSnack, setWinSnack] = useState(false)

@@ -28,7 +28,7 @@ import Hint from '../components/Hint'
 const App = () => {
 
   const { background } = useSelector(state => state.enableDarkMode)
-  const { phase, time, roomID, serverConnected } = useSelector(state => state.switchHand)
+  const { phase, time, roomID, serverConnected } = useSelector(state => state.gameState)
   // const cards = useSelector(state => state.switchHand.cards)
   // const dispatch = useDispatch()
 

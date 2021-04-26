@@ -8,7 +8,7 @@ import { socket } from '../WebSocket'
 const StartButton = () => {
 
   const dispatch = useDispatch()
-  const cards = useSelector(state => state.switchHand.cards)
+  const { cards } = useSelector(state => state.gameState)
 
   const goTo2Phase = () => {
     let trueCards = cards.filter(card => { return card.myHand === true })

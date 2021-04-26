@@ -1,22 +1,20 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import Card from '../components/Card'
-import { doNothing } from '../actions'
-// import { MockDatabase } from '../components/MockDatabase'
 import './CardList.css'
 
 
 const CardList = () => {
 
-  const myDiscardsArray = useSelector(state => state.switchHand.myDiscards)
+  const { myDiscards } = useSelector(state => state.gameState)
 
   return (
     <div>
       <h2>내가 버린 패</h2>
       <div className='Discard-container'>
         {
-          myDiscardsArray.map((card, i) => {
-            return (<Card card={card} switchHand = {doNothing} key={i}></Card>)
+          myDiscards.map((card, i) => {
+            return (<Card card={card} key={i}></Card>)
           })
         }
       </div>

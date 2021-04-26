@@ -8,7 +8,7 @@ const StartButton = () => {
 
   const dispatch = useDispatch()
 
-  const { myName, isTwoUser} = useSelector(state => state.switchHand)
+  const { myName, isTwoUser} = useSelector(state => state.gameState)
 
   const emitStart = ( myName, socket) => {
     socket.emit('login', {

@@ -25,7 +25,7 @@ const Hint = () => {
   const classes = useStyles();
   const dispatch = useDispatch()
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const { cards, hint } = useSelector(state => state.switchHand)
+  const { cards, hint } = useSelector(state => state.gameState)
 //********************
   // const database = [
   //   1,2,3,4,5,6,7,8,9,
@@ -201,7 +201,6 @@ const Hint = () => {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
 
   return (
     <div>
@@ -237,7 +236,7 @@ const Hint = () => {
         <Typography className={classes.typography}>
         {
           hint.map((card, i) => {
-            return (<Card card={card} key={i} switchHand={doNothing}></Card>)
+            return (<Card card={card} key={i} clickCard={doNothing}></Card>)
           })
         }
         </Typography>

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { opponentDecide, opponentDiscard, oneUser, twoUser, startSuccess,
-   opponentAccept, win, lose, draw, playerLeft } from '../actions'
+import { 
+  opponentDecide, opponentDiscard, oneUser, twoUser, startSuccess,
+  opponentAccept, win, lose, draw, playerLeft } from '../actions'
 import { initialRoomID } from '../reducer'
 import { io } from 'socket.io-client'
 

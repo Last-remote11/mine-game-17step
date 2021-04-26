@@ -25,7 +25,18 @@ const getModalStyle = {
 
 const Result = () => {
 
-  const { point, yakuNameArr, uradora, gameEnd, yakuman, pan, win, resultCards, myScore, draw } = useSelector(state => state.switchHand)
+  const { 
+    point, 
+    yakuNameArr, 
+    uradora, 
+    gameEnd, 
+    yakuman, 
+    pan, 
+    win, 
+    resultCards, 
+    myScore, 
+    draw
+   } = useSelector(state => state.gameState)
   const dispatch = useDispatch()
   
   const classes = useStyles();

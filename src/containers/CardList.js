@@ -8,15 +8,11 @@ import './CardList.css'
 
 const CardList = () => {
 
-  const cards = useSelector(state => state.switchHand.cards)
-  const time = useSelector(state => state.switchHand.time)
-  const [, forceUpdate] = useReducer(x => x + 1, 0);
-
-  useEffect(() => setTimeout(forceUpdate(),1000), [time])
+  const { cards, time } = useSelector(state => state.gameState)
 
   let falseCards = 
-  cards.filter(card => { return card.myHand === false })
-  .sort((a, b) => {return a.order - b.order})
+    cards.filter(card => { return card.myHand === false })
+    .sort((a, b) => {return a.order - b.order})
 
   return (
     <div className='w-90'>
@@ -24,7 +20,7 @@ const CardList = () => {
       <div className='CardList-container'>
         {
           falseCards.map((card, i) => {
-            return (<Card card={card} switchHand = {cardToHand} key={i}></Card>)
+            return (<Card card={card} onClickCard = {cardToHand} key={i}></Card>)
           })
         }
       </div>

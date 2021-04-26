@@ -78,7 +78,7 @@ const initialState = {
 
 
 
-export const switchHand = (state=initialState, action={}) => {
+export const gameState = (state=initialState, action={}) => {
   
   switch (action.type) {
 

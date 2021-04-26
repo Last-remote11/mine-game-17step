@@ -5,7 +5,7 @@ import { socket } from './WebSocket'
 const Lobby = () => {
 
 
-  const isTwoUser = useSelector(state => state.switchHand.isTwoUser)
+  const { isTwoUser } = useSelector(state => state.gameState)
   
   const [joinID, setJoinID] = useState('')
 

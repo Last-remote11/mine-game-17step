@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 
 const WaitBackdrop = () => {
 
-  const { pending } = useSelector(state => state.switchHand)
+  const { pending } = useSelector(state => state.gameState)
 
   const classes = useStyles();
   // const [open, setOpen] = React.useState(false);

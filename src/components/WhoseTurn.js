@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 const WhoseTurn = () => {
 
-  const { myTurn, soon } = useSelector(state => state.switchHand)
+  const { myTurn, soon } = useSelector(state => state.gameState)
 
   return (
     <div>
