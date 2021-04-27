@@ -22,7 +22,7 @@ const StartButton = () => {
   return (
     <div>
       <Button variant="contained" color="primary" onClick={() => goTo2Phase()}>
-        완료
+        패 선택 완료
       </Button>
     </div>
   );

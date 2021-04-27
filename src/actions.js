@@ -42,8 +42,9 @@ export const oneUser = () => ({
   type: ONE_USER
 })
 
-export const twoUser = () => ({
-  type: TWO_USER
+export const twoUser = (roomID) => ({
+  type: TWO_USER,
+  payload: roomID
 })
 
 export const startGameReq = () => ({

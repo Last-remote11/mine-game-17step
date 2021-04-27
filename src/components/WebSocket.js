@@ -12,16 +12,15 @@ export const socket = io("https://intense-brushlands-31556.herokuapp.com/");
 
 const WebSocket = () => {
 
-  const dispatch = useDispatch()
-
   const [, setConnected] = useState(false);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     socket.emit('joinroom', initialRoomID);
     const eventHandler = () => setConnected(true);
     socket.on('joined', eventHandler);
     return () => {
-        socket.off('joined', eventHandler);
+      socket.off('joined', eventHandler);
     };
   }, [dispatch]);
 
@@ -33,8 +32,8 @@ const WebSocket = () => {
   }, [dispatch])
 
   useEffect(()=> { // 유저 모임
-    socket.on('twoUser', () => {
-      dispatch(twoUser())
+    socket.on('twoUser', (roomID) => {
+      dispatch(twoUser(roomID))
     })
   }, [dispatch])
   

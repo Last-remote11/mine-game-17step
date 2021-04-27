@@ -123,7 +123,7 @@ export const gameState = (state=initialState, action={}) => {
       return {...state, isTwoUser: false, serverConnected: true}
 
     case TWO_USER:
-      return {...state, isTwoUser: true}
+      return {...state, isTwoUser: true, roomID: action.payload}
       
     case START_FAILED:
       return {...state, pending: action.payload}

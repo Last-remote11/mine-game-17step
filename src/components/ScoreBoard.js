@@ -7,11 +7,11 @@ const ScoreBoard = () => {
 
 
   return (
-    <table style={{fontsize: '20px'}}>
+    <table style={{fontsize: '30px'}}>
       <tbody>
       <tr>
-        <th>내점수{oya ? '東' : '西'}</th>
-        <th>상대점수{oya ? '西' : '東'}</th>
+        <th>내점수{' '}{oya ? '東' : '西'}</th>
+        <th>상대점수{' '}{oya ? '西' : '東'}</th>
       </tr>
       <tr>
         <th>{myScore}</th>
