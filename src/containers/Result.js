@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import { socket } from '../components/WebSocket'
+import Card from '../components/Card'
 import { accept } from '../actions'
-import Modal from '@material-ui/core/Modal';
+import Modal from '@material-ui/core/Modal'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -68,12 +69,15 @@ const Result = () => {
         : <h1>쳐발림</h1>
       }
       <div className='Result-container'>
-        {resultCards.map(e => {
-          return(      
-          <div className='tc dib br3 ma1 bw2 shadow-5'>
-            <img src={e.img} width='39.6px' height='70.8px' alt='card' className='br3 cards'/> 
-            {/* 33:59 */}
-          </div>)}
+        {resultCards.map((card, i) => {
+          return(
+            <Card card={card} width='39.6px' height='70.8px'></Card>
+          
+          // <div className='tc dib br3 ma1 bw2 shadow-5'>
+          //   <img src={e.img} width='39.6px' height='70.8px' alt='card' className='br3 cards'/> 
+          //   {/* 33:59 */}
+          // </div>
+          )}
         )}
       </div>
       우라도라

@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import Card from '../components/Card'
 import { cardToHand } from '../actions'
@@ -8,7 +8,7 @@ import './CardList.css'
 
 const CardList = () => {
 
-  const { cards, time } = useSelector(state => state.gameState)
+  const { cards } = useSelector(state => state.gameState)
 
   let falseCards = 
     cards.filter(card => { return card.myHand === false })

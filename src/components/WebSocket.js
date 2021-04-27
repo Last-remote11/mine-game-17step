@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 
 import { 
   opponentDecide, opponentDiscard, oneUser, twoUser, startSuccess,
-  opponentAccept, win, lose, draw, playerLeft } from '../actions'
+  opponentAccept, win, lose, draw } from '../actions'
 import { initialRoomID } from '../reducer'
 import { io } from 'socket.io-client'
 
@@ -113,7 +113,7 @@ const WebSocket = () => {
   useEffect(()=> { // 최종패배
     socket.on('playerLeft', () => {
       alert('상대방과의 연결이 끊어졌습니다.')
-      window.location.reload(false)
+      setTimeout(window.location.reload(), 3000)
     })
   }, [dispatch])
 
