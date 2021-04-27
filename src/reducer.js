@@ -1,25 +1,3 @@
-import { 
-  ENABLE_DARKMODE,
-  CHANGE_PHASE,
-  CARD_TO_HAND,
-  HAND_TO_CARD,
-  DO_NOTHING,
-  DISCARD_PENDING,
-  DISCARD_SUCCESS,
-  DISCARD_FAILED,
-  DEAL_IN,
-  START_PENDING,
-  START_SUCCESS,
-  START_FAILED,
-  WS_CONNECT,
-  OPPONENT_DECIDE,
-  OPPONENT_DISCARD,
-  INPUT_NAME,
-  SET_ROOMID,
-  ONE_USER,
-  TWO_USER
-} from './constants'
-
 import { cardData } from './components/MockDatabase'
 
 const initialStateBackground = {
@@ -27,7 +5,7 @@ const initialStateBackground = {
 }
 
 export const enableDarkMode = (state = initialStateBackground, action={}) => {
-  if (action.type === ENABLE_DARKMODE) {
+  if (action.type === 'ENABLE_DARKMODE') {
     switch (state.background) {
       case 'body { background-color: #1a1a1a; }':
         return {...state, background: 'body { background-color: #e6e6e6; }'}
@@ -84,16 +62,16 @@ export const gameState = (state=initialState, action={}) => {
 
     // 로그인, 배패 단계***********************************************
 
-    case INPUT_NAME:
+    case 'INPUT_NAME':
       return {...state, myName: action.payload}
     
-    case SET_ROOMID:
+    case 'SET_ROOMID':
       return {...state, roomID: action.payload}
 
-    case START_PENDING:
+    case 'START_PENDING':
       return {...state, pending: true}
 
-    case START_SUCCESS:
+    case 'START_SUCCESS':
       for (let i of action.payload.playerHand) {
         for (let j of cardData) {
           if (i === j.order) {
@@ -119,26 +97,32 @@ export const gameState = (state=initialState, action={}) => {
       }
       return {...state, phase: 1, pending: false, time: Date.now(), gameEnd: false, resultCards: []}
 
-    case ONE_USER:
+    case 'ONE_USER':
       return {...state, isTwoUser: false, serverConnected: true}
 
-    case TWO_USER:
+    case 'TWO_USER':
       return {...state, isTwoUser: true, roomID: action.payload}
       
-    case START_FAILED:
+    case 'START_FAILED':
       return {...state, pending: action.payload}
 
-    case CHANGE_PHASE:
+    case 'ME_DECIDE':
       if (state.opponentDecide) {
-        return {...state, phase: action.payload, meDecide: true, pending: false}
+        return {...state, phase: 2, meDecide: true, pending: false}
       } else {
-        return {...state, meDecide: true}
+        return {...state, meDecide: true, pending: true}
       }
 
 
+    case 'OPPONENT_DECIDE':
+      if (state.meDecide) {
+        return {...state, opponentDecide: true, phase: 2, pending: false}
+      } else {
+        return {...state, opponentDecide: true}
+      }
     // 조패 단계******************************************************
 
-    case CARD_TO_HAND:
+    case 'CARD_TO_HAND':
       for (let i = 0; i < state.cards.length; i++) {
         if (state.cards[i].order === action.payload.order && state.cards[i].myHand === false) {
           state.cards[i].myHand = true
@@ -147,7 +131,7 @@ export const gameState = (state=initialState, action={}) => {
       }
       return {...state, time : Date.now()}
 
-    case HAND_TO_CARD:
+    case 'HAND_TO_CARD':
       for (let idx = 0; idx < state.cards.length; idx++) {
         if (state.cards[idx].order === action.payload.order && state.cards[idx].myHand === true) {
           state.cards[idx].myHand = false
@@ -157,12 +141,7 @@ export const gameState = (state=initialState, action={}) => {
       return {...state, time : Date.now()}
 
     
-    case OPPONENT_DECIDE:
-      if (state.meDecide) {
-        return {...state, opponentDecide: true, phase: 2, pending: false}
-      } else {
-        return {...state, opponentDecide: true}
-      }
+
       
     case 'HINT':
       for (let i of cardData) {
@@ -179,10 +158,10 @@ export const gameState = (state=initialState, action={}) => {
 
     // 패 하나씩 버리는 단계 *********************************************
 
-    case DISCARD_PENDING:
+    case 'DISCARD_PENDING':
       return {...state, pending: true, time: Date.now()}
         
-    case DISCARD_SUCCESS:
+    case 'DISCARD_SUCCESS':
       for (let i = 0; i < state.cards.length; i++) {
         if (state.cards[i].order === action.payload.order && state.cards[i].myHand === false && !state.cards[i].discard) {
           state.cards[i].discard = true
@@ -195,10 +174,10 @@ export const gameState = (state=initialState, action={}) => {
       }
       return {...state, time : Date.now(), myTurn: false, pending: false}
 
-    case DISCARD_FAILED:
+    case 'DISCARD_FAILED':
       return {...state, error: action.payload}
 
-    case OPPONENT_DISCARD:
+    case 'OPPONENT_DISCARD':
       for (let i = 0; i < cardData.length; i++) {
         if (cardData[i].order === action.payload.order) {
           state.opponentDiscards.push(action.payload)
@@ -209,18 +188,7 @@ export const gameState = (state=initialState, action={}) => {
         state.soon++
       }
       return {...state, myTurn: true}
-      
-
-    case DEAL_IN:
-      for (let i = 0; i < state.cards.length; i++) {
-        if (state.cards[i].order === action.payload.card.order && state.cards[i].myHand === false && !state.cards[i].discard) {
-          state.cards[i].discard = true
-          break
-        }
-      }
-      state.myScore -= action.payload.score
-      state.opponentScore += action.payload.score
-      return {...state, gameEnd: true, score: action.payload.card.score, pending: false, time: Date.now()}
+    
 
     case 'RON':
       return {...state, pending: true, myTurn: false}
@@ -228,15 +196,15 @@ export const gameState = (state=initialState, action={}) => {
       // 개별 결과
 
     case 'WIN':
-      state.myScore += action.point
-      state.opponentScore -= action.point
-      state.yakuman = action.yakuman
-      state.resultTiles = action.tiles
-      state.pan = action.pan
-      state.yakuNameArr = action.yakuNameArr
+      state.myScore += action.payload.point
+      state.opponentScore -= action.payload.point
+      state.yakuman = action.payload.yakuman
+      state.resultTiles = action.payload.tiles
+      state.pan = action.payload.pan
+      state.yakuNameArr = action.payload.yakuNameArr
 
       for (let card of cardData) {
-        if (card.order === action.uradora)
+        if (card.order === action.payload.uradora)
         state.uradora = card
       }
 
@@ -251,22 +219,22 @@ export const gameState = (state=initialState, action={}) => {
       state.resultCards.sort((a, b) => a - b)
       return { ...state,
         gameEnd: true,
-        point: action.point, 
+        point: action.payload.point, 
         win: true,
         lose: false,
         }
 
     case 'LOSE':
-      state.myScore -= action.point
-      state.opponentScore += action.point
-      state.yakuman = action.yakuman
-      state.resultTiles = action.tiles
-      state.pan = action.pan
-      state.yakuNameArr = action.yakuNameArr
-      state.uradora = action.uradora
+      state.myScore -= action.payload.point
+      state.opponentScore += action.payload.point
+      state.yakuman = action.payload.yakuman
+      state.resultTiles = action.payload.tiles
+      state.pan = action.payload.pan
+      state.yakuNameArr = action.payload.yakuNameArr
+      state.uradora = action.payload.uradora
 
       for (let card of cardData) {
-        if (card.order === action.uradora)
+        if (card.order === action.payload.uradora)
         state.uradora = card
       }
 
@@ -280,7 +248,7 @@ export const gameState = (state=initialState, action={}) => {
       }
       return { ...state,
         gameEnd: true,
-        point: action.point, 
+        point: action.payload.point, 
         win: false,
         lose: true
         }
@@ -342,10 +310,10 @@ export const gameState = (state=initialState, action={}) => {
     case 'PLAYER_LEFT':
       return {...state}
 
-    case DO_NOTHING:
+    case 'DO_NOTHING':
       return state
 
-    case WS_CONNECT:
+    case 'WS_CONNECT':
       return {...state, connect: true}
 
     default:
