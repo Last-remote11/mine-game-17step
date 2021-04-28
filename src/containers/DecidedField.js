@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { discard, doNothing } from '../actions'
+import { discard, doNothing } from '../reducer'
 import { socket } from '../components/WebSocket'
 import './CardList.css'
 

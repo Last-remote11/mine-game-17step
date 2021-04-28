@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import Card from '../components/Card'
-import { cardToHand } from '../actions'
+import { cardToHand } from '../reducer'
 // import { MockDatabase } from '../components/MockDatabase'
 import './CardList.css'
 

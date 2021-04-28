@@ -10,7 +10,7 @@ const CardList = () => {
 
   return (
     <div className='w-10'>
-      <h2>도라</h2>
+      <h2>도라(표시패)</h2>
       <div className='Dora-container'>
         <Card card={dora}></Card>
       </div>

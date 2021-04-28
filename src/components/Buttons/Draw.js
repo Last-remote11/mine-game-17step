@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { ron } from '../../actions'
+import { ron } from '../../reducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { socket } from '../WebSocket'
 

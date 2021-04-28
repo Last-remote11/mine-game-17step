@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import { socket } from '../components/WebSocket'
 import Card from '../components/Card'
-import { accept } from '../actions'
+import { accept } from '../reducer'
 import Modal from '@material-ui/core/Modal'
 
 

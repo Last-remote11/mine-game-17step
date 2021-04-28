@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 
 import { 
   opponentDecide, opponentDiscard, oneUser, twoUser, startSuccess,
-  opponentAccept, win, lose, draw } from '../actions'
+  opponentAccept, win, lose, draw } from '../reducer'
 import { initialRoomID } from '../reducer'
 import { io } from 'socket.io-client'
 
@@ -27,7 +27,7 @@ const WebSocket = () => {
 
   useEffect(()=> { // 유저 안모임(방에 1명있다)
     socket.on('oneUser', () => {
-      dispatch(oneUser())
+      return dispatch(oneUser())
     })
   }, [dispatch])
 
@@ -59,7 +59,7 @@ const WebSocket = () => {
 
   useEffect(()=> {
     socket.on('opponentDecide', () => {
-      dispatch(opponentDecide())
+      return dispatch(opponentDecide())
     })
   }, [dispatch])
  

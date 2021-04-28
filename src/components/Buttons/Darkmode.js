@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { enableDarkMode } from '../../actions'
+import { enableDarkMode } from '../../reducer'
 import { useDispatch } from 'react-redux'
 import { Switch, FormControlLabel } from '@material-ui/core';
 

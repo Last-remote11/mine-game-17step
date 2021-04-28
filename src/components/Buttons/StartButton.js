@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { startGameReq } from '../../actions'
+import { startGameReq } from '../../reducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { socket } from '../WebSocket'
 
@@ -14,7 +14,7 @@ const StartButton = () => {
     socket.emit('login', {
       name: myName
     })
-    dispatch(startGameReq())
+    return dispatch(startGameReq())
   }
 
   return (

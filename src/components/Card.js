@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux'
-import { doNothing } from '../actions'
+import { doNothing } from '../reducer'
 
 const Card = ({ card, onClickCard = doNothing(), width='66px', height='118px' }) => {
 

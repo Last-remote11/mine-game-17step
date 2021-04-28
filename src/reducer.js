@@ -1,33 +1,80 @@
+import { createReducer, createAction } from '@reduxjs/toolkit'
 import { cardData } from './components/MockDatabase'
+import { socket } from './components/WebSocket'
+
+// 로그인, 배패 단계 **********************************************
+
+export const setName = createAction('INPUT_NAME')
+export const oneUser = createAction('ONE_USER')
+export const twoUser = createAction('TWO_USER')
+export const startGameReq = createAction('START_PENDING')
+export const startSuccess = createAction('START_SUCCESS')
+
+// 조패 단계 *********************************************
+
+export const cardToHand = createAction('CARD_TO_HAND')
+export const handToCard = createAction('HAND_TO_CARD')
+export const decideHand = createAction('DECIDE_HAND')
+export const opponentDecide = createAction('OPPONENT_DECIDE')
+
+// 조패끝 결정 *********************************************
+
+export const meDecide = createAction('ME_DECIDE')
+export const hintAction = createAction('HINT')
+export const initHint = createAction('INIT_HINT')
+
+// 버림 단계 ***********************************************
+
+export const discard = createAction('DISCARD_SUCCESS', function prepare(card) {
+  socket.emit('discard', card)
+  return {
+    payload: card
+  }
+})
+export const opponentDiscard = createAction('OPPONENT_DISCARD')
+export const ron = createAction('RON')
+
+
+// 결과 ******************************************************
+
+export const win = createAction('WIN')
+export const lose = createAction('LOSE')
+export const draw = createAction('DRAW')
+export const accept = createAction('ACCEPT')
+export const opponentAccept = createAction('OPPONENT_ACCEPT')
+export const newGameReq = createAction('ACCEPT')
+export const playerLeft = createAction('PLAYER_LEFT')
+export const doNothing = createAction('DO_NOTHING')
+export const enableDarkMode = createAction('ENABLE_DARKMODE')
+
+//
 
 const initialStateBackground = {
   background: 'body { background-color: #1a1a1a; }'
 }
 
-export const enableDarkMode = (state = initialStateBackground, action={}) => {
-  if (action.type === 'ENABLE_DARKMODE') {
-    switch (state.background) {
-      case 'body { background-color: #1a1a1a; }':
-        return {...state, background: 'body { background-color: #e6e6e6; }'}
-      case 'body { background-color: #e6e6e6; }':
-        return {...state, background: 'body { background-color: #1a1a1a; }'}
-      default:
-        return state
-    }
-  }
-  else {
-    return state
-  }
-}
+export const enableDarkModeReducer = createReducer(initialStateBackground, (builder) => {
+  builder
+    .addCase(enableDarkMode, (state, action) => {
+      switch (state.background) {
+        case 'body { background-color: #1a1a1a; }':
+          state.background = 'body { background-color: #e6e6e6; }'
+          break
+        case 'body { background-color: #e6e6e6; }':
+          state.background = 'body { background-color: #1a1a1a; }'
+      }
+    })
+})
 
 export const initialRoomID = Math.floor(100000 + Math.random() * 900000)
 
-const initialState = {
+const initialGameState = {
   serverConnected: false,
   cards: [],
   time: true,
   gameEnd: false,
   phase: 0,
+  pending: false,
   myScore: 35000,
   opponentScore: 35000,
   dora: null,
@@ -54,24 +101,12 @@ const initialState = {
   hint:[]
 }
 
-
-
-export const gameState = (state=initialState, action={}) => {
-  
-  switch (action.type) {
-
-    // 로그인, 배패 단계***********************************************
-
-    case 'INPUT_NAME':
-      return {...state, myName: action.payload}
-    
-    case 'SET_ROOMID':
-      return {...state, roomID: action.payload}
-
-    case 'START_PENDING':
-      return {...state, pending: true}
-
-    case 'START_SUCCESS':
+export const gameState = createReducer(initialGameState, (builder) => {
+  builder
+    .addCase(startGameReq, (state) => {
+      state.pending = true
+    })
+    .addCase(startSuccess, (state, action) => {
       for (let i of action.payload.playerHand) {
         for (let j of cardData) {
           if (i === j.order) {
@@ -95,55 +130,58 @@ export const gameState = (state=initialState, action={}) => {
         state.myTurn = true
         state.oya = true
       }
-      return {...state, phase: 1, pending: false, time: Date.now(), gameEnd: false, resultCards: []}
-
-    case 'ONE_USER':
-      return {...state, isTwoUser: false, serverConnected: true}
-
-    case 'TWO_USER':
-      return {...state, isTwoUser: true, roomID: action.payload}
-      
-    case 'START_FAILED':
-      return {...state, pending: action.payload}
-
-    case 'ME_DECIDE':
+      state.phase = 1 
+      state.pending = false
+      state.time = Date.now()
+      state.gameEnd = false
+      state.resultCards = []
+    })
+    .addCase(oneUser, (state) => {
+      state.isTwoUser = false
+      state.serverConnected = true
+    })
+    .addCase(twoUser, (state, action) => {
+      state.isTwoUser = true
+      state.roomID = action.payload
+    })
+    .addCase(meDecide, (state) => {
       if (state.opponentDecide) {
-        return {...state, phase: 2, meDecide: true, pending: false}
+        state.phase = 2
+        state.meDecide = true
+        state.pending = false
       } else {
-        return {...state, meDecide: true, pending: true}
+        state.meDecide = true
+        state.pending = true
       }
-
-
-    case 'OPPONENT_DECIDE':
+    })
+    .addCase(opponentDecide, (state) => {
       if (state.meDecide) {
-        return {...state, opponentDecide: true, phase: 2, pending: false}
+        state.opponentDecide = true
+        state.phase = 2
+        state.pending = false
       } else {
-        return {...state, opponentDecide: true}
+        state.opponentDecide = true
       }
-    // 조패 단계******************************************************
-
-    case 'CARD_TO_HAND':
+    })
+    .addCase(cardToHand, (state, action) => {
       for (let i = 0; i < state.cards.length; i++) {
         if (state.cards[i].order === action.payload.order && state.cards[i].myHand === false) {
           state.cards[i].myHand = true
           break
         }
       }
-      return {...state, time : Date.now()}
-
-    case 'HAND_TO_CARD':
+      state.time = Date.now()
+    })
+    .addCase(handToCard, (state, action) => {
       for (let idx = 0; idx < state.cards.length; idx++) {
         if (state.cards[idx].order === action.payload.order && state.cards[idx].myHand === true) {
           state.cards[idx].myHand = false
           break
         }
       }
-      return {...state, time : Date.now()}
-
-    
-
-      
-    case 'HINT':
+      state.time = Date.now()
+    })
+    .addCase(hintAction, (state, action) => {
       for (let i of cardData) {
         for (let j of action.payload) {
           if (i.order === j) {
@@ -151,17 +189,11 @@ export const gameState = (state=initialState, action={}) => {
           }
         }
       }
-      return {...state}
-
-    case 'INIT_HINT':
-      return {...state, hint:[]}
-
-    // 패 하나씩 버리는 단계 *********************************************
-
-    case 'DISCARD_PENDING':
-      return {...state, pending: true, time: Date.now()}
-        
-    case 'DISCARD_SUCCESS':
+    })
+    .addCase(initHint, (state) => {
+      state.hint = []
+    })
+    .addCase(discard, (state, action) => {
       for (let i = 0; i < state.cards.length; i++) {
         if (state.cards[i].order === action.payload.order && state.cards[i].myHand === false && !state.cards[i].discard) {
           state.cards[i].discard = true
@@ -172,12 +204,11 @@ export const gameState = (state=initialState, action={}) => {
       if (state.oya) {
         state.soon++
       }
-      return {...state, time : Date.now(), myTurn: false, pending: false}
-
-    case 'DISCARD_FAILED':
-      return {...state, error: action.payload}
-
-    case 'OPPONENT_DISCARD':
+      state.time = Date.now()
+      state.myTurn = false
+      state.pending = false
+    })
+    .addCase(opponentDiscard, (state, action) => {
       for (let i = 0; i < cardData.length; i++) {
         if (cardData[i].order === action.payload.order) {
           state.opponentDiscards.push(action.payload)
@@ -187,15 +218,12 @@ export const gameState = (state=initialState, action={}) => {
       if (!state.oya) {
         state.soon++
       }
-      return {...state, myTurn: true}
-    
-
-    case 'RON':
+      state.myTurn = true
+    })
+    .addCase(ron, (state) => {
       return {...state, pending: true, myTurn: false}
-
-      // 개별 결과
-
-    case 'WIN':
+    })
+    .addCase(win, (state, action) => {
       state.myScore += action.payload.point
       state.opponentScore -= action.payload.point
       state.yakuman = action.payload.yakuman
@@ -217,14 +245,12 @@ export const gameState = (state=initialState, action={}) => {
         }
       }
       state.resultCards.sort((a, b) => a - b)
-      return { ...state,
-        gameEnd: true,
-        point: action.payload.point, 
-        win: true,
-        lose: false,
-        }
-
-    case 'LOSE':
+      state.gameEnd = true
+      state.point = action.payload.point
+      state.win = true
+      state.lose = false
+    })
+    .addCase(lose, (state, action) => {
       state.myScore -= action.payload.point
       state.opponentScore += action.payload.point
       state.yakuman = action.payload.yakuman
@@ -246,19 +272,16 @@ export const gameState = (state=initialState, action={}) => {
           }
         }
       }
-      return { ...state,
-        gameEnd: true,
-        point: action.payload.point, 
-        win: false,
-        lose: true
-        }
-
-    case 'DRAW':
+      state.gameEnd = true
+      state.point = action.payload.point
+      state.win = false
+      state.lose = true
+    })
+    .addCase(draw, (state) => {
       state.draw = true
-      return {...state, gameEnd: true}
-      // 새게임
-
-    case 'ACCEPT':
+      state.gameEnd = true
+    })
+    .addCase(accept, (state, action) => {
       if (state.opponentScore < 0) {
         alert('승리')
       if (state.myScore < 0) {
@@ -266,84 +289,50 @@ export const gameState = (state=initialState, action={}) => {
       }
       }
       if (state.opponentAccept) {
-        return {...state,
-          phase: 0,
-          cards: [],
-          gameEnd: false,
-          dora: null,
-          myDiscards: [],
-          opponentDiscards: [],
-          meDecide: false,
-          opponentDecide: false,
-          myTurn: true,
-          meAccept: false,
-          draw: false,
-          soon: 0,
-          gook: state.gook + 1 }
+          state.phase = 0
+          state.cards = []
+          state.gameEnd = false
+          state.dora = null
+          state.myDiscards = []
+          state.opponentDiscards = []
+          state.meDecide = false
+          state.opponentDecide = false
+          state.myTurn = true
+          state.meAccept = false
+          state.draw = false
+          state.soon = 0
+          state.gook = state.gook + 1 
       } else {
-        return {...state,
-          phase: 0,
-          pending: true,
-          cards: [],
-          gameEnd: false,
-          dora: null,
-          myDiscards: [],
-          opponentDiscards: [],
-          meDecide: false,
-          opponentDecide: false,
-          myTurn: true,
-          meAccept: true,
-          draw: false,
-          soon: 0,
-          gook: state.gook + 1 }
-      }
+          state.phase = 0
+          state.pending = true
+          state.cards = []
+          state.gameEnd = false
+          state.dora = null
+          state.myDiscards = []
+          state.opponentDiscards = []
+          state.meDecide = false
+          state.opponentDecide = false
+          state.myTurn = true
+          state.meAccept = true
+          state.draw = false
+          state.soon = 0
+          state.gook = state.gook + 1 }
 
-    case 'OPPONENT_ACCEPT':
+    })
+    .addCase(opponentAccept, (state, action) => {
       if (state.meAccept) {
-        return {...state, phase: 0, opponentAccept: true, pending: false, meAccept: false}
+        state.phase = 0
+        state.opponentAccept = true
+        state.pending = false
+        state.meAccept = false
       } else {
-        return {...state, opponentAccept: true}
+        state.opponentAccept = true
       }
+    })
+    .addCase(doNothing, (state) => {
+      state = state
+    })
+    // .addCase(, (state, action) => {
 
-      // 기타 **************************************************************
-    
-    case 'PLAYER_LEFT':
-      return {...state}
-
-    case 'DO_NOTHING':
-      return state
-
-    case 'WS_CONNECT':
-      return {...state, connect: true}
-
-    default:
-      return state
-  }
-}
-
-
-// const initialDiscarded = {
-//   discarded: [],
-//   pending: false,
-//   time: true
-// }
-
-// export const discardOrRon = (state=initialDiscarded, action={}) => {
-
-//   switch (action.type) {
-
-//     case DISCARD_PENDING:
-//       return {...state, isPending: true, time: Date.now()}
-
-//     case DISCARD_SUCCESS: // 안쏘임
-//       state.discarded.push(action.payload)
-//       return {...state, isPending: false, time: Date.now()}
-
-//     case DEAL_IN:
-//       return {...state, gameEnd: true, score: action.payload.score, isPending: false, time: Date.now()}
-
-//     default:
-//       return state
-//   }
-
-// }
+    // })
+}) 

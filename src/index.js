@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
-import { createLogger } from 'redux-logger'
+import logger from 'redux-logger'
 import thunk from 'redux-thunk';
 import { 
-  enableDarkMode,
+  enableDarkModeReducer,
   gameState
 } from './reducer'
 import './index.css';
@@ -13,11 +14,16 @@ import App from './containers/App';
 import reportWebVitals from './reportWebVitals';
 import 'tachyons';
 
-const logger = createLogger()
 
-const rootReducer = combineReducers({enableDarkMode, gameState})
 
-const store = createStore(rootReducer, applyMiddleware(logger, thunk))
+const reducer = {enableDarkMode: enableDarkModeReducer, gameState}
+
+// const store = createStore(rootReducer, applyMiddleware(logger, thunk))
+
+const store = configureStore({
+  reducer: reducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+})
 
 ReactDOM.render(
   <Provider store={store}>
