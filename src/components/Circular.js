@@ -17,7 +17,7 @@ export default function Circular() {
 
   return (
     <div className={classes.root}>
-      <CircularProgress /> 상대방의 결정을 기다리는중...
+      <CircularProgress />
     </div>
   );
 }

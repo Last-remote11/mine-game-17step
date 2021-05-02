@@ -24,6 +24,7 @@ import WaitBackdrop from '../components/WaitBackdrop'
 import Footer from '../components/Footer'
 import SnackBarGroup from '../components/SnackBarGroup'
 import Hint from '../components/Hint'
+import Circular from '../components/Circular'
 
 const App = () => {
 
@@ -57,7 +58,9 @@ const App = () => {
         return (
           <div>
             <div className='routeTest'></div>
-            {serverConnected ? <h4 style={{color:'blue'}}>연결되었습니다.</h4> : <h4 style={{color:'red'}}>서버에 접속중..</h4>}
+            {serverConnected 
+            ? <h4 style={{color:'blue'}}>연결되었습니다.</h4> 
+            : <h4 style={{color:'red'}}><Circular />서버에 접속중..</h4>}
             <Lobby />
             <StartButton />
           </div>
@@ -77,7 +80,7 @@ const App = () => {
         )
       case 2: // 서로 조패 완료 후, 하나씩 버리는 단계
         return (
-          <div className='routeTest'>2페이즈!
+          <div className='routeTest'>
             <ScoreBoard />
             <WhoseTurn /> 
             <div className='Discard-container2'>
@@ -88,9 +91,9 @@ const App = () => {
               <DecidedField />
               <Dora />
             </div>
-            <Hint />
-            <Ron />
-            <DecidedHand />
+              <Hint />
+              <Ron />
+              <DecidedHand />
           </div>
         )
       default:

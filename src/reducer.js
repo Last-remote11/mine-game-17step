@@ -194,6 +194,7 @@ export const gameState = createReducer(initialGameState, (builder) => {
       state.hint = []
     })
     .addCase(discard, (state, action) => {
+      state.myTurn = false
       for (let i = 0; i < state.cards.length; i++) {
         if (state.cards[i].order === action.payload.order && state.cards[i].myHand === false && !state.cards[i].discard) {
           state.cards[i].discard = true
@@ -205,7 +206,6 @@ export const gameState = createReducer(initialGameState, (builder) => {
         state.soon++
       }
       state.time = Date.now()
-      state.myTurn = false
       state.pending = false
     })
     .addCase(opponentDiscard, (state, action) => {
@@ -317,7 +317,6 @@ export const gameState = createReducer(initialGameState, (builder) => {
           state.draw = false
           state.soon = 0
           state.gook = state.gook + 1 }
-
     })
     .addCase(opponentAccept, (state, action) => {
       if (state.meAccept) {
