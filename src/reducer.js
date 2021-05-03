@@ -26,7 +26,6 @@ export const initHint = createAction('INIT_HINT')
 // 버림 단계 ***********************************************
 
 export const discard = createAction('DISCARD_SUCCESS', function prepare(card) {
-  socket.emit('discard', card)
   return {
     payload: card
   }
@@ -194,6 +193,7 @@ export const gameState = createReducer(initialGameState, (builder) => {
       state.hint = []
     })
     .addCase(discard, (state, action) => {
+      socket.emit('discard', action.payload)
       state.myTurn = false
       for (let i = 0; i < state.cards.length; i++) {
         if (state.cards[i].order === action.payload.order && state.cards[i].myHand === false && !state.cards[i].discard) {
