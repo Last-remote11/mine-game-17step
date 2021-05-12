@@ -105,6 +105,7 @@ export const gameState = createReducer(initialGameState, (builder) => {
     .addCase(startGameReq, (state) => {
       state.pending = true
     })
+
     .addCase(startSuccess, (state, action) => {
       for (let i of action.payload.playerHand) {
         for (let j of cardData) {
@@ -135,14 +136,17 @@ export const gameState = createReducer(initialGameState, (builder) => {
       state.gameEnd = false
       state.resultCards = []
     })
+
     .addCase(oneUser, (state) => {
       state.isTwoUser = false
       state.serverConnected = true
     })
+
     .addCase(twoUser, (state, action) => {
       state.isTwoUser = true
       state.roomID = action.payload
     })
+
     .addCase(meDecide, (state) => {
       if (state.opponentDecide) {
         state.phase = 2
@@ -153,6 +157,7 @@ export const gameState = createReducer(initialGameState, (builder) => {
         state.pending = true
       }
     })
+
     .addCase(opponentDecide, (state) => {
       if (state.meDecide) {
         state.opponentDecide = true
@@ -162,6 +167,7 @@ export const gameState = createReducer(initialGameState, (builder) => {
         state.opponentDecide = true
       }
     })
+
     .addCase(cardToHand, (state, action) => {
       for (let i = 0; i < state.cards.length; i++) {
         if (state.cards[i].order === action.payload.order && state.cards[i].myHand === false) {
@@ -171,6 +177,7 @@ export const gameState = createReducer(initialGameState, (builder) => {
       }
       state.time = Date.now()
     })
+
     .addCase(handToCard, (state, action) => {
       for (let idx = 0; idx < state.cards.length; idx++) {
         if (state.cards[idx].order === action.payload.order && state.cards[idx].myHand === true) {
@@ -180,6 +187,7 @@ export const gameState = createReducer(initialGameState, (builder) => {
       }
       state.time = Date.now()
     })
+
     .addCase(hintAction, (state, action) => {
       for (let i of cardData) {
         for (let j of action.payload) {
@@ -189,9 +197,11 @@ export const gameState = createReducer(initialGameState, (builder) => {
         }
       }
     })
+
     .addCase(initHint, (state) => {
       state.hint = []
     })
+
     .addCase(discard, (state, action) => {
       socket.emit('discard', action.payload)
       state.myTurn = false
@@ -208,6 +218,7 @@ export const gameState = createReducer(initialGameState, (builder) => {
       state.time = Date.now()
       state.pending = false
     })
+
     .addCase(opponentDiscard, (state, action) => {
       for (let i = 0; i < cardData.length; i++) {
         if (cardData[i].order === action.payload.order) {
@@ -220,9 +231,11 @@ export const gameState = createReducer(initialGameState, (builder) => {
       }
       state.myTurn = true
     })
+
     .addCase(ron, (state) => {
       return {...state, pending: true, myTurn: false}
     })
+
     .addCase(win, (state, action) => {
       state.myScore += action.payload.point
       state.opponentScore -= action.payload.point
@@ -232,7 +245,7 @@ export const gameState = createReducer(initialGameState, (builder) => {
       state.yakuNameArr = action.payload.yakuNameArr
 
       for (let card of cardData) {
-        if (card.order === action.payload.uradora)
+        if (card.order === Number(action.payload.uradora))
         state.uradora = card
       }
 
@@ -245,11 +258,12 @@ export const gameState = createReducer(initialGameState, (builder) => {
         }
       }
       state.resultCards.sort((a, b) => a - b)
-      state.gameEnd = true
       state.point = action.payload.point
       state.win = true
       state.lose = false
+      state.gameEnd = true
     })
+
     .addCase(lose, (state, action) => {
       state.myScore -= action.payload.point
       state.opponentScore += action.payload.point
@@ -260,7 +274,7 @@ export const gameState = createReducer(initialGameState, (builder) => {
       state.uradora = action.payload.uradora
 
       for (let card of cardData) {
-        if (card.order === action.payload.uradora)
+        if (card.order === Number(action.payload.uradora))
         state.uradora = card
       }
 
@@ -272,15 +286,17 @@ export const gameState = createReducer(initialGameState, (builder) => {
           }
         }
       }
-      state.gameEnd = true
       state.point = action.payload.point
       state.win = false
       state.lose = true
+      state.gameEnd = true
     })
+
     .addCase(draw, (state) => {
       state.draw = true
       state.gameEnd = true
     })
+
     .addCase(accept, (state, action) => {
       if (state.opponentScore < 0) {
         alert('승리')
@@ -318,6 +334,7 @@ export const gameState = createReducer(initialGameState, (builder) => {
           state.soon = 0
           state.gook = state.gook + 1 }
     })
+
     .addCase(opponentAccept, (state, action) => {
       if (state.meAccept) {
         state.phase = 0
@@ -328,6 +345,7 @@ export const gameState = createReducer(initialGameState, (builder) => {
         state.opponentAccept = true
       }
     })
+    
     .addCase(doNothing, (state) => {
       state = state
     })
