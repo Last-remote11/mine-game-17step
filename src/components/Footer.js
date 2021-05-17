@@ -12,7 +12,13 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary">
       <Link color="inherit" href="https://github.com/Last-remote11/mine-game-17step">
         <img src={GitHubIcon} alt='github icon' />
-      </Link>
+      </Link> 
+      <br/>
+        <h2 className = 'gray'>플레이 해주셔서 감사합니다.</h2> 
+      <a className='email-link' href = "mailto:ththth663@gmail.com">
+        버그 혹은 개선점은 여기로 => ththth663@gmail.com
+      </a>
+      
     </Typography>
   );
 }

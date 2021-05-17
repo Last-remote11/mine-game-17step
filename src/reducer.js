@@ -135,6 +135,7 @@ export const gameState = createReducer(initialGameState, (builder) => {
       state.time = Date.now()
       state.gameEnd = false
       state.resultCards = []
+      state.opponentAccept = false
     })
 
     .addCase(oneUser, (state) => {
@@ -233,7 +234,8 @@ export const gameState = createReducer(initialGameState, (builder) => {
     })
 
     .addCase(ron, (state) => {
-      return {...state, pending: true, myTurn: false}
+      state.pending = true
+      state.myTurn = false
     })
 
     .addCase(win, (state, action) => {
@@ -243,6 +245,7 @@ export const gameState = createReducer(initialGameState, (builder) => {
       state.resultTiles = action.payload.tiles
       state.pan = action.payload.pan
       state.yakuNameArr = action.payload.yakuNameArr
+      state.uradora = action.payload.uradora
 
       for (let card of cardData) {
         if (card.order === Number(action.payload.uradora))
@@ -257,7 +260,6 @@ export const gameState = createReducer(initialGameState, (builder) => {
           }
         }
       }
-      state.resultCards.sort((a, b) => a - b)
       state.point = action.payload.point
       state.win = true
       state.lose = false
@@ -300,11 +302,9 @@ export const gameState = createReducer(initialGameState, (builder) => {
     .addCase(accept, (state, action) => {
       if (state.opponentScore < 0) {
         alert('승리')
-      if (state.myScore < 0) {
+      } else if (state.myScore < 0) {
         alert('패배')
-      }
-      }
-      if (state.opponentAccept) {
+      } else if (state.opponentAccept) { // 상대방도 확인 나도 확인
           state.phase = 0
           state.cards = []
           state.gameEnd = false
@@ -313,12 +313,13 @@ export const gameState = createReducer(initialGameState, (builder) => {
           state.opponentDiscards = []
           state.meDecide = false
           state.opponentDecide = false
+          state.opponentAccept = false
           state.myTurn = true
           state.meAccept = false
           state.draw = false
           state.soon = 0
           state.gook = state.gook + 1 
-      } else {
+      } else { // 난 확인 상대방은 아직 확인x
           state.phase = 0
           state.pending = true
           state.cards = []
@@ -347,7 +348,7 @@ export const gameState = createReducer(initialGameState, (builder) => {
     })
     
     .addCase(doNothing, (state) => {
-      state = state
+      console.log('do nothing?')
     })
     // .addCase(, (state, action) => {
 
