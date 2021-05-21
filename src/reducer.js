@@ -5,6 +5,7 @@ import { socket } from './components/WebSocket'
 // 로그인, 배패 단계 **********************************************
 
 export const setName = createAction('INPUT_NAME')
+export const matchingPending = createAction('MATCHING_PENDING')
 export const oneUser = createAction('ONE_USER')
 export const twoUser = createAction('TWO_USER')
 export const startGameReq = createAction('START_PENDING')
@@ -97,7 +98,8 @@ const initialGameState = {
   soon: 0,
   draw: false,
   uradora: {img: 'hello?'},
-  hint:[]
+  hint:[],
+  matchWait: false
 }
 
 export const gameState = createReducer(initialGameState, (builder) => {
@@ -136,6 +138,10 @@ export const gameState = createReducer(initialGameState, (builder) => {
       state.gameEnd = false
       state.resultCards = []
       state.opponentAccept = false
+    })
+
+    .addCase(matchingPending, (state) => {
+      state.matchWait = true
     })
 
     .addCase(oneUser, (state) => {

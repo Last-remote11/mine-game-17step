@@ -11,7 +11,7 @@ const CardList = () => {
   return (
     <div>
       <h2>내가 버린 패</h2>
-      <div className='Discard-container'>
+      <div className='MyDiscard-container'>
         {
           myDiscards.map((card, i) => {
             return (<Card card={card} key={i}></Card>)

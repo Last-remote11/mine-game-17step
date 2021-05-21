@@ -11,7 +11,7 @@ const OpponentDiscard = () => {
   return (
     <div>
       <h2>상대가 버린 패</h2>
-      <div className='Discard-container'>
+      <div className='OpponentDiscard-container'>
         { 
             opponentDiscards.map((card, i) => {
             return (<Card card={card} key={i}></Card>)

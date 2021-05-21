@@ -33,6 +33,7 @@
 
 .field-dora {
   display: flex;
+  justify-content: space-around;
 }
 
 .MyHand-container {
@@ -47,16 +48,28 @@
   border-radius: 25px;
 }
 
-.Discard-container {
+.MyDiscard-container {
   min-height: 200px;
   margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  border-color: blue;
+  border-color: green;
   border-style: groove;
-  border-radius: 25px;
+  border-radius: 10px;
+}
+
+.OpponentDiscard-container {
+  min-height: 200px;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  border-color: red;
+  border-style: groove;
+  border-radius: 10px;
 }
 
 .Discard-container2 {
@@ -65,6 +78,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  justify-content: space-around;
   align-items: center;
   border-color: none;
   border-style: groove;

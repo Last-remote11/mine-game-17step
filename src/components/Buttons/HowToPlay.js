@@ -15,10 +15,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const getModalStyle = {
-  top: '10%',
-  left: '30%',
-  right:'30%'
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
 }
 
 const HowToPlay = () => {

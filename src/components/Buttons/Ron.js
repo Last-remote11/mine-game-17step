@@ -45,7 +45,7 @@ const Ron = () => {
 
   return (
     <div>
-      <Button variant="contained" color="primary" disabled={!myTurn || ( oya && soon === 0 )} onClick={() => emitRon(socket)}>
+      <Button variant="contained" color="secondary" disabled={!myTurn || ( oya && soon === 0 )} onClick={() => emitRon(socket)}>
         론
       </Button>
     </div>
