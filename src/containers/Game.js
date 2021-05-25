@@ -1,7 +1,8 @@
 import './Game.css';
 import React, { useEffect, useReducer } from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Helmet } from 'react-helmet';
+import { useHistory } from "react-router-dom";
 
 import HowToPlay from '../components/Buttons/HowToPlay'
 import StartButton from '../components/Buttons/StartButton';
@@ -25,14 +26,46 @@ import Footer from '../components/Footer'
 import SnackBarGroup from '../components/SnackBarGroup'
 import Hint from '../components/Hint'
 import Circular from '../components/Circular'
+import LogoutButton from '../components/Buttons/Logout-button'
+
+import { userLogin } from '../reducer'
 
 const Game = () => {
 
+  const dispatch = useDispatch()
+  const history = useHistory()
   const { background } = useSelector(state => state.enableDarkMode)
   const { phase, time, roomID, serverConnected } = useSelector(state => state.gameState)
+  const { login, name } = useSelector(state => state.auth)
   const [, forceUpdate] = useReducer(x => x + 1, 0);
 
+  const API_URL = 'http://localhost:3000'
+
   useEffect(() => forceUpdate(), [time])
+  useEffect(() => {
+    const token = window.localStorage.getItem('token')
+    async function authToken() {
+      try {
+        let res = await fetch(API_URL + '/authByToken', {
+          method: 'get',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+          }
+        })
+        res = await res.json()
+        dispatch(userLogin(res.name))
+      } catch(e) {
+        alert('세션이 만료')
+        history.push('/login')
+      }
+    }
+    if (!token) {
+      history.push('/login')
+    }
+    authToken()
+  }
+  , [])
 
 
   const renderSwitch = (phase) => {
@@ -94,7 +127,27 @@ const Game = () => {
         <meta charSet='utf-8'/>
         <style>{background}</style>
       </Helmet>
-      <div className = 'tl light-silver'>방 ID : {' '}{roomID}</div>
+      {
+        login
+        ?
+        <div>
+          <div className='navbar'>
+            <div className = 'tl light-silver'>방 ID : {' '}{roomID}</div>
+            <LogoutButton />
+          </div>
+          <h1 className='title'>지뢰 게임 17보</h1>
+          <WaitBackdrop />
+          <SnackBarGroup />
+          <Result />
+          <WebSocket />
+          <HowToPlay />
+          <Darkmode />
+          {renderSwitch(phase)}
+          <Footer />
+        </div>
+        : <h1>로그인정보가없어용</h1>
+      }
+      {/* <div className = 'tl light-silver'>방 ID : {' '}{roomID}</div>
       <h1 className='title'>지뢰 게임 17보</h1>
       <WaitBackdrop />
       <SnackBarGroup />
@@ -103,7 +156,7 @@ const Game = () => {
       <HowToPlay />
       <Darkmode />
       {renderSwitch(phase)}
-      <Footer />
+      <Footer /> */}
     </div>
   );
 }

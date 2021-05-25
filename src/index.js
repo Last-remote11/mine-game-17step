@@ -6,7 +6,8 @@ import { Provider } from 'react-redux'
 import logger from 'redux-logger'
 import { 
   enableDarkModeReducer,
-  gameState
+  gameState,
+  auth
 } from './reducer'
 import './index.css';
 import App from './containers/App';
@@ -15,7 +16,7 @@ import 'tachyons';
 
 
 
-const reducer = {enableDarkMode: enableDarkModeReducer, gameState}
+const reducer = {enableDarkMode: enableDarkModeReducer, gameState, auth}
 
 // const store = createStore(rootReducer, applyMiddleware(logger, thunk))
 

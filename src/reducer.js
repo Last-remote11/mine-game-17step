@@ -47,6 +47,9 @@ export const playerLeft = createAction('PLAYER_LEFT')
 export const doNothing = createAction('DO_NOTHING')
 export const enableDarkMode = createAction('ENABLE_DARKMODE')
 
+export const userLogin = createAction('USER_LOGIN')
+export const userLogout = createAction('USER_LOGOUT')
+
 //
 
 const initialStateBackground = {
@@ -63,6 +66,23 @@ export const enableDarkModeReducer = createReducer(initialStateBackground, (buil
         case 'body { background-color: #e6e6e6; }':
           state.background = 'body { background-color: #1a1a1a; }'
       }
+    })
+})
+
+const initialAuth = {
+  login: false,
+  name: ''
+}
+export const auth = createReducer(initialAuth, (builder) => {
+  builder
+    .addCase(userLogin, (state, action) => {
+      state.login = true
+      state.name = action.payload
+    })
+
+    .addCase(userLogout, (state) => {
+      state.login = false
+      state.name = ''
     })
 })
 

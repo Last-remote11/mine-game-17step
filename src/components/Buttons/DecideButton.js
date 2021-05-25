@@ -5,7 +5,7 @@ import { meDecide } from '../../reducer'
 import { useDispatch } from 'react-redux'
 import { socket } from '../WebSocket'
 
-const StartButton = () => {
+const DecideButton = () => {
 
   const dispatch = useDispatch()
   const { cards } = useSelector(state => state.gameState)
@@ -29,4 +29,4 @@ const StartButton = () => {
   );
 };
 
-export default StartButton;
+export default DecideButton;

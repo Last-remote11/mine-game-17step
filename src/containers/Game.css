@@ -7,6 +7,10 @@
   color: skyblue
 }
 
+.button-right {
+  align-items: flex-end;
+}
+
 .CardList-container {
   min-height: 200px;
   margin-top: 10px;
@@ -58,6 +62,10 @@
   border-color: green;
   border-style: groove;
   border-radius: 10px;
+}
+
+.navbar {
+  display: flex;
 }
 
 .OpponentDiscard-container {
