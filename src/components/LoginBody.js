@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 // import { makeStyles } from '@material-ui/core/styles';
 import { Button, TextField } from '@material-ui/core';
+import { useDispatch } from 'react-redux'
+
+import { userLogin, setStateName } from '../reducer'
 
 
 const LoginBody = React.forwardRef(({ modalStyle, classes, setSignupRoute}, ref) => {
@@ -9,6 +12,7 @@ const LoginBody = React.forwardRef(({ modalStyle, classes, setSignupRoute}, ref)
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const history = useHistory(); 
+  const dispatch = useDispatch()
 
   // const API_URL = 'https://intense-brushlands-31556.herokuapp.com'
   const API_URL = 'http://localhost:3000'
@@ -16,20 +20,30 @@ const LoginBody = React.forwardRef(({ modalStyle, classes, setSignupRoute}, ref)
   const submitLoginForm = async (e) => {
     console.log(name, password)
     e.preventDefault()
-    let res = await fetch(API_URL + '/login', {
-      method: 'post',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        name: name,
-        password: password
+    try {
+      let res = await fetch(API_URL + '/login', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          name: name,
+          password: password
+        })
       })
-    })
-    let resJson = await res.json()
-    if (resJson.token) {
-      await window.localStorage.setItem('token', resJson.token);
-      console.log('성공~~~')
-      history.push('/game')
-    }    
+      let resJson = await res.json()
+      if (resJson.token) {
+        window.localStorage.setItem('token', resJson.token);
+        console.log('resJson', name)
+        console.log('성공~~~')
+        dispatch(userLogin())
+        dispatch(setStateName(name))
+        history.push('/mine-game-17step')
+      } else {
+        alert('존재하지 않는 닉네임이거나 비밀번호가 틀립니다.')
+      }
+    } catch(e) {
+      alert('서버 오류 발생')
+      console.log(e)
+    }
   }
   
   return (

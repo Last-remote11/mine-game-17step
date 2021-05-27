@@ -17,7 +17,7 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <Route path='/game'>
+        <Route path='/mine-game-17step'>
           <Game/>
         </Route>
         <Route path='/login'>

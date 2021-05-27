@@ -66,6 +66,11 @@
 
 .navbar {
   display: flex;
+  padding: 10px;
+}
+
+.right {
+  margin-left: auto;
 }
 
 .OpponentDiscard-container {

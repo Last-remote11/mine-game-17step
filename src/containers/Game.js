@@ -54,9 +54,14 @@ const Game = () => {
           }
         })
         res = await res.json()
-        dispatch(userLogin(res.name))
+        if (res.name) {
+          dispatch(userLogin(res.name))
+        } else {
+          history.push('/login')
+          alert('세션이 만료되었습니다. 다시 로그인해주세요')
+        }
       } catch(e) {
-        alert('세션이 만료')
+        alert(e)
         history.push('/login')
       }
     }
@@ -133,6 +138,8 @@ const Game = () => {
         <div>
           <div className='navbar'>
             <div className = 'tl light-silver'>방 ID : {' '}{roomID}</div>
+            <Darkmode />
+            <HowToPlay />
             <LogoutButton />
           </div>
           <h1 className='title'>지뢰 게임 17보</h1>
@@ -140,8 +147,6 @@ const Game = () => {
           <SnackBarGroup />
           <Result />
           <WebSocket />
-          <HowToPlay />
-          <Darkmode />
           {renderSwitch(phase)}
           <Footer />
         </div>

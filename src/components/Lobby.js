@@ -5,7 +5,7 @@ import { socket } from './WebSocket'
 const Lobby = () => {
 
 
-  const { isTwoUser } = useSelector(state => state.gameState)
+  const { isTwoUser, myName } = useSelector(state => state.gameState)
   
   const [joinID, setJoinID] = useState('')
 
@@ -22,7 +22,7 @@ const Lobby = () => {
             <input type='text' placeholder='[여기에 방번호 입력]' 
             onChange={(e) => setJoinID(e.target.value)}>
             </input>
-            <button onClick={() => socket.emit('joinroom', joinID)}>방에 참가</button>
+            <button onClick={() => socket.emit('joinroom', { joinID: joinID, name: myName })}>방에 참가</button>
           </div>
       }
     </div>

@@ -3,15 +3,15 @@ import { useSelector } from 'react-redux'
 
 const ScoreBoard = () => {
 
-  const { myScore, opponentScore, oya } = useSelector(state => state.gameState)
+  const { myScore, opponentScore, oya, myName, opponentName } = useSelector(state => state.gameState)
 
 
   return (
     <table style={{fontsize: '30px'}}>
       <tbody>
       <tr>
-        <th>내점수{' '}{oya ? '東' : '西'}</th>
-        <th>상대점수{' '}{oya ? '西' : '東'}</th>
+        <th>{myName}{' '}{oya ? '東' : '西'}</th>
+        <th>{opponentName}{' '}{oya ? '西' : '東'}</th>
       </tr>
       <tr>
         <th>{myScore}</th>

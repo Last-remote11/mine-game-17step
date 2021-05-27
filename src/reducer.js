@@ -4,7 +4,7 @@ import { socket } from './components/WebSocket'
 
 // 로그인, 배패 단계 **********************************************
 
-export const setName = createAction('INPUT_NAME')
+export const setStateName = createAction('INPUT_NAME')
 export const matchingPending = createAction('MATCHING_PENDING')
 export const oneUser = createAction('ONE_USER')
 export const twoUser = createAction('TWO_USER')
@@ -47,6 +47,8 @@ export const playerLeft = createAction('PLAYER_LEFT')
 export const doNothing = createAction('DO_NOTHING')
 export const enableDarkMode = createAction('ENABLE_DARKMODE')
 
+// 유저정보
+
 export const userLogin = createAction('USER_LOGIN')
 export const userLogout = createAction('USER_LOGOUT')
 
@@ -73,22 +75,25 @@ const initialAuth = {
   login: false,
   name: ''
 }
+
 export const auth = createReducer(initialAuth, (builder) => {
   builder
-    .addCase(userLogin, (state, action) => {
+    .addCase(userLogin, (state) => {
       state.login = true
-      state.name = action.payload
     })
 
     .addCase(userLogout, (state) => {
       state.login = false
       state.name = ''
+      window.reload()
     })
 })
 
 export const initialRoomID = Math.floor(100000 + Math.random() * 900000)
 
 const initialGameState = {
+  myName: '',
+  opponentName: '',
   serverConnected: false,
   cards: [],
   time: true,
@@ -126,6 +131,10 @@ export const gameState = createReducer(initialGameState, (builder) => {
   builder
     .addCase(startGameReq, (state) => {
       state.pending = true
+    })
+
+    .addCase(setStateName, (state, action) => {
+      state.myName = action.payload
     })
 
     .addCase(startSuccess, (state, action) => {
@@ -170,8 +179,12 @@ export const gameState = createReducer(initialGameState, (builder) => {
     })
 
     .addCase(twoUser, (state, action) => {
+      state.roomID = action.payload.roomID
+      state.opponentName = 
+      state.myName === action.payload.user1 
+      ? action.payload.user2 
+      : action.payload.user1
       state.isTwoUser = true
-      state.roomID = action.payload
     })
 
     .addCase(meDecide, (state) => {

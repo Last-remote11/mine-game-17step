@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { 
   opponentDecide, opponentDiscard, oneUser, twoUser, startSuccess,
@@ -7,21 +7,26 @@ import {
 import { initialRoomID } from '../reducer'
 import { io } from 'socket.io-client'
 
-// export const socket = io("http://localhost:3000/");
-export const socket = io("https://intense-brushlands-31556.herokuapp.com/");
+export const socket = io("http://localhost:3000/");
+// export const socket = io("https://intense-brushlands-31556.herokuapp.com/");
 
 const WebSocket = () => {
 
   const [, setConnected] = useState(false);
   const dispatch = useDispatch()
 
+  const { myName } = useSelector(state => state.gameState)
+  const { login } = useSelector(state => state.auth)
+
   useEffect(() => {
-    socket.emit('joinroom', initialRoomID);
-    const eventHandler = () => setConnected(true);
-    socket.on('joined', eventHandler);
-    return () => {
-      socket.off('joined', eventHandler);
-    };
+    if (login) {
+      socket.emit('joinroom', { joinID: initialRoomID, name: myName });
+      const eventHandler = () => setConnected(true);
+      socket.on('joined', eventHandler);
+      return () => {
+        socket.off('joined', eventHandler);
+      };
+    }
   }, [dispatch]);
 
 
@@ -32,8 +37,8 @@ const WebSocket = () => {
   }, [dispatch])
 
   useEffect(()=> { // 유저 모임
-    socket.on('twoUser', (roomID) => {
-      dispatch(twoUser(roomID))
+    socket.on('twoUser', (data) => {
+      dispatch(twoUser(data))
     })
   }, [dispatch])
   

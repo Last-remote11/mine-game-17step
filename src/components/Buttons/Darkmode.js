@@ -17,7 +17,7 @@ const Darkmode = () => {
   };
 
   return (
-    <div>
+    <div className='right'>
       <FormControlLabel
         control={<Switch checked={state.checkedA} onChange={handleChange} name="checkedA" />}
         label="Dark Mode"

@@ -8,7 +8,7 @@ const StartButton = () => {
 
   const dispatch = useDispatch()
 
-  const { myName, isTwoUser} = useSelector(state => state.gameState)
+  const { myName, opponentName, isTwoUser } = useSelector(state => state.gameState)
 
   const emitStart = ( myName, socket) => {
     socket.emit('login', {
@@ -21,7 +21,9 @@ const StartButton = () => {
     <div>
       {
         isTwoUser
-        ? <div><h4 className='blue'>상대방이 들어왔습니다!</h4>
+        ? <div>
+          <h4 className='blue'>상대방이 들어왔습니다!</h4>
+          <h1>{myName}{' '} VS {' '}{opponentName}</h1>
           <Button variant="contained" color="primary" disabled={!isTwoUser} onClick={() => emitStart(myName, socket)}>
             게임 시작!
           </Button>

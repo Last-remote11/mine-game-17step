@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 
 const SignupBody = React.forwardRef(({ modalStyle, classes, setSignupRoute}, ref) => {
   
@@ -21,25 +21,44 @@ const SignupBody = React.forwardRef(({ modalStyle, classes, setSignupRoute}, ref
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-          email: name,
+          name: name,
           password: password
         })
       })
       let resJson = await res.json()
-      if (resJson) {
+      if (resJson === name) {
+        console.log(resJson)
         history.push('/login')
+        alert('가입이 완료되었습니다! 가입한 이름, 비밀번호로 로그인해주세요')
+        setSignupRoute(false)
+      } else {
+        alert(resJson)
       }
     } catch(e) {
       console.log('오류가 발생하였습니다.', e)
+      alert(e)
     }  
   }
   
   return(
   <div ref={ref} style={modalStyle} className={classes.paper}>
     <h2 id="simple-modal-title">회원가입</h2>
-    <p id="simple-modal-description">
-      Hello this is signup page.
-    </p>
+    <form className={classes.root} noValidate autoComplete="off">
+      <TextField 
+        id="standard-basic" 
+        variant="outlined" 
+        label="아이디" 
+        onChange={(e) => setName(e.target.value)}/>
+      <TextField 
+        id="filled-password-input" 
+        variant="outlined" 
+        label="비밀번호"
+        type="password"
+        autoComplete="current-password"
+        size='normal'
+        onChange={(e) => setPassword(e.target.value)}
+        />
+    </form>
     <Button color="primary" onClick={() => setSignupRoute(false)}>돌아가기</Button>
     <Button color="primary" onClick={(e) => submitSignupForm(e)}>가입하기</Button>
   </div>
