@@ -17,6 +17,12 @@ const LoginBody = React.forwardRef(({ modalStyle, classes, setSignupRoute}, ref)
   const API_URL = 'https://intense-brushlands-31556.herokuapp.com'
   // const API_URL = 'http://localhost:3000'
 
+  const pressEnter = (e) => {
+    if (e.key === 'Enter') {
+      submitLoginForm(e)
+    }
+  }
+
   const submitLoginForm = async (e) => {
     console.log(name, password)
     e.preventDefault()
@@ -41,7 +47,7 @@ const LoginBody = React.forwardRef(({ modalStyle, classes, setSignupRoute}, ref)
         alert('존재하지 않는 닉네임이거나 비밀번호가 틀립니다.')
       }
     } catch(e) {
-      alert('서버 오류 발생')
+      alert('잘못된 제출 양식입니다.')
       console.log(e)
     }
   }
@@ -55,7 +61,8 @@ const LoginBody = React.forwardRef(({ modalStyle, classes, setSignupRoute}, ref)
         id="standard-basic" 
         variant="outlined" 
         label="아이디" 
-        onChange={(e) => setName(e.target.value)}/>
+        onChange={(e) => setName(e.target.value)}
+        onKeyPress={(e) => pressEnter(e)}/>
       <TextField 
         id="filled-password-input" 
         variant="outlined" 
@@ -64,6 +71,7 @@ const LoginBody = React.forwardRef(({ modalStyle, classes, setSignupRoute}, ref)
         autoComplete="current-password"
         size='normal'
         onChange={(e) => setPassword(e.target.value)}
+        onKeyPress={(e) => pressEnter(e)}
         />
     </form>
     <Button color="primary" onClick={submitLoginForm}>로그인</Button>

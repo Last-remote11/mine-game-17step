@@ -13,6 +13,12 @@ const SignupBody = React.forwardRef(({ modalStyle, classes, setSignupRoute}, ref
   const API_URL = 'https://intense-brushlands-31556.herokuapp.com'
   // const API_URL = 'http://localhost:3000'
 
+  const pressEnter = (e) => {
+    if (e.key === 'Enter') {
+      submitSignupForm(e)
+    }
+  }
+
   const submitSignupForm = async (e) => {
     e.preventDefault()
 
@@ -47,7 +53,8 @@ const SignupBody = React.forwardRef(({ modalStyle, classes, setSignupRoute}, ref
         id="standard-basic" 
         variant="outlined" 
         label="아이디" 
-        onChange={(e) => setName(e.target.value)}/>
+        onChange={(e) => setName(e.target.value)}
+        onKeyPress={(e) => pressEnter(e)}/>
       <TextField 
         id="filled-password-input" 
         variant="outlined" 
@@ -56,6 +63,7 @@ const SignupBody = React.forwardRef(({ modalStyle, classes, setSignupRoute}, ref
         autoComplete="current-password"
         size='normal'
         onChange={(e) => setPassword(e.target.value)}
+        onKeyPress={(e) => pressEnter(e)}
         />
     </form>
     <Button color="primary" onClick={() => setSignupRoute(false)}>돌아가기</Button>
