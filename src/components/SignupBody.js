@@ -26,10 +26,9 @@ const SignupBody = React.forwardRef(({ modalStyle, classes, setSignupRoute}, ref
         })
       })
       let resJson = await res.json()
-      if (resJson === name) {
-        console.log(resJson)
+      if (resJson[0] === name) {
         history.push('/login')
-        alert('가입이 완료되었습니다! 가입한 이름, 비밀번호로 로그인해주세요')
+        alert(`${resJson[0]}님 가입이 완료되었습니다. 가입한 이름, 비밀번호로 로그인해주세요`)
         setSignupRoute(false)
       } else {
         alert(resJson)

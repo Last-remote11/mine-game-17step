@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { userLogout } from '../../reducer'
+import { userLogout, gameStateInitialize } from '../../reducer'
 import { useDispatch } from 'react-redux'
 import { socket } from '../WebSocket'
 import { useHistory } from "react-router-dom";
@@ -13,7 +13,8 @@ const LogoutButton = () => {
 
   const logout = () => {
     socket.emit('forceDisconnect')
-    dispatch(userLogout)
+    dispatch(userLogout())
+    dispatch(gameStateInitialize())
     window.localStorage.removeItem('token')
     history.push('/login')
   }

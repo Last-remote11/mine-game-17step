@@ -4,6 +4,8 @@ import { socket } from './components/WebSocket'
 
 // 로그인, 배패 단계 **********************************************
 
+export const gameStateMyName = createAction('GAME_STATE_MYNAME')
+export const gameStateInitialize = createAction('GAME_STATE_INITIALIZE') // 로그아웃, 게임초기화
 export const setStateName = createAction('INPUT_NAME')
 export const matchingPending = createAction('MATCHING_PENDING')
 export const oneUser = createAction('ONE_USER')
@@ -78,14 +80,14 @@ const initialAuth = {
 
 export const auth = createReducer(initialAuth, (builder) => {
   builder
-    .addCase(userLogin, (state) => {
+    .addCase(userLogin, (state, action) => {
       state.login = true
+      
     })
 
     .addCase(userLogout, (state) => {
       state.login = false
       state.name = ''
-      window.reload()
     })
 })
 
@@ -384,6 +386,14 @@ export const gameState = createReducer(initialGameState, (builder) => {
       } else {
         state.opponentAccept = true
       }
+    })
+
+    .addCase(gameStateInitialize, (state) => {
+      state = initialGameState
+    })
+
+    .addCase(gameStateMyName, (state, action) => {
+      state.myName = action.payload
     })
     
     .addCase(doNothing, (state) => {

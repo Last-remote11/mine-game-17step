@@ -57,7 +57,7 @@ const WebSocket = () => {
 
   useEffect(()=> {
     socket.on('forceDisconnect', (message) => {
-      console.log(message)
+      alert(message)
     })
   }, [dispatch])
 

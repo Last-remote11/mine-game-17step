@@ -28,7 +28,7 @@ import Hint from '../components/Hint'
 import Circular from '../components/Circular'
 import LogoutButton from '../components/Buttons/Logout-button'
 
-import { userLogin } from '../reducer'
+import { userLogin, gameStateMyName } from '../reducer'
 
 const Game = () => {
 
@@ -55,7 +55,10 @@ const Game = () => {
         })
         res = await res.json()
         if (res.name) {
+          console.log('토큰으로받은 닉네임', res.name)
           dispatch(userLogin(res.name))
+          dispatch(gameStateMyName(res.name))
+          
         } else {
           history.push('/login')
           alert('세션이 만료되었습니다. 다시 로그인해주세요')
