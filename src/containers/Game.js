@@ -40,7 +40,7 @@ const Game = () => {
   const [, forceUpdate] = useReducer(x => x + 1, 0);
 
   // const API_URL = 'http://localhost:3000'
-  const API_URL = "https://intense-brushlands-31556.herokuapp.com/"
+  const API_URL = "https://intense-brushlands-31556.herokuapp.com"
 
 
   useEffect(() => forceUpdate(), [time])
