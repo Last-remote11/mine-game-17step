@@ -10,8 +10,8 @@ const SignupBody = React.forwardRef(({ modalStyle, classes, setSignupRoute}, ref
 
   const history = useHistory()
 
-  // const API_URL = 'https://intense-brushlands-31556.herokuapp.com'
-  const API_URL = 'http://localhost:3000'
+  const API_URL = 'https://intense-brushlands-31556.herokuapp.com'
+  // const API_URL = 'http://localhost:3000'
 
   const submitSignupForm = async (e) => {
     e.preventDefault()
