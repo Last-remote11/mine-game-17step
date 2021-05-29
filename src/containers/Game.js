@@ -46,6 +46,9 @@ const Game = () => {
   useEffect(() => forceUpdate(), [time])
   useEffect(() => {
     const token = window.localStorage.getItem('token')
+    if (!token) {
+      history.push('/login')
+    }
     async function authToken() {
       try {
         let res = await fetch(API_URL + '/authByToken', {
@@ -69,9 +72,6 @@ const Game = () => {
         alert(e)
         history.push('/login')
       }
-    }
-    if (!token) {
-      history.push('/login')
     }
     authToken()
   }
