@@ -1,15 +1,10 @@
 import React from 'react';
 import Game from './Game'
 import Login from './Login';
-import Signup from './Signup'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link,
-  Redirect,
-  useHistory,
-  useLocation
+  Route
 } from "react-router-dom";
 
 const App = () => {
@@ -22,9 +17,6 @@ const App = () => {
         </Route>
         <Route path='/login'>
           <Login/>
-        </Route>
-        <Route path='/signup'>
-          <Signup/>
         </Route>
       </Switch>
     </Router>

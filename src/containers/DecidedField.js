@@ -18,7 +18,7 @@ const CardList = () => {
     if (myTurn) {
       return discard
     } else {
-      alert('자네 차례가 아닐세')
+      alert('상대방의 차례입니다.')
       return doNothing()
     }
   }

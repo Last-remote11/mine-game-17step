@@ -36,7 +36,7 @@ const Game = () => {
   const history = useHistory()
   const { background } = useSelector(state => state.enableDarkMode)
   const { phase, time, roomID, serverConnected } = useSelector(state => state.gameState)
-  const { login, name } = useSelector(state => state.auth)
+  const { login } = useSelector(state => state.auth)
   const [, forceUpdate] = useReducer(x => x + 1, 0);
 
   // const API_URL = 'http://localhost:3000'
@@ -156,7 +156,7 @@ const Game = () => {
           {renderSwitch(phase)}
           <Footer />
         </div>
-        : <h1>로그인정보가없어용</h1>
+        : <h1>로그인 정보를 확인하는중...</h1>
       }
       {/* <div className = 'tl light-silver'>방 ID : {' '}{roomID}</div>
       <h1 className='title'>지뢰 게임 17보</h1>

@@ -60,11 +60,18 @@ const Result = () => {
     )
   }
 
+  const yakumanText = {
+    1: '역만',
+    2: '더블역만',
+    3: '3배역만',
+    4: '4배역만'
+  }
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      {
-        win
+      {point === -8000
+      ? <h1>촌보</h1>
+      : win
         ? <h1>인생의 승리자</h1>
         : <h1>쳐발림</h1>
       }
@@ -89,8 +96,8 @@ const Result = () => {
         })}
       <hr />
       {
-        yakuman === 1
-        ? <h1>역만 32000점</h1>
+        yakuman >= 1
+        ? <h1>{yakumanText[yakuman]}{' '} {32000*yakuman}점</h1>
         : <h3>{pan}판 {point}점</h3>
       }
         

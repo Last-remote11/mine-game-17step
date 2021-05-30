@@ -4,12 +4,9 @@ import { socket } from './WebSocket'
 
 const Lobby = () => {
 
-
   const { isTwoUser, myName } = useSelector(state => state.gameState)
   
   const [joinID, setJoinID] = useState('')
-
-  
 
   return (
     <div>
