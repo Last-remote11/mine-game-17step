@@ -23,6 +23,10 @@ const CardList = () => {
     }
   }
 
+  const w = window.innerWidth
+  const cardWidth = w <= 800 ? w*0.05 : 66
+  const cardHeight = cardWidth / 66 * 118
+
   return (
     <div>
       <h2>버릴 패</h2>
@@ -31,7 +35,7 @@ const CardList = () => {
           abandonedCards.map((card, i) => {
             return (
             <div className='tc bg-light-blue dib br3 ma1 grow bw2 shadow-5'>
-              <img src={card.img} width='66px' height='118px' alt='card' className='br3' 
+              <img src={card.img} width={cardWidth} height={cardHeight} alt='card' className='br3' 
               onClick={() => dispatch(checkMyTurn(discard(card, socket)))}/>
             </div>)
           })

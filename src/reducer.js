@@ -389,7 +389,41 @@ export const gameState = createReducer(initialGameState, (builder) => {
     })
 
     .addCase(gameStateInitialize, (state) => {
-      state = initialGameState
+      state = {
+        myName: '',
+        opponentName: '',
+        serverConnected: false,
+        cards: [],
+        time: true,
+        gameEnd: false,
+        phase: 0,
+        pending: false,
+        myScore: 35000,
+        opponentScore: 35000,
+        dora: null,
+        myDiscards: [],
+        opponentDiscards: [],
+        meDecide: false,
+        opponentDecide: false,
+        myTurn: true,
+        isTwoUser: false,
+        roomID: initialRoomID,
+        resultTiles: [],
+        yakuNameArr: [],
+        point: 0,
+        win: false,
+        lose: false,
+        meAccept: false,
+        opponentAccept: false,
+        resultCards: [],
+        oya: null,
+        gook: 1,
+        soon: 0,
+        draw: false,
+        uradora: {img: 'hello?'},
+        hint:[],
+        matchWait: false
+      }
     })
 
     .addCase(gameStateMyName, (state, action) => {

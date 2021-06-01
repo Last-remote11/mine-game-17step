@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 
+const height = window.innerWidth < 800 ? '100%' : null
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -12,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    overflow: 'scroll',
+    height: height,
+    display:'block'
   },
 }));
 
@@ -23,6 +27,7 @@ function getModalStyle() {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
+    overflow: 'scroll'
   };
 }
 

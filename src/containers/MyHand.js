@@ -2,7 +2,6 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import Card from '../components/Card'
 import { handToCard } from '../reducer'
-// import { MockDatabase } from '../components/MockDatabase'
 
 
 const MyHand = () => {

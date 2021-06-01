@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import Game from './Game'
 import Login from './Login';
 import {
@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 
 const App = () => {
+  const isMobile = window.innerWidth < 800 ? true : false
+  const mobileContext = createContext(false)
 
   return (
     <Router>

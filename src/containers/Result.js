@@ -78,7 +78,7 @@ const Result = () => {
       <div className='Result-container'>
         {resultCards.map((card, i) => {
           return(
-            <Card card={card} width='39.6px' height='70.8px'></Card>
+            <Card card={card} width='39.6px' height='70.8px' key={i}></Card>
           
           // <div className='tc dib br3 ma1 bw2 shadow-5'>
           //   <img src={e.img} width='39.6px' height='70.8px' alt='card' className='br3 cards'/> 

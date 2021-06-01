@@ -39,8 +39,8 @@ const Game = () => {
   const { login } = useSelector(state => state.auth)
   const [, forceUpdate] = useReducer(x => x + 1, 0);
 
-  // const API_URL = 'http://localhost:3000'
-  const API_URL = "https://intense-brushlands-31556.herokuapp.com"
+  const API_URL = 'http://localhost:3000'
+  // const API_URL = "https://intense-brushlands-31556.herokuapp.com"
 
 
   useEffect(() => forceUpdate(), [time])
@@ -148,7 +148,10 @@ const Game = () => {
             <HowToPlay />
             <LogoutButton />
           </div>
-          <h1 className='title'>지뢰 게임 17보</h1>
+          {window.innerWidth > 800 ?
+          <h1 className='title'>지뢰 게임 17보</h1> :
+          <></>
+          }
           <WaitBackdrop />
           <SnackBarGroup />
           <Result />
