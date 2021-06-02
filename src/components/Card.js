@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux'
 import { doNothing } from '../reducer'
+import { mobileContext } from '../containers/App'
 
 const Card = ({ card, onClickCard = doNothing() }) => {
 
+  const isMobile = useContext(mobileContext)
   const dispatch = useDispatch()
   const w = window.innerWidth
-  const cardWidth = w <= 800 ? w*0.05 : 66
+  const cardWidth = isMobile <= 800 ? w*0.05 : 66
   const cardHeight = cardWidth / 66 * 118
 
   return (

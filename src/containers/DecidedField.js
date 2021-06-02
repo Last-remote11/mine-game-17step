@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { discard, doNothing } from '../reducer'
 import { socket } from '../components/WebSocket'
 import './CardList.css'
-
+import { mobileContext } from '../containers/App'
 
 const CardList = () => {
 
@@ -22,9 +22,9 @@ const CardList = () => {
       return doNothing()
     }
   }
-
+  const isMobile = useContext(mobileContext)
   const w = window.innerWidth
-  const cardWidth = w <= 800 ? w*0.05 : 66
+  const cardWidth = isMobile ? w*0.05 : 66
   const cardHeight = cardWidth / 66 * 118
 
   return (

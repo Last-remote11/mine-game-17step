@@ -23,7 +23,8 @@ const Lobby = () => {
           onChange={(e) => setJoinID(e.target.value)}>
           </input>
           <button onClick={() => socket.emit('joinroom', { joinID: joinID, name: myName })}>방에 참가</button>
-          <h4 className='blue'>{roomID}번 방에서 대전 상대를 기다리는 중...</h4>
+          <h4 className='blue'>{roomID}번 방에서 대전 상대를 기다리는 중입니다...</h4>
+          <h4 className='yellow'>무작위 매칭을 원하시면 무작위 매치 버튼을 누르세요</h4>
         </div>
       }
     </div>

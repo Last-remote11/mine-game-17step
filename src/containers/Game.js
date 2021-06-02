@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 
 import HowToPlay from '../components/Buttons/HowToPlay'
 import StartButton from '../components/Buttons/StartButton';
+import RandomMatch from '../components/Buttons/RandomMatch'
 import DecideButton from '../components/Buttons/DecideButton';
 import Darkmode from '../components/Buttons/Darkmode'
 import CardList from './CardList'
@@ -76,7 +77,7 @@ const Game = () => {
       authToken()
     }
   }
-  , [])
+  , [dispatch])
 
 
   const renderSwitch = (phase) => {
@@ -91,6 +92,7 @@ const Game = () => {
             : <h4 style={{color:'red'}}><Circular />서버에 접속중..</h4>}
             <Lobby />
             <StartButton />
+            <RandomMatch />
           </div>
         )
       case 1: // 로그인, 접속, 배패 완료, 조패단계

@@ -7,15 +7,19 @@ import {
   Route
 } from "react-router-dom";
 
+export const mobileContext = createContext(false)
+
 const App = () => {
-  const isMobile = window.innerWidth < 800 ? true : false
-  const mobileContext = createContext(false)
+  const isMobile = window.innerWidth < 900 ? true : false
+  
 
   return (
     <Router>
       <Switch>
         <Route path='/mine-game-17step'>
-          <Game/>
+          <mobileContext.Provider value={isMobile}>
+            <Game/>
+          </mobileContext.Provider>
         </Route>
         <Route path='/login'>
           <Login/>
