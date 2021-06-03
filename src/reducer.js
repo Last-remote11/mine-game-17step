@@ -342,9 +342,9 @@ export const gameState = createReducer(initialGameState, (builder) => {
 
     .addCase(accept, (state, action) => {
       if (state.opponentScore < 0) {
-        alert('승리')
+        alert('승리 (새 게임을 하시려면 새로고침해주세요)')
       } else if (state.myScore < 0) {
-        alert('패배')
+        alert('패배 (새 게임을 하시려면 새로고침해주세요)')
       } else if (state.opponentAccept) { // 상대방도 확인 나도 확인
           state.phase = 0
           state.cards = []
