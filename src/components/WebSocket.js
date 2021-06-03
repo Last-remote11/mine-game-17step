@@ -7,7 +7,7 @@ import { initialRoomID } from '../reducer'
 import { io } from 'socket.io-client'
 import { API_URL } from '../containers/App'
 
-export const socket = io(API_URL);
+export const socket = io(API_URL + '/');
 
 const WebSocket = () => {
 
