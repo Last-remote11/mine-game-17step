@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
 import { 
   opponentDecide, opponentDiscard, oneUser, twoUser, startSuccess,
   opponentAccept, win, lose, draw } from '../reducer'
 import { initialRoomID } from '../reducer'
 import { io } from 'socket.io-client'
+import { API_URL } from '../containers/App'
 
-export const socket = io("http://localhost:3000/");
-// export const socket = io("https://intense-brushlands-31556.herokuapp.com/");
+export const socket = io(API_URL);
 
 const WebSocket = () => {
 

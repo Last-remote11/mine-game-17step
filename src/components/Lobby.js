@@ -15,7 +15,7 @@ const Lobby = () => {
         ?
         <div>
           <h4 className='blue'>상대방이 들어왔습니다!</h4>
-          <h1>{myName}{' '} VS {' '}{opponentName}</h1>
+          <h1 style={{color:'yellow'}}>{myName}{' '} VS {' '}{opponentName}</h1>
         </div>
         : 
         <div>

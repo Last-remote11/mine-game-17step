@@ -9,6 +9,9 @@ import {
 
 export const mobileContext = createContext(false)
 
+export const API_URL = 'http://localhost:3000'
+// export const API_URL = 'https://intense-brushlands-31556.herokuapp.com'
+
 const App = () => {
   const isMobile = window.innerWidth < 900 ? true : false
   

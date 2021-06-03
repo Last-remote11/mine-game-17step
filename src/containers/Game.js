@@ -30,19 +30,16 @@ import Circular from '../components/Circular'
 import LogoutButton from '../components/Buttons/Logout-button'
 
 import { userLogin, gameStateMyName } from '../reducer'
+import { API_URL } from './App'
 
 const Game = () => {
 
   const dispatch = useDispatch()
   const history = useHistory()
   const { background } = useSelector(state => state.enableDarkMode)
-  const { phase, time, roomID, serverConnected } = useSelector(state => state.gameState)
+  const { phase, time, roomID, serverConnected, myName } = useSelector(state => state.gameState)
   const { login } = useSelector(state => state.auth)
   const [, forceUpdate] = useReducer(x => x + 1, 0);
-
-  const API_URL = 'http://localhost:3000'
-  // const API_URL = "https://intense-brushlands-31556.herokuapp.com"
-
 
   useEffect(() => forceUpdate(), [time])
   useEffect(() => {
@@ -145,7 +142,7 @@ const Game = () => {
         ?
         <div>
           <div className='navbar'>
-            <div className = 'tl light-silver'>방 ID : {' '}{roomID}</div>
+            <div className = 'tl light-silver'>방 ID : {' '}{roomID} {' '}{myName}</div>
             <Darkmode />
             <HowToPlay />
             <LogoutButton />

@@ -15,7 +15,7 @@ const StartButton = () => {
         ? <></>
         : 
           <Button variant="contained" color="primary" disabled={isTwoUser}
-          onClick={() => socket.emit('joinroom', { name: myName })}>
+          onClick={() => socket.emit('randomMatch', { name: myName })}>
             무작위 매치
           </Button>      
         

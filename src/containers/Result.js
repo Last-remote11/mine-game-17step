@@ -1,30 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles';
 import { socket } from '../components/WebSocket'
 import Card from '../components/Card'
 import { accept } from '../reducer'
 import Modal from '@material-ui/core/Modal'
+import { mobileContext } from '../containers/App'
 
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: 'absolute',
-    width: '60vm',
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
 
-const getModalStyle = {
-  top: '10%',
-  left: '30%',
-  right:'30%'
-}
+
 
 const Result = () => {
+
+  const isMobile = useContext(mobileContext)
+
+  const useStyles = makeStyles((theme) => ({
+    paper: {
+      position: 'absolute',
+      width: isMobile ? '80%' : '40%',
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+      overflow: 'scroll'
+    },
+  }));
+  
+  const getModalStyle = {
+    top: isMobile ? '5%' : '10%',
+    bottom: isMobile ? '5%' : '',
+    left: isMobile ? '10%' : '30%',
+    right: isMobile ? '10%' : '30%'
+  }
 
   const { 
     point, 
@@ -78,7 +86,7 @@ const Result = () => {
       <div className='Result-container'>
         {resultCards.map((card, i) => {
           return(
-            <Card card={card} width='39.6px' height='70.8px' key={i}></Card>
+            <Card card={card} width={39.6} height={70.8} key={i}></Card>
           
           // <div className='tc dib br3 ma1 bw2 shadow-5'>
           //   <img src={e.img} width='39.6px' height='70.8px' alt='card' className='br3 cards'/> 
@@ -107,7 +115,7 @@ const Result = () => {
         ? <h4>{myScore - point}{' '}→{' '}{myScore}점 </h4>
         : <h4>{myScore + point}{' '}→{' '}{myScore}점 </h4>
       }
-        
+      <span style={{color:'red'}}>창 바깥 눌러 닫기</span>
 
     {/* 타이틀 : 인생의 승리자 or 쳐발림 or 유국*/}
     {/* 패, 역, 점수 */}

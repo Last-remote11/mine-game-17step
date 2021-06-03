@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 // import { makeStyles } from '@material-ui/core/styles';
 import { Button, TextField } from '@material-ui/core';
 import { useDispatch } from 'react-redux'
+import { API_URL } from '../containers/App'
 
 import { userLogin, setStateName } from '../reducer'
 
@@ -14,8 +15,6 @@ const LoginBody = React.forwardRef(({ modalStyle, classes, setSignupRoute}, ref)
   const history = useHistory(); 
   const dispatch = useDispatch()
 
-  const API_URL = 'http://localhost:3000'
-  // const API_URL = 'https://intense-brushlands-31556.herokuapp.com'
 
   const pressEnter = (e) => {
     if (e.key === 'Enter') {
