@@ -22,7 +22,8 @@ const reducer = {enableDarkMode: enableDarkModeReducer, gameState, auth}
 
 const store = configureStore({
   reducer: reducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 })
 
 ReactDOM.render(
